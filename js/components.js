@@ -114,7 +114,6 @@ function injectWidgets() {
             <a href="habitaciones.html" class="mob-nav-item" title="Habitaciones"><i class="fa-solid fa-bed"></i></a>
             <a href="experiencias.html" class="mob-nav-item" title="Experiencias"><i class="fa-solid fa-compass"></i></a>
             <a href="nosotros.html" class="mob-nav-item" title="Nosotros"><i class="fa-solid fa-users"></i></a>
-            <a href="ubicacion.html" class="mob-nav-item" title="Ubicación"><i class="fa-solid fa-location-dot"></i></a>
         </nav>
     `;
 

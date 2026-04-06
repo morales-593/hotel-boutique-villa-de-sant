@@ -3,23 +3,27 @@
 /* Language Switcher (Left) */
 .lang-switcher {
     position: fixed;
-    bottom: 110px; /* Aligned with WhatsApp */
-    left: 50px;    /* Increased margin */
+    bottom: 50px;
+    left: 50px;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.05); /* very transparent */
+    background: rgba(255, 255, 255, 0.05);
+    /* very transparent */
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 15px 10px;
     border-radius: 50px;
     display: flex;
-    flex-direction: column; /* Vertical */
+    flex-direction: column;
+    /* Vertical */
     transition: var(--transition);
 }
+
 .lang-switcher.scrolled {
     opacity: 0.6;
     transform: scale(0.9) translateX(-10px);
 }
+
 .lang-switcher.scrolled:hover {
     opacity: 1;
     transform: scale(1) translateX(0);
@@ -34,7 +38,7 @@
 .lang-switcher.expanded .lang-settings-content {
     display: flex !important;
     padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     margin-bottom: 10px;
 }
 
@@ -44,11 +48,11 @@ body.light-mode .lang-switcher {
 }
 
 body.light-mode .lang-settings-content {
-    border-bottom-color: rgba(0,0,0,0.1);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
 }
 
 body.light-mode .theme-btn {
-    background: rgba(255,255,255,0.8);
+    background: rgba(255, 255, 255, 0.8);
     color: #111;
     border-color: #DDD;
 }
@@ -94,11 +98,11 @@ body.light-mode .theme-btn {
     border-radius: 50%;
     cursor: pointer;
     transition: var(--transition);
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     color: var(--text-white);
     margin-top: 10px;
 }
@@ -109,40 +113,46 @@ body.light-mode .theme-btn {
 }
 
 @media (max-width: 768px) {
-    /* Stack widgets on the left: Gear above, WhatsApp below */
+
+    /* Symmetrical widgets above mobile bottom nav */
     .whatsapp-widget {
-        bottom: 110px;
-        left: 25px;
-        right: auto;
+        bottom: 110px !important;
+        right: 20px !important;
+        left: auto !important;
     }
+
     .lang-switcher {
-        bottom: 180px;
-        left: 25px;
-        right: auto;
+        bottom: 110px !important;
+        left: 20px !important;
+        right: auto !important;
     }
+
     .whatsapp-button {
         width: 42px;
         height: 42px;
     }
+
     .whatsapp-button svg,
     .whatsapp-button i {
         font-size: 22px !important;
         width: 22px;
         height: 22px;
     }
+
     .chat-box {
         right: 0;
         left: auto;
         width: 260px;
-        bottom: 60px; /* Adjust chat box position relative to button */
+        bottom: 60px;
+        /* Adjust chat box position relative to button */
     }
 }
 
 /* WhatsApp Chatbot (Right) */
 .whatsapp-widget {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 50px;
+    right: 50px;
     z-index: 1000;
 }
 
@@ -172,8 +182,15 @@ body.light-mode .theme-btn {
 }
 
 @keyframes wa-pulse {
-    0% { transform: scale(1); opacity: 0.6; }
-    100% { transform: scale(1.6); opacity: 0; }
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1.6);
+        opacity: 0;
+    }
 }
 
 .whatsapp-button:hover {
@@ -195,15 +212,22 @@ body.light-mode .theme-btn {
     overflow: hidden;
     display: none;
     flex-direction: column;
-    box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(212, 175, 55, 0.2);
     transform-origin: bottom right;
     animation: chatOpen 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes chatOpen {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .chat-box.active {
@@ -223,11 +247,11 @@ body.light-mode .theme-btn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-.chat-header h4 { 
-    margin: 0; 
+.chat-header h4 {
+    margin: 0;
     font-size: 1rem;
     font-weight: 600;
 }
@@ -317,4 +341,3 @@ body:not(.light-mode) .chat-footer {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
 }
-
