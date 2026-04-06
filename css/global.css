@@ -9,6 +9,9 @@
 html {
     background-color: #0A0A0A; /* Prevent white flash at bottom (Dark) */
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
 }
 
 /* If body has light-mode, ensure html background matches */
@@ -95,6 +98,9 @@ body {
     font-family: var(--font-sans);
     line-height: 1.6;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
 }
 
 h1, h2, h3, h4, .serif {

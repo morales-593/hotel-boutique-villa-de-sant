@@ -1,67 +1,219 @@
 /* =============================================
-   RESPONSIVE - Villa de Sant
+   RESPONSIVE — Villa de Sant
+   Breakpoints:
+   ├── 1280px  Large Tablet / Small Desktop
+   ├── 1024px  iPad Pro / Tablet Landscape
+   ├──  900px  Tablet / Landscape Phone
+   ├──  768px  Tablet Portrait
+   ├──  600px  Large Phone
+   └──  480px  Small Phone
 ============================================= */
-.mobile-menu-toggle { display: none; }
 
-/* ===== IPAD / TABLET (1024px and below) ===== */
+/* ── Default: hide bottom nav, keep top nav ── */
+.mobile-menu-toggle { display: none; }
+.mobile-bottom-nav  { display: none; }
+
+/* Forcefully hide the legacy overlay */
+.mobile-overlay { display: none !important; }
+
+
+/* ============================================
+   1280px — Large Tablet / Small Desktop
+============================================ */
+@media (max-width: 1280px) {
+    /* Home: story gap */
+    .story-grid { gap: 60px; }
+
+    /* Rooms: 4 → 3 cols handled in rooms.css via 1400px */
+    /* Nosotros: about grid */
+    .nos-about-grid { gap: 50px; }
+}
+
+
+/* ============================================
+   1024px — Tablet Landscape / iPad Pro
+============================================ */
 @media (max-width: 1024px) {
+    /* ── Header ── */
     #main-header {
         max-width: calc(100% - 30px);
         min-width: 0;
     }
-    
     .nav-container {
         padding: 8px 15px;
         gap: 10px;
     }
-
     .nav-link {
         font-size: 0.7rem;
         padding: 6px 10px;
     }
-
     .logo-text { font-size: 1rem; }
     .nav-lottie { width: 38px; height: 38px; }
 
+    /* ── Footer ── */
     .footer-grid {
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
 
+    /* ── Global ── */
     .section-padding { padding: 60px 0; }
-    .hero-title { font-size: 3rem; }
-    .story-grid { gap: 50px; }
+    .hero-title      { font-size: 3rem; }
+    .story-grid      { gap: 50px; }
+
+    /* ── Rooms: detail page ── */
+    .room-info-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .booking-sidebar { position: static; }
+
+    /* ── Reserva ── */
+    .reserva-page-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .reserva-summary { position: static; }
+    .form-row { grid-template-columns: 1fr 1fr; }
+
+    /* ── Nosotros ── */
+    .nos-about-grid    { grid-template-columns: 1fr; gap: 40px; }
+    .nos-about-img     { height: 380px; }
 }
 
-/* ===== TABLET / LARGE PHONE (768px and below) ===== */
+
+/* ============================================
+   900px — Tablet / Info Sections
+============================================ */
+@media (max-width: 900px) {
+    /* ── Home: Info split (Amenities + FAQ) ── */
+    .info-split-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    /* ── Nosotros: Mission/Vision & Stats ── */
+    .nos-mv-grid    { grid-template-columns: 1fr; gap: 24px; }
+    .nos-mv-card    { min-height: 320px; }
+    .nos-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+
+    /* ── Reserva ── */
+    .reserva-page-grid { grid-template-columns: 1fr; }
+    .form-row          { grid-template-columns: 1fr; }
+    .form-col-full     { grid-column: auto; }
+
+    /* ── Ubicacion ── */
+    .ubicacion-grid      { grid-template-columns: 1fr; gap: 40px; }
+    .location-text-block { text-align: center; }
+    .actions-block       { justify-content: center; }
+    .location-title      { font-size: 2.5rem; }
+    .map-container       { height: 380px; }
+}
+
+
+/* ============================================
+   768px — Tablet Portrait / Large Phone
+============================================ */
 @media (max-width: 768px) {
+    /* ── Header: hide desktop nav & remove pill ── */
     #main-header {
-        top: 10px;
-        max-width: calc(100% - 20px);
+        top: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        transition: none !important;
+        animation: none !important;
     }
-
-    .desktop-nav { display: none; }
-    .mobile-menu-toggle { display: none !important; }
-
-    .section-padding { padding: 50px 0; }
-    .hero-title { font-size: 2.2rem; }
-    .hero-subtitle { font-size: 1rem; margin-bottom: 30px; }
-    
-    .story-grid { 
-        grid-template-columns: 1fr; 
-        gap: 30px; 
+    #main-header.scrolled {
+        top: 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        transition: none !important;
+        animation: none !important;
     }
-    
+    .nav-container {
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.3) !important;
+        padding: 10px 20px !important;
+        background: rgba(15, 15, 15, 0.95) !important;
+        transition: none !important;
+        animation: none !important;
+    }
+    .desktop-nav          { display: none; }
+    .mobile-menu-toggle   { display: none !important; }
+
+    /* ── Global ── */
+    .section-padding  { padding: 50px 0; }
+    .hero-title       { font-size: 2.2rem; }
+    .hero-subtitle    { font-size: 1rem; margin-bottom: 30px; }
+    .page-hero        { height: 55vh; }
+    .page-lottie      { width: 100px; height: 100px; }
+    .page-hero-title  { font-size: 2.2rem; }
+
+    /* ── Home: stories & featured rooms ── */
+    .story-grid  {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
     .story-content h2 { font-size: 2rem; }
+    .room-cards-preview {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .preview-card { height: 300px; }
 
+    /* ── Home: Amenities list ── */
+    .amenities-list { grid-template-columns: repeat(2, 1fr); }
+
+    /* ── Footer ── */
     .footer-grid {
         grid-template-columns: 1fr;
         text-align: center;
     }
     .footer-brand .footer-lottie { margin: 0 auto 10px; }
-    .footer-brand p { margin: 10px auto; }
+    .footer-brand p               { margin: 10px auto; }
 
-    /* ===== MOBILE BOTTOM NAV ===== */
+    /* ── Experiencias: exp-grid ── */
+    .exp-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+    /* ── Nosotros: stats ── */
+    .nos-stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .nos-about-img  { height: 300px; }
+    .nos-mv-card    { min-height: 280px; }
+    .nos-cta h2     { font-size: 2.2rem; }
+
+    /* ── Ubicacion ── */
+    .map-container   { height: 300px; }
+    .actions-block   { flex-direction: column; align-items: center; }
+
+    /* ── Rooms: gallery ── */
+    .room-gallery-grid   { grid-template-columns: 1fr; }
+    .gallery-large       { grid-column: auto; height: 280px; }
+    .gallery-small       { height: 200px; }
+
+    /* ── Widgets: stack left ── */
+    .whatsapp-widget {
+        bottom: 110px;
+        left: 25px;
+        right: auto;
+    }
+    .lang-switcher {
+        bottom: 180px;
+        left: 25px;
+        right: auto;
+    }
+    .whatsapp-button { width: 46px; height: 46px; }
+    .whatsapp-button i { font-size: 26px; }
+    .chat-box {
+        left: 0;
+        right: auto;
+        width: 280px;
+        bottom: 60px;
+    }
+
+    /* ── Mobile Bottom Nav ── */
     .mobile-bottom-nav {
         display: flex !important;
         position: fixed;
@@ -81,13 +233,6 @@
         padding: 5px 10px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.6),
                     inset 0 0 15px rgba(212,175,55,0.05);
-        /* Entrada suave */
-        animation: bot-nav-slide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    @keyframes bot-nav-slide {
-        0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
-        100% { transform: translateX(-50%) translateY(0); opacity: 1; }
     }
 
     body.light-mode .mobile-bottom-nav {
@@ -105,28 +250,13 @@
         justify-content: center;
         border-radius: 50%;
         color: rgba(245,245,245,0.7);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         text-decoration: none;
-        /* Animación individual suave */
-        opacity: 0;
-        animation: item-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        opacity: 1;
+        transition: none !important;
+        animation: none !important;
     }
 
-    /* Staggered load animation */
-    .mob-nav-item:nth-child(1) { animation-delay: 0.1s; }
-    .mob-nav-item:nth-child(2) { animation-delay: 0.2s; }
-    .mob-nav-item:nth-child(3) { animation-delay: 0.3s; }
-    .mob-nav-item:nth-child(4) { animation-delay: 0.4s; }
-    .mob-nav-item:nth-child(5) { animation-delay: 0.5s; }
-
-    @keyframes item-pop {
-        0% { transform: scale(0.5); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-
-    body.light-mode .mob-nav-item {
-        color: #4a3a10;
-    }
+    body.light-mode .mob-nav-item { color: #4a3a10; }
 
     .mob-nav-item:hover,
     .mob-nav-item.active {
@@ -134,58 +264,122 @@
         background: rgba(212,175,55,0.15);
         box-shadow: 0 0 20px rgba(212,175,55,0.5),
                     inset 0 0 10px rgba(212,175,55,0.1);
-        transform: translateY(-5px) scale(1.15);
     }
 
-    body { padding-bottom: 110px; } /* Increased to clear footer branding */
+    /* Extra body padding to clear the bottom nav */
+    body { padding-bottom: 110px; }
 }
 
-/* ===== SMALL PHONE (480px and below) ===== */
+
+/* ============================================
+   600px — Large Phone
+============================================ */
+@media (max-width: 600px) {
+    /* ── Home: featured rooms → 1 col ── */
+    .room-cards-preview { grid-template-columns: 1fr; }
+
+    /* ── Home: amenities → 1 col ── */
+    .amenities-list { grid-template-columns: 1fr; }
+
+    /* ── Experiencias: 2 → 1 col ── */
+    .exp-grid { grid-template-columns: 1fr !important; }
+
+    /* ── Nosotros: stats 2 → 1 col ── */
+    .nos-stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* ── Reserva: form rows ── */
+    .form-row { grid-template-columns: 1fr; }
+
+    /* ── Ubicacion ── */
+    .location-title { font-size: 2rem; }
+    .map-container  { height: 260px; }
+
+    /* ── Hero sizes ── */
+    .hero-title      { font-size: 2rem; }
+    .hero-subtitle   { font-size: 0.95rem; }
+    .page-hero-title { font-size: 1.9rem; }
+    .page-hero       { height: 50vh; }
+}
+
+
+/* ============================================
+   480px — Small Phone
+============================================ */
 @media (max-width: 480px) {
-    .btn-text { display: none; }
-    .header-book-btn { padding: 8px 12px; }
-    .hero-title { font-size: 1.8rem; }
-    .hero-subtitle { font-size: 0.9rem; }
-    .section-padding { padding: 40px 0; }
-    /* Stack widgets on the left: Gear above, WhatsApp below */
+    /* ── Header ── */
+    .btn-text         { display: none; }
+    .header-book-btn  { padding: 8px 12px; }
+
+    /* ── Hero ── */
+    .hero-title       { font-size: 1.8rem; }
+    .hero-subtitle    { font-size: 0.88rem; }
+    .page-hero-title  { font-size: 1.6rem; }
+    .page-hero        { height: 45vh; }
+    .page-lottie      { width: 80px; height: 80px; }
+
+    /* ── Global ── */
+    .section-padding  { padding: 40px 0; }
+    .btn              { font-size: 0.75rem; padding: 12px 20px; }
+
+    /* ── Nosotros ── */
+    .nos-stats-grid   { grid-template-columns: 1fr 1fr; }
+    .nos-stat-num     { font-size: 2.2rem; }
+    .nos-cta h2       { font-size: 1.8rem; }
+    .nos-text h2      { font-size: 2rem; }
+    .nos-mv-content h3 { font-size: 1.4rem; }
+
+    /* ── Rooms: room cards image height ── */
+    .room-card-image  { height: 160px; }
+
+    /* ── Reserva: padding ── */
+    .reserva-form-card { padding: 25px 20px; }
+    .reserva-summary   { padding: 20px; }
+
+    /* ── Ubicacion ── */
+    .location-title   { font-size: 1.8rem; }
+    .map-container    { height: 220px; }
+    .actions-block    { gap: 12px; }
+
+    /* ── Widgets: stack left ── */
     .whatsapp-widget {
         bottom: 110px;
-        left: 25px;
+        left: 20px;
         right: auto;
     }
     .lang-switcher {
-        bottom: 180px;
-        left: 25px;
+        bottom: 175px;
+        left: 20px;
         right: auto;
     }
-    .whatsapp-button {
-        width: 48px;
-        height: 48px;
-    }
+    .whatsapp-button { width: 44px; height: 44px; }
     .whatsapp-button svg,
     .whatsapp-button i {
-        font-size: 24px !important;
-        width: 24px;
-        height: 24px;
+        font-size: 22px !important;
+        width: 22px;
+        height: 22px;
     }
     .chat-box {
         left: 0;
         right: auto;
         width: 260px;
-        bottom: 60px;
+        bottom: 56px;
     }
-    
+
+    /* ── Bottom Nav ── */
     .mobile-bottom-nav {
         width: 85%;
         padding: 5px;
     }
-    
     .mob-nav-item {
         width: 38px;
         height: 38px;
+        font-size: 1.05rem;
     }
-}
 
-/* Forcefully hide the legacy overlay to prevent overlapping with bottom nav */
-.mobile-overlay { display: none !important; }
-.mobile-bottom-nav { display: none; }
+    /* ── Footer ── */
+    .footer-grid  { gap: 30px; }
+    #main-footer  { padding: 40px 0 15px; }
+
+    /* ── Modal ── */
+    .modal-content { padding: 25px 20px; }
+}

@@ -280,8 +280,27 @@ body.light-mode .review-author span {
     .amenities-list { grid-template-columns: 1fr; }
 }
 
+@media (max-width: 900px) {
+    .room-cards-preview { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .preview-card { height: 320px; }
+}
+
 @media (max-width: 768px) {
     .story-grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero-title { font-size: 2.2rem; }
+    .hero { height: 85vh; }
+}
+
+@media (max-width: 600px) {
     .room-cards-preview { grid-template-columns: 1fr; }
-    .hero-title { font-size: 3rem; }
+    .preview-card { height: 280px; }
+    .hero-title { font-size: 2rem; }
+    .hero-subtitle { font-size: 0.95rem; }
+}
+
+@media (max-width: 480px) {
+    .hero-title { font-size: 1.8rem; }
+    .hero-subtitle { font-size: 0.88rem; }
+    .hero { height: 100vh; }
+    .faq-question { font-size: 1rem; }
 }

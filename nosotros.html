@@ -226,11 +226,21 @@
         /* ====== RESPONSIVE ====== */
         @media (max-width: 900px) {
             .nos-about-grid,
-            .nos-mv-grid,
-            .nos-stats-grid { grid-template-columns: 1fr; }
+            .nos-mv-grid { grid-template-columns: 1fr; }
             .nos-about-img { height: 350px; }
             .nos-mv-card { min-height: 320px; }
             .nos-stats-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .nos-about-grid  { gap: 30px; }
+            .nos-about-img   { height: 260px; }
+            .nos-stat-num    { font-size: 2.2rem; }
+            .nos-cta h2      { font-size: 1.8rem; }
+            .nos-text h2     { font-size: 2rem; }
+            .nos-mv-content  { padding: 25px; }
+            .nos-mv-content h3 { font-size: 1.4rem; }
+            .nos-about       { padding: 80px 0; }
+            .nos-cta         { padding: 80px 0; }
         }
     </style>
 </head>
