@@ -1,0 +1,191 @@
+/* =============================================
+   RESPONSIVE - Villa de Sant
+============================================= */
+.mobile-menu-toggle { display: none; }
+
+/* ===== IPAD / TABLET (1024px and below) ===== */
+@media (max-width: 1024px) {
+    #main-header {
+        max-width: calc(100% - 30px);
+        min-width: 0;
+    }
+    
+    .nav-container {
+        padding: 8px 15px;
+        gap: 10px;
+    }
+
+    .nav-link {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+    }
+
+    .logo-text { font-size: 1rem; }
+    .nav-lottie { width: 38px; height: 38px; }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .section-padding { padding: 60px 0; }
+    .hero-title { font-size: 3rem; }
+    .story-grid { gap: 50px; }
+}
+
+/* ===== TABLET / LARGE PHONE (768px and below) ===== */
+@media (max-width: 768px) {
+    #main-header {
+        top: 10px;
+        max-width: calc(100% - 20px);
+    }
+
+    .desktop-nav { display: none; }
+    .mobile-menu-toggle { display: none !important; }
+
+    .section-padding { padding: 50px 0; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-subtitle { font-size: 1rem; margin-bottom: 30px; }
+    
+    .story-grid { 
+        grid-template-columns: 1fr; 
+        gap: 30px; 
+    }
+    
+    .story-content h2 { font-size: 2rem; }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .footer-brand .footer-lottie { margin: 0 auto 10px; }
+    .footer-brand p { margin: 10px auto; }
+
+    /* ===== MOBILE BOTTOM NAV ===== */
+    .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 420px;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 2000;
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(212, 175, 55, 0.35);
+        border-radius: 50px;
+        padding: 5px 10px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.6),
+                    inset 0 0 15px rgba(212,175,55,0.05);
+        /* Entrada suave */
+        animation: bot-nav-slide 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes bot-nav-slide {
+        0% { transform: translateX(-50%) translateY(100px); opacity: 0; }
+        100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
+    body.light-mode .mobile-bottom-nav {
+        background: rgba(255, 252, 240, 0.92);
+        box-shadow: 0 8px 32px rgba(180,140,30,0.25),
+                    inset 0 0 15px rgba(212,175,55,0.05);
+    }
+
+    .mob-nav-item {
+        width: 46px;
+        height: 46px;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: rgba(245,245,245,0.7);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        /* Animación individual suave */
+        opacity: 0;
+        animation: item-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    /* Staggered load animation */
+    .mob-nav-item:nth-child(1) { animation-delay: 0.1s; }
+    .mob-nav-item:nth-child(2) { animation-delay: 0.2s; }
+    .mob-nav-item:nth-child(3) { animation-delay: 0.3s; }
+    .mob-nav-item:nth-child(4) { animation-delay: 0.4s; }
+    .mob-nav-item:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes item-pop {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    body.light-mode .mob-nav-item {
+        color: #4a3a10;
+    }
+
+    .mob-nav-item:hover,
+    .mob-nav-item.active {
+        color: var(--primary-gold);
+        background: rgba(212,175,55,0.15);
+        box-shadow: 0 0 20px rgba(212,175,55,0.5),
+                    inset 0 0 10px rgba(212,175,55,0.1);
+        transform: translateY(-5px) scale(1.15);
+    }
+
+    body { padding-bottom: 110px; } /* Increased to clear footer branding */
+}
+
+/* ===== SMALL PHONE (480px and below) ===== */
+@media (max-width: 480px) {
+    .btn-text { display: none; }
+    .header-book-btn { padding: 8px 12px; }
+    .hero-title { font-size: 1.8rem; }
+    .hero-subtitle { font-size: 0.9rem; }
+    .section-padding { padding: 40px 0; }
+    /* Stack widgets on the left: Gear above, WhatsApp below */
+    .whatsapp-widget {
+        bottom: 110px;
+        left: 25px;
+        right: auto;
+    }
+    .lang-switcher {
+        bottom: 180px;
+        left: 25px;
+        right: auto;
+    }
+    .whatsapp-button {
+        width: 48px;
+        height: 48px;
+    }
+    .whatsapp-button svg,
+    .whatsapp-button i {
+        font-size: 24px !important;
+        width: 24px;
+        height: 24px;
+    }
+    .chat-box {
+        left: 0;
+        right: auto;
+        width: 260px;
+        bottom: 60px;
+    }
+    
+    .mobile-bottom-nav {
+        width: 85%;
+        padding: 5px;
+    }
+    
+    .mob-nav-item {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+/* Forcefully hide the legacy overlay to prevent overlapping with bottom nav */
+.mobile-overlay { display: none !important; }
+.mobile-bottom-nav { display: none; }

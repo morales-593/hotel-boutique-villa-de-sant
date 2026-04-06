@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hotel Boutique Villa de Sant - Lujo, cultura y agilidad en el corazón de Quito.">
+    <title>Hotel Boutique Villa de Sant | Inicio</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Core CSS (Order matters) -->
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/header-footer.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Core JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="js/components.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/whatsapp-chat.js" defer></script>
+</head>
+<body>
+
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content scroll-anim scroll-fade">
+                <h1 class="hero-title">Santuario en el Centro del Mundo</h1>
+                <p class="hero-subtitle">Vive una estancia única en Quito, donde el lujo florece bajo el vuelo del colibrí.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-gold btn-book-trigger">RESERVA TU EXPERIENCIA</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Storytelling Section -->
+        <section class="section-padding story-section">
+            <div class="container story-grid">
+                <div class="story-image scroll-anim scroll-left">
+                    <img src="https://lh3.googleusercontent.com/p/AF1QipNVb6baKMNn4xJZncYQr9f1z7mdaYdRtnXhkfiz=s4000" alt="Villa de Sant Architecture" loading="lazy">
+                </div>
+                <div class="story-content scroll-anim scroll-right">
+                    <h2 class="gold-text">El Vuelo del Colibrí</h2>
+                    <p>En el corazón de Quito, surge Villa de Sant como un homenaje a la agilidad y la elegancia de nuestra ave más icónica. Nuestra historia se teje entre muros coloniales y un servicio contemporáneo que fluye sin esfuerzo.</p>
+                    <p>Cada rincón de nuestro hotel ha sido diseñado para transportarte a una época de esplendor, sin renunciar a las comodidades del lujo moderno. Descubre por qué somos el refugio favorito de quienes buscan algo más que un simple alojamiento.</p>
+                    <a href="habitaciones.html" class="btn btn-gold">EXPLORAR HABITACIONES</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Carousel Section -->
+        <section class="section-padding reviews-carousel-section">
+            <div class="container text-center scroll-anim scroll-fade">
+                <h2 class="gold-text">Experiencias Memorables</h2>
+                <p style="color: var(--text-gray); margin-bottom: 50px;">Lo que dicen nuestros huéspedes en todo el mundo.</p>
+            </div>
+            
+            <div class="marquee-container scroll-anim scroll-right">
+                <div class="marquee-content">
+                    <!-- Duplicate items for infinite flow -->
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"Un oasis absoluto en medio de la ciudad histórica. Minimalista y elegante."</p>
+                        <p class="review-author">Marie L. <br><span>París, Francia</span></p>
+                    </div>
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"La atención y el lujo en cada detalle hicieron nuestra estadía inolvidable."</p>
+                        <p class="review-author">John D. <br><span>New York, USA</span></p>
+                    </div>
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"Excelente ubicación, decoración exquisita y un personal sumamente atento."</p>
+                        <p class="review-author">Carlos M. <br><span>Madrid, España</span></p>
+                    </div>
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"Perfección total. Las noches en la suite son sencillamente mágicas."</p>
+                        <p class="review-author">Julieta P. <br><span>Buenos Aires, Argentina</span></p>
+                    </div>
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"El mejor desayuno y una arquitectura colonial preservada de forma impecable."</p>
+                        <p class="review-author">Liam S. <br><span>Londres, UK</span></p>
+                    </div>
+                    
+                    <!-- Duplicated exactly the same for seamless loop -->
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"Un oasis absoluto en medio de la ciudad histórica. Minimalista y elegante."</p>
+                        <p class="review-author">Marie L. <br><span>París, Francia</span></p>
+                    </div>
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"La atención y el lujo en cada detalle hicieron nuestra estadía inolvidable."</p>
+                        <p class="review-author">John D. <br><span>New York, USA</span></p>
+                    </div>
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"Excelente ubicación, decoración exquisita y un personal sumamente atento."</p>
+                        <p class="review-author">Carlos M. <br><span>Madrid, España</span></p>
+                    </div>
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"Perfección total. Las noches en la suite son sencillamente mágicas."</p>
+                        <p class="review-author">Julieta P. <br><span>Buenos Aires, Argentina</span></p>
+                    </div>
+                    <div class="review-box">
+                        <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                        <p class="review-text">"El mejor desayuno y una arquitectura colonial preservada de forma impecable."</p>
+                        <p class="review-author">Liam S. <br><span>Londres, UK</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Santuario de Comodidades & FAQ Section -->
+        <section class="section-padding story-section">
+            <div class="container">
+                <div class="info-split-grid">
+                    
+                    <!-- Amenities Column -->
+                    <div class="amenities-side scroll-anim scroll-left">
+                        <div class="text-center" style="margin-bottom: 40px;">
+                            <h2 class="gold-text">Santuario de Comodidades</h2>
+                            <p style="color: var(--text-gray); margin-top: 10px;">Todo lo que necesitas para una estancia perfecta en el corazón de Quito.</p>
+                        </div>
+                        <div class="amenities-list">
+                            <div class="amenity-item"><span class="amenity-icon">📶</span> Wi-Fi gratis</div>
+                            <div class="amenity-item"><span class="amenity-icon">☕</span> Desayuno incluido</div>
+                            <div class="amenity-item"><span class="amenity-icon">🅿️</span> Estacionamiento pago</div>
+                            <div class="amenity-item"><span class="amenity-icon">♿</span> Accesible</div>
+                            <div class="amenity-item"><span class="amenity-icon">🏊</span> Piscina</div>
+                            <div class="amenity-item"><span class="amenity-icon">❄️</span> Aire acondicionado</div>
+                            <div class="amenity-item"><span class="amenity-icon">🧺</span> Servicio de lavandería</div>
+                            <div class="amenity-item"><span class="amenity-icon">💼</span> Centro de negocios</div>
+                            <div class="amenity-item"><span class="amenity-icon">🐾</span> Se permiten mascotas</div>
+                            <div class="amenity-item"><span class="amenity-icon">🍽️</span> Servicio en la habitación</div>
+                            <div class="amenity-item"><span class="amenity-icon">👶</span> Apto para niños</div>
+                            <div class="amenity-item"><span class="amenity-icon">🍴</span> Restaurante</div>
+                            <div class="amenity-item"><span class="amenity-icon">🚐</span> Transporte aeropuerto</div>
+                            <div class="amenity-item"><span class="amenity-icon">🏋️</span> Gimnasio</div>
+                            <div class="amenity-item"><span class="amenity-icon">🍸</span> Bar</div>
+                            <div class="amenity-item"><span class="amenity-icon">🚭</span> Libre de humo</div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Column -->
+                    <div class="faq-side scroll-anim scroll-right">
+                        <div class="text-center" style="margin-bottom: 40px;">
+                            <h2 class="gold-text">Preguntas Frecuentes</h2>
+                            <p style="color: var(--text-gray); margin-top: 10px;">Respuestas a tus principales inquietudes.</p>
+                        </div>
+                        <div class="faq-grid" style="margin-top: 0; max-width: 100%;">
+                            <div class="faq-item">
+                                <div class="faq-question">¿Cuál es el horario de Check-in y Check-out? <span>+</span></div>
+                                <div class="faq-answer">El check-in es a partir de las 15:00 y el check-out es hasta las 12:00. Ofrecemos opciones de late check-out bajo disponibilidad.</div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">¿Ofrecen transporte desde el aeropuerto? <span>+</span></div>
+                                <div class="faq-answer">Sí, contamos con un servicio de transporte privado premium para asegurar su llegada agendando con 24 horas de anticipación.</div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">¿El hotel cuenta con Wi-Fi de alta velocidad? <span>+</span></div>
+                                <div class="faq-answer">Absolutamente. Ofrecemos Wi-Fi de fibra óptica gratuito en todas las habitaciones y áreas comunes para su comodidad.</div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">¿Se admiten mascotas en el hotel? <span>+</span></div>
+                                <div class="faq-answer">Somos pet-friendly. Se admiten mascotas pequeñas previa notificación y con un ligero recargo por desinfección profunda.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+    <div id="modal-placeholder"></div>
+    <div id="modal-tour-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="js/modal-reserva.js" defer></script>
+    <script>
+        // Hero animation and FAQ - Moved to bottom for direct DOM access if needed
+        window.addEventListener('load', () => {
+            window.addEventListener('scroll', () => {
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    const scroll = window.pageYOffset;
+                    hero.style.backgroundPositionY = (scroll * 0.5) + 'px';
+                }
+            });
+
+            // FAQ Toggle logic
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.faq-question')) {
+                    const item = e.target.closest('.faq-item');
+                    item.classList.toggle('active');
+                    const span = item.querySelector('span');
+                    span.innerText = item.classList.contains('active') ? '-' : '+';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
