@@ -13,7 +13,12 @@
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.6);
+    background: linear-gradient(to bottom, 
+                rgba(0,0,0,0.7) 0%, 
+                rgba(0,0,0,0.3) 40%, 
+                rgba(0,0,0,0.2) 60%, 
+                rgba(0,0,0,0.8) 100%);
+    z-index: 1;
 }
 
 .hero-content {
@@ -266,10 +271,108 @@ body.light-mode .review-author span {
 }
 
 .amenity-icon {
+    font-size: 1.2rem;
+    color: var(--primary-gold);
+    width: 25px;
+    text-align: center;
+}
+
+/* Schedule Cards */
+.schedule-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 50px;
+}
+
+/* Schedule Cards - Dark Premium Style (Always) */
+.schedule-card {
+    background: rgba(10, 20, 15, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    transition: var(--transition);
+    color: #FFFFFF;
+}
+
+.schedule-card:hover {
+    border-color: var(--primary-gold);
+    transform: translateY(-5px);
+}
+
+.schedule-icon {
     font-size: 1.5rem;
     color: var(--primary-gold);
-    width: 30px;
-    text-align: center;
+    margin-bottom: 20px;
+    background: rgba(212, 175, 55, 0.15);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+}
+
+.schedule-card h4 {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.schedule-card p {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-gold);
+    letter-spacing: 0.5px;
+}
+
+/* FAQ Refinement */
+.faq-grid {
+    max-width: 100%;
+}
+
+.faq-item {
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 25px 0;
+}
+
+body.light-mode .faq-item {
+    border-bottom-color: #EEEEEE;
+}
+
+.faq-question {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--text-white);
+    transition: var(--transition);
+}
+
+body.light-mode .faq-question {
+    color: #111111;
+}
+
+.faq-question:hover {
+    color: var(--primary-gold);
+}
+
+.faq-question span {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--primary-gold);
+}
+
+.faq-answer {
+    padding-top: 15px;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    color: var(--text-gray);
+}
+
+body.light-mode .faq-answer {
+    color: #444444;
 }
 
 @media (max-width: 950px) {
@@ -301,6 +404,100 @@ body.light-mode .review-author span {
 @media (max-width: 480px) {
     .hero-title { font-size: 1.8rem; }
     .hero-subtitle { font-size: 0.88rem; }
-    .hero { height: 100vh; }
     .faq-question { font-size: 1rem; }
+}
+
+/* Amenities Compact Carousel (Shared) */
+.amenities-marquee-section {
+    padding: 70px 0 80px;
+    background: var(--bg-black);
+    overflow: hidden;
+    border-top: 1px solid rgba(212,175,55,0.12);
+}
+
+body.light-mode .amenities-marquee-section {
+    background: #F0EDE6;
+    border-top-color: rgba(212,175,55,0.25);
+}
+
+.amenity-track-wrapper {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.amenity-track {
+    display: flex;
+    width: max-content;
+    gap: 14px;
+    padding: 6px 0;
+}
+
+.track-left  { animation: chip-slide-left  15s linear infinite; }
+.track-right { animation: chip-slide-right 12s linear infinite; }
+
+.amenity-track:hover { animation-play-state: paused; }
+
+@keyframes chip-slide-left {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes chip-slide-right {
+    0%   { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+
+.amenity-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px;
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 50px;
+    white-space: nowrap;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-white);
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.amenity-chip:hover {
+    background: rgba(212, 175, 55, 0.18);
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
+    transform: scale(1.06);
+    box-shadow: 0 4px 18px rgba(212,175,55,0.2);
+}
+
+.amenity-chip i {
+    font-size: 0.85rem;
+    color: var(--primary-gold);
+    flex-shrink: 0;
+}
+
+.chip-outline {
+    background: transparent;
+    border-color: rgba(255,255,255,0.1);
+    color: var(--text-gray);
+}
+
+body.light-mode .amenity-chip {
+    color: #222;
+    border-color: rgba(212,175,55,0.3);
+    background: rgba(212,175,55,0.06);
+}
+
+body.light-mode .chip-outline {
+    border-color: rgba(0,0,0,0.1);
+    color: #555;
+}
+
+.chip-outline:hover {
+    background: rgba(212,175,55,0.1);
+    border-color: var(--primary-gold);
+    color: var(--primary-gold);
 }

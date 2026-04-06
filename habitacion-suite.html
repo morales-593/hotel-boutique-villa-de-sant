@@ -35,11 +35,28 @@
 
     <main>
         <!-- Room Detail Hero -->
-        <section class="room-detail-hero"
+        <section class="room-detail-hero" 
             style="background-image: url('https://lh3.googleusercontent.com/gps-proxy/ALd4DhF56FUjX6thoqm3SWvq32eUKJzYCr7JmoP7mkLrPF9hVhT-UXv2NkCzLtnUq8x8PiFmAZINY45gj_aqlSFDaaz9VJ-bV7x9mVHX1pTupj6Tv6rDMlgkIAwL1lkPsG7AfZeL9ImuEhBIkKUMvlEHsy9d063cIlVxb0VrvWYGKX6pbdcuyKg1iqKyCA=s4000')">
-            <div class="container room-header-content scroll-anim scroll-fade">
-                <h1 class="gold-text">Suite Real</h1>
-                <p>Nuestra joya de la corona, diseñada para el viajero más exigente.</p>
+            <div class="room-detail-overlay"></div>
+            <div class="container room-header-content text-center scroll-anim scroll-fade">
+                <div class="lottie-hummingbird" style="width: 50px; height: 50px; margin: 0 auto 15px;"></div>
+                <div style="width: 60px; height: 2px; background: var(--primary-gold); margin: 0 auto 20px;"></div>
+                <h1 class="gold-text" style="font-size: 4rem; margin-bottom: 20px;">Nuestras Estancias</h1>
+                <p class="hero-subtitle" style="font-size: 1.2rem; color: #EEE; transition: var(--transition);">Descubre el equilibrio perfecto entre la historia colonial y el confort contemporáneo.</p>
+                
+                <!-- Dark Schedule Cards -->
+                <div class="schedule-cards dark-theme">
+                    <div class="schedule-card">
+                        <div class="schedule-icon"><i class="fa-solid fa-bell-concierge"></i></div>
+                        <h4>Hora de entrada</h4>
+                        <p>12:00 p. m.</p>
+                    </div>
+                    <div class="schedule-card">
+                        <div class="schedule-icon"><i class="fa-solid fa-key"></i></div>
+                        <h4>Hora de salida</h4>
+                        <p>12:00 p. m.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -64,36 +81,33 @@
                             alt="Bathroom Detail">
                     </div>
                 </div>
-
-                <div style="margin-top: 60px;" class="scroll-anim scroll-fade">
-                    <h3 class="serif gold-text" style="font-size: 1.8rem;">Servicios Incluidos</h3>
-                    <ul
-                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; list-style: none; padding: 0;">
-
-                        <li><i class="fa-solid fa-utensils" style="color: var(--primary-gold); margin-right: 8px;"></i>
-                            Desayuno a la carta incluido</li>
-                        <li><i class="fa-solid fa-car" style="color: var(--primary-gold); margin-right: 8px;"></i>
-                            Traslado aeropuerto-hotel</li>
-                        <li><i class="fa-solid fa-star" style="color: var(--primary-gold); margin-right: 8px;"></i>
-                            Carta de almohadas premium</li>
-                        <li><i class="fa-solid fa-music" style="color: var(--primary-gold); margin-right: 8px;"></i>
-                            Sistema de sonido envolvente</li>
-                        <li><i class="fa-solid fa-crown" style="color: var(--primary-gold); margin-right: 8px;"></i>
-                            Acceso exclusivo al salón VIP</li>
-                    </ul>
-                </div>
             </div>
 
             <aside class="booking-sidebar scroll-anim scroll-right">
                 <h3 class="serif gold-text">Reserva tu Estancia</h3>
-                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 30px;">Selecciona tus fechas y vive
-                    la experiencia del colibrí. Consulta disponibilidad sin compromiso.</p>
+                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 25px;">Selecciona tus fechas y vive
+                    la experiencia del colibrí con los servicios incluidos. Consulta disponibilidad sin compromiso.</p>
 
-                <a href="reserva.html" class="btn btn-gold btn-full"><i class="fa-solid fa-calendar-check"
-                        style="margin-right: 8px;"></i> CONSULTAR DISPONIBILIDAD</a>
-                <p style="text-align: center; margin-top: 15px; font-size: 0.8rem; color: var(--text-gray);"><i
-                        class="fa-solid fa-shield-halved" style="margin-right: 4px;"></i> Sin cargos por cancelación
-                    hasta 48h antes.</p>
+                <ul class="sidebar-amenities">
+                    <li><i class="fa-solid fa-wifi"></i> Wi-Fi gratis</li>
+                    <li><i class="fa-solid fa-mug-hot"></i> Desayuno incluido</li>
+                    <li><i class="fa-solid fa-square-parking"></i> Estacionamiento pago</li>
+                    <li><i class="fa-solid fa-ban-smoking"></i> Libre de humo</li>
+                    <li><i class="fa-solid fa-snowflake"></i> Aire acondicionado</li>
+                    <li><i class="fa-solid fa-shirt"></i> Servicio de lavandería</li>
+                    <li><i class="fa-solid fa-paw"></i> Se permiten mascotas</li>
+                    <li><i class="fa-solid fa-utensils"></i> Restaurante</li>
+                    <li><i class="fa-solid fa-van-shuttle"></i> Transporte aeropuerto</li>
+                    <li><i class="fa-solid fa-martini-glass-citrus"></i> Bar</li>
+                </ul>
+
+                <a href="reserva.html" class="btn btn-availability">
+                    <i class="fa-solid fa-calendar-days"></i> CONSULTAR DISPONIBILIDAD
+                </a>
+                
+                <p style="text-align: center; margin-top: 20px; font-size: 0.8rem; color: var(--text-gray); opacity: 0.8;">
+                    <i class="fa-solid fa-shield-halved" style="margin-right: 6px;"></i> Sin cargos por cancelación hasta 48h antes.
+                </p>
             </aside>
         </section>
     </main>

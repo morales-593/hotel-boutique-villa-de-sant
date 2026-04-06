@@ -114,29 +114,29 @@ body.light-mode .nav-link {
 
 /* Active State - Matches reference image "START" */
 .nav-link.active {
-    color: var(--primary-gold);
-    background: rgba(212, 175, 55, 0.15);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2),
-                inset 0 0 10px rgba(212, 175, 55, 0.1);
+    color: #000;
+    background: #D4AF37;
+    border-radius: 50px;
+    padding: 10px 20px;
 }
 
 /* ===== RESERVAR BUTTON ===== */
 .header-book-btn {
-    background: #D4AF37;
+    background: #FFD700;
     color: #000;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    padding: 12px 25px;
+    padding: 10px 22px;
     border-radius: 50px;
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
-    transition: all 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    gap: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
 }
 
 .header-book-btn i {
@@ -230,14 +230,55 @@ body.light-mode .nav-link {
     color: var(--primary-gold);
 }
 
-.f-newsletter input {
-    width: 100%;
-    padding: 12px;
-    background: #111;
-    border: 1px solid #333;
-    color: white;
-    margin-bottom: 10px;
-    border-radius: 4px;
+/* Social Icons */
+.footer-social .social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.footer-social .social-icon.facebook {
+    color: #1877F2;
+}
+.footer-social .social-icon.facebook:hover {
+    background: #1877F2;
+    color: #fff;
+    border-color: #1877F2;
+    transform: scale(1.15);
+    box-shadow: 0 0 15px rgba(24, 119, 242, 0.4);
+}
+
+.footer-social .social-icon.tiktok {
+    color: #fff;
+    position: relative;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode .footer-social .social-icon {
+    background: rgba(212, 175, 55, 0.05);
+    border-color: rgba(212, 175, 55, 0.25);
+}
+
+body.light-mode .footer-social .social-icon.tiktok {
+    color: #000;
+}
+
+.footer-social .social-icon.tiktok:hover {
+    background: #000;
+    transform: scale(1.15);
+    border-color: #69C9D0;
+    box-shadow: 2px 2px 0px #EE1D52, -2px -2px 0px #69C9D0;
+}
+
+body.light-mode .footer-social .social-icon.tiktok:hover {
+    color: #fff;
 }
 
 .footer-bottom {

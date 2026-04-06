@@ -119,9 +119,21 @@
         }
 
         @keyframes float-pulse {
-            0% { transform: translateY(0); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-            50% { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(212,175,55,0.4); border-color: rgba(212,175,55,0.5); }
-            100% { transform: translateY(0); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+            0% {
+                transform: translateY(0);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+
+            50% {
+                transform: translateY(-8px);
+                box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+                border-color: rgba(212, 175, 55, 0.5);
+            }
+
+            100% {
+                transform: translateY(0);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
         }
 
         .exp-pic-card {
@@ -440,10 +452,11 @@
         <style>
             .section-360-bg {
                 margin-top: 60px;
-                border-top: 1px solid rgba(212,175,55,0.2);
-                border-bottom: 1px solid rgba(212,175,55,0.2);
+                border-top: 1px solid rgba(212, 175, 55, 0.2);
+                border-bottom: 1px solid rgba(212, 175, 55, 0.2);
                 background: linear-gradient(135deg, #0a110a 0%, #000000 100%);
             }
+
             body.light-mode .section-360-bg {
                 background: linear-gradient(135deg, #fdfbf7 0%, #ffffff 100%);
             }
@@ -514,183 +527,6 @@
                     onclick="window.location.href='reserva.html'">
                     <i class="fa-solid fa-key" style="margin-right: 8px;"></i>VÍVELO EN PERSONA
                 </button>
-            </div>
-        </section>
-
-        <!-- Continue with Infinite Carousel -->
-
-        <!-- Infinite Carousel of Amenities -->
-        <section class="section-padding exp-infinite-carousel">
-            <div class="container text-center scroll-anim scroll-fade">
-                <h2 class="gold-text" style="font-family: 'Playfair Display', serif; margin-bottom: 10px;">Comodidades
-                    Exclusivas</h2>
-                <p style="color: var(--text-gray); margin-bottom: 50px;">Disfruta de nuestros servicios premium
-                    diseñados para una estancia inigualable.</p>
-            </div>
-
-            <div class="pic-marquee-container scroll-anim scroll-right">
-                <div class="pic-marquee-content">
-
-                    <!-- 8 Base Items -->
-                    <div class="exp-pic-card">
-                        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqqmbgpzHoh0CFhCGSzFmdqfzpRdVNLHrn46UQfYdL8DxfIQFTQ81mammeQJQocwwVhk0ElP-S2AvoWY3Rf576sRPc3wYylGATcOG2lMfL1f8LaIz9kQM14YlrW8ymRfThUECoG=s4000"
-                            class="bg-img" alt="Piscina" loading="lazy">
-                        <div class="exp-overlay grad-pool"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🏊</span>
-                            <h4>Piscina Climatizada</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipNkbPiGQBCatcZS6d1G4xQzAfysCz5OgP5fws4H=s4000"
-                            class="bg-img" alt="Mascotas" loading="lazy">
-                        <div class="exp-overlay grad-pets"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🐾</span>
-                            <h4>Se Permiten Mascotas</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="bg-img" alt="Room Service" loading="lazy">
-                        <div class="exp-overlay grad-room"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🍽️</span>
-                            <h4>Servicio a la Habitación</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepKNa4-yTcZ9B5e1ElnFUdenNrR5OIzZeAK8SeaaSeuCpMhrRGPGEmFM34491nFP7E3ZImoW8treuT6AmE-JiK1FvdfgcCuWEOA3iK3tVjpsAz4Unh5UVpWelcUUOjFWHTHY24=s4000"
-                            class="bg-img" alt="Restaurante" loading="lazy">
-                        <div class="exp-overlay grad-rest"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🍴</span>
-                            <h4>Restaurante Gourmet</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1582733959828-0cd055a4fdd5?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
-                            class="bg-img" alt="Lavandería" loading="lazy">
-                        <div class="exp-overlay grad-laundry"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🧺</span>
-                            <h4>Lavandería Premium</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                            class="bg-img" alt="Gimnasio" loading="lazy">
-                        <div class="exp-overlay grad-gym"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🏋️</span>
-                            <h4>Gimnasio Equipado</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                            class="bg-img" alt="Bar" loading="lazy">
-                        <div class="exp-overlay grad-bar"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🍸</span>
-                            <h4>Bar Exclusivo</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                            class="bg-img" alt="Estacionamiento" loading="lazy">
-                        <div class="exp-overlay grad-park"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🅿️</span>
-                            <h4>Estacionamiento Pago</h4>
-                        </div>
-                    </div>
-
-                    <!-- Duplicated Items for Seamless Infinite Marquee -->
-                    <div class="exp-pic-card">
-                        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweqqmbgpzHoh0CFhCGSzFmdqfzpRdVNLHrn46UQfYdL8DxfIQFTQ81mammeQJQocwwVhk0ElP-S2AvoWY3Rf576sRPc3wYylGATcOG2lMfL1f8LaIz9kQM14YlrW8ymRfThUECoG=s4000"
-                            class="bg-img" alt="Piscina" loading="lazy">
-                        <div class="exp-overlay grad-pool"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🏊</span>
-                            <h4>Piscina Climatizada</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipNkbPiGQBCatcZS6d1G4xQzAfysCz5OgP5fws4H=s4000"
-                            class="bg-img" alt="Mascotas" loading="lazy">
-                        <div class="exp-overlay grad-pets"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🐾</span>
-                            <h4>Se Permiten Mascotas</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" class="bg-img" alt="Room Service" loading="lazy">
-                        <div class="exp-overlay grad-room"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🍽️</span>
-                            <h4>Servicio a la Habitación</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepKNa4-yTcZ9B5e1ElnFUdenNrR5OIzZeAK8SeaaSeuCpMhrRGPGEmFM34491nFP7E3ZImoW8treuT6AmE-JiK1FvdfgcCuWEOA3iK3tVjpsAz4Unh5UVpWelcUUOjFWHTHY24=s4000"
-                            class="bg-img" alt="Restaurante" loading="lazy">
-                        <div class="exp-overlay grad-rest"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🍴</span>
-                            <h4>Restaurante Gourmet</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1582733959828-0cd055a4fdd5?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
-                            class="bg-img" alt="Lavandería" loading="lazy">
-                        <div class="exp-overlay grad-laundry"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🧺</span>
-                            <h4>Lavandería Premium</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                            class="bg-img" alt="Gimnasio" loading="lazy">
-                        <div class="exp-overlay grad-gym"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🏋️</span>
-                            <h4>Gimnasio Equipado</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                            class="bg-img" alt="Bar" loading="lazy">
-                        <div class="exp-overlay grad-bar"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🍸</span>
-                            <h4>Bar Exclusivo</h4>
-                        </div>
-                    </div>
-
-                    <div class="exp-pic-card">
-                        <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-                            class="bg-img" alt="Estacionamiento" loading="lazy">
-                        <div class="exp-overlay grad-park"></div>
-                        <div class="exp-pic-content">
-                            <span class="exp-icon">🅿️</span>
-                            <h4>Estacionamiento Pago</h4>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
