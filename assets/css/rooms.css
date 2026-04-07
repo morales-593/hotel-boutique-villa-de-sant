@@ -148,8 +148,8 @@ body.light-mode .room-card-content h3 {
 
 /* ── Detail Page: Room Hero ─────────────────────────────────────────── */
 .room-detail-hero {
-    height: 90vh;
-    min-height: 600px;
+    height: 60vh;
+    min-height: 480px;
     background-size: cover;
     background-position: center;
     position: relative;
@@ -347,8 +347,9 @@ body.light-mode .booking-sidebar li {
 .room-header-content .schedule-cards.dark-theme {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-top: 50px;
+    gap: 30px;
+    margin-top: 40px;
+    width: 100%;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
@@ -359,17 +360,49 @@ body.light-mode .booking-sidebar li {
     background: rgba(10, 20, 15, 0.95) !important;
     border: 1px solid rgba(212, 175, 55, 0.4) !important;
     backdrop-filter: blur(5px);
-    color: #FFFFFF !important;
+    border-radius: 12px;
+    padding: 30px 40px;
+    flex: 1;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.dark-theme .schedule-card:hover,
+.schedule-card:hover {
+    border-color: var(--primary-gold) !important;
+    transform: translateY(-4px);
+}
+
+.dark-theme .schedule-card .schedule-icon,
+.schedule-card .schedule-icon {
+    font-size: 1.5rem;
+    color: var(--primary-gold);
+    margin: 0 auto 20px;
+    background: rgba(212, 175, 55, 0.15);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .dark-theme .schedule-card h4,
 .schedule-card h4 {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 400;
     color: #FFFFFF !important;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
 }
 
 .dark-theme .schedule-card p,
 .schedule-card p {
+    font-size: 1.35rem;
+    font-weight: 700;
     color: var(--primary-gold) !important;
+    letter-spacing: 0.5px;
 }
 
 .room-detail-overlay {

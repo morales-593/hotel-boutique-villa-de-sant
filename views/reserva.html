@@ -13,15 +13,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- Core CSS (Order matters) -->
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/header-footer.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/header-footer.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
     
     <!-- Core JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="js/components.js" defer></script>
-    <script src="js/main.js" defer></script>
-    <script src="js/whatsapp-chat.js" defer></script>
+    <script src="../assets/js/components.js" defer></script>
+    <script src="../assets/js/main.js" defer></script>
+    <script src="../assets/js/chat-widget.js" defer></script>
     <style>
         .reserva-page-grid {
             display: grid;
@@ -159,7 +159,7 @@
                     </div>
                     <div class="summary-item">
                         <span>Precio Base</span>
-                        <span>$240.00</span>
+                        <span>$84.00</span>
                     </div>
                     <div class="summary-item">
                         <span>Impuestos & Tasas</span>
@@ -167,7 +167,7 @@
                     </div>
                     <div class="summary-total">
                         <span>Total Estancia</span>
-                        <span>$763.20</span>
+                        <span>$127.20</span>
                     </div>
                     <p style="font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; text-align: center;">Precios expresados en USD. Pago al llegar al establecimiento.</p>
                 </aside>
@@ -179,12 +179,12 @@
     <div id="modal-placeholder"></div>
     <div id="modal-tour-placeholder"></div>
 
-    <script src="js/modal-reserva.js" defer></script>
+    <script src="../assets/js/modal-reserva.js" defer></script>
     <script>
         // Reservation Form Logic
         document.addEventListener('DOMContentLoaded', () => {
         const roomPrices = {
-            "Suite Real": 240,
+            "Suite Real": 84,
             "Habitación Jardín": 180,
             "Deluxe Colonial": 160,
             "Superior Familiar": 310,
@@ -231,19 +231,43 @@
         // Form submission
         form.onsubmit = (e) => {
             e.preventDefault();
+            
+            // Extract all form data for WhatsApp
+            const nameInput = form.querySelectorAll('input[type="text"]')[0];
+            const lastNameInput = form.querySelectorAll('input[type="text"]')[1];
+            const guestsInput = form.querySelector('input[type="number"]');
+            
+            const fullName = `${nameInput ? nameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim();
+            const room = roomSelect.value;
+            const checkIn = checkInInput.value;
+            const checkOut = checkOutInput.value;
+            const totalVal = summaryTotal ? summaryTotal.innerText : '';
+
+            const customMsg = `¡Hola Villa de Sant! 👋\nDeseo confirmar mi reserva:\n👤 Nombre: ${fullName}\n👥 Huéspedes: ${guestsInput ? guestsInput.value : '2'}\n🏨 Habitación: ${room}\n📅 Check-in: ${checkIn}\n📅 Check-out: ${checkOut}\n💵 Total Estimado: ${totalVal}`;
+
+            const confirmed = confirm("¿Deseas enviar un mensaje rápido a WhatsApp para pre-aprobar esta reserva y asegurar tu lugar?");
+            if (confirmed) {
+                // Must be synchronous to bypass browser popup blockers
+                if (typeof sendWhatsAppMessage === 'function') {
+                    sendWhatsAppMessage(customMsg);
+                } else {
+                    const link = document.createElement('a');
+                    link.href = `https://wa.me/593984606212?text=${encodeURIComponent(customMsg)}`;
+                    link.target = '_blank';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            }
+
             const btn = e.target.querySelector('button');
-            const originalText = btn.innerHTML;
             btn.innerHTML = 'PROCESANDO...';
             btn.disabled = true;
 
             setTimeout(() => {
-                const confirmed = confirm("¿Deseas enviar esta información también por WhatsApp para una atención más rápida?");
-                if (confirmed) {
-                    sendWhatsAppMessage();
-                }
-                alert('¡Reserva confirmada! Recibirás un correo de confirmación en breve.');
-                window.location.href = 'index.html';
-            }, 1000);
+                alert('¡Reserva confirmada! Recibirás un correo electrónico de confirmación. Tu pago se realizará al check-in.');
+                window.location.href = '../index.html';
+            }, 600);
         };
 
         // Set default dates

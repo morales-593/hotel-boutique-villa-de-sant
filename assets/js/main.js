@@ -54,7 +54,8 @@ function initModalTriggers() {
     triggers.forEach(btn => {
         btn.onclick = (e) => {
             e.preventDefault();
-            window.location.href = 'reserva.html';
+            const viewsPath = window.location.pathname.includes('/views/') ? './' : 'views/';
+            window.location.href = viewsPath + 'reserva.html';
         };
     });
 

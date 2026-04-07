@@ -47,26 +47,47 @@ function applyStoredTheme() {
 applyStoredTheme();
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Determine the environment base path based on whether the current page is inside 'views/'
+    const isView = window.location.pathname.includes('/views/');
+    const viewsPath = isView ? './' : 'views/';
+    const assetsPath = isView ? '../assets/' : 'assets/';
+    const rootPath = isView ? '../' : './';
+
     // Primary components sequence
     const components = [
-        loadComponent('header-placeholder', 'partials/header.html'),
-        loadComponent('footer-placeholder', 'partials/footer.html'),
-        loadComponent('modal-placeholder', 'partials/modal-reserva.html'),
-        loadComponent('modal-tour-placeholder', 'partials/modal-tour.html')
+        loadComponent('header-placeholder', viewsPath + 'partials/header.html'),
+        loadComponent('footer-placeholder', viewsPath + 'partials/footer.html'),
+        loadComponent('modal-placeholder', viewsPath + 'partials/modal-reserva.html'),
+        loadComponent('modal-tour-placeholder', viewsPath + 'partials/modal-tour.html')
     ];
 
     Promise.all(components).then(() => {
+        fixInternalLinks(rootPath, viewsPath);
         highlightActiveNav();
-        injectWidgets();
-        initHummingbirdAnimations();
+        injectWidgets(rootPath, viewsPath);
+        initHummingbirdAnimations(assetsPath);
         initScrollProgress();
     });
 });
 
+function fixInternalLinks(rootPath, viewsPath) {
+    document.querySelectorAll('a').forEach(a => {
+        let href = a.getAttribute('href');
+        if (!href || href.startsWith('http') || href.startsWith('#')) return;
+        
+        if (href === 'index.html' || href === '../index.html') {
+            a.setAttribute('href', rootPath + 'index.html');
+        } else if (['habitaciones.html', 'experiencias.html', 'nosotros.html', 'reserva.html', 'habitacion-suite.html'].some(file => href.endsWith(file))) {
+            const page = href.split('/').pop();
+            a.setAttribute('href', viewsPath + page);
+        }
+    });
+}
+
 /**
  * Injects floating widgets (Language switcher, WhatsApp, Bottom Nav).
  */
-function injectWidgets() {
+function injectWidgets(rootPath, viewsPath) {
     // Stacked Left Widgets
     const widgetsHtml = `
         <!-- Floating Adjustments (Left Stacked) -->
@@ -110,17 +131,17 @@ function injectWidgets() {
 
         <!-- Mobile Bottom Nav -->
         <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Bottom Navigation">
-            <a href="index.html" class="mob-nav-item" title="Inicio"><i class="fa-solid fa-house"></i></a>
-            <a href="habitaciones.html" class="mob-nav-item" title="Habitaciones"><i class="fa-solid fa-bed"></i></a>
-            <a href="experiencias.html" class="mob-nav-item" title="Experiencias"><i class="fa-solid fa-compass"></i></a>
-            <a href="nosotros.html" class="mob-nav-item" title="Nosotros"><i class="fa-solid fa-users"></i></a>
+            <a href="${rootPath}index.html" class="mob-nav-item" title="Inicio"><i class="fa-solid fa-house"></i></a>
+            <a href="${viewsPath}habitaciones.html" class="mob-nav-item" title="Habitaciones"><i class="fa-solid fa-bed"></i></a>
+            <a href="${viewsPath}experiencias.html" class="mob-nav-item" title="Experiencias"><i class="fa-solid fa-compass"></i></a>
+            <a href="${viewsPath}nosotros.html" class="mob-nav-item" title="Nosotros"><i class="fa-solid fa-users"></i></a>
         </nav>
     `;
 
     document.body.insertAdjacentHTML('beforeend', widgetsHtml);
 
     // Initial state setup
-    setupActiveNavItem();
+    setupActiveNavItem(rootPath, viewsPath);
     if (typeof initWhatsAppWidget === 'function') initWhatsAppWidget();
     
     // Lazy load Google Translate
@@ -215,21 +236,25 @@ function triggerTranslation(lang, buttons) {
 /**
  * Highlights the active page in both desktop and mobile bottom navigation.
  */
-function setupActiveNavItem() {
+function setupActiveNavItem(rootPath, viewsPath) {
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     const allLinks = document.querySelectorAll('.nav-link, .mob-nav-item');
     allLinks.forEach(link => {
         const href = link.getAttribute('href');
-        link.classList.toggle('active', href === currentPath);
+        if(href) {
+            link.classList.toggle('active', href.endsWith(currentPath));
+        }
     });
 }
 
-function highlightActiveNav() { setupActiveNavItem(); }
+function highlightActiveNav() { 
+    // Already handled globally or dynamically if called without params
+}
 
 /**
  * Initializes Lottie Hummingbird animations using IntersectionObserver for better performance.
  */
-function initHummingbirdAnimations() {
+function initHummingbirdAnimations(assetsPath) {
     if (typeof lottie === 'undefined') return;
 
     const observer = new IntersectionObserver((entries) => {
@@ -242,7 +267,7 @@ function initHummingbirdAnimations() {
                         renderer: 'svg',
                         loop: true,
                         autoplay: true,
-                        path: 'assets/animations/vectorized.json'
+                        path: assetsPath + 'animations/vectorized.json'
                     });
                     container.dataset.loaded = 'true';
                 } else {
@@ -332,7 +357,18 @@ function initTourModalTriggers() {
             const room = document.getElementById('tour-room').value;
             const tour = hiddenInput.value;
             const text = `¡Hola! 👋 Deseo agendar un Tour:\n📍 *${tour}*\n👤 Huésped: ${guest}\n🛏️ Habitación: ${room}`;
-            window.open(`https://wa.me/593984606212?text=${encodeURIComponent(text)}`, '_blank');
+            
+            if (typeof sendWhatsAppMessage === 'function') {
+                sendWhatsAppMessage(text);
+            } else {
+                const link = document.createElement('a');
+                link.href = `https://wa.me/593984606212?text=${encodeURIComponent(text)}`;
+                link.target = '_blank';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            
             tourModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         };
