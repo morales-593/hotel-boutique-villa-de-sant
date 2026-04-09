@@ -74,3 +74,52 @@ function initModalTriggers() {
         }
     };
 }
+
+// ==========================================
+// WhatsApp Chatbot & Widget Logic
+// ==========================================
+
+function sendWhatsAppMessage(customMessage = null) {
+    const number = "593984606212";
+    let message = "Hola Villa de Sant! 👋 Estoy interesado en realizar una reserva o necesito más información.";
+
+    if (customMessage) {
+        message = customMessage;
+    } else {
+        const fullForm = document.getElementById('full-booking-form');
+        
+        if (fullForm) {
+            const nameInput = fullForm.querySelectorAll('input[type="text"]')[0];
+            const lastNameInput = fullForm.querySelectorAll('input[type="text"]')[1];
+            const guestsInput = fullForm.querySelector('input[type="number"]');
+            const roomSelect = fullForm.querySelector('select');
+            const checkInInput = fullForm.querySelectorAll('input[type="date"]')[0];
+            const checkOutInput = fullForm.querySelectorAll('input[type="date"]')[1];
+            const summaryTotal = document.querySelector('.summary-total span:last-child');
+            
+            const fullName = `${nameInput ? nameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim();
+            const room = roomSelect ? roomSelect.value : '';
+            const checkIn = checkInInput ? checkInInput.value : '';
+            const checkOut = checkOutInput ? checkOutInput.value : '';
+            const totalVal = summaryTotal ? summaryTotal.innerText : '';
+            
+            message = `¡Hola Villa de Sant! 👋\nDeseo confirmar/consultar mi reserva:\n👤 Nombre: ${fullName || 'Pendiente'}\n👥 Huéspedes: ${guestsInput ? guestsInput.value : '2'}\n🏨 Habitación: ${room}\n📅 Check-in: ${checkIn}\n📅 Check-out: ${checkOut}\n💵 Total Estimado: ${totalVal}`;
+        } else {
+            const roomSelect = document.querySelector('select');
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            const checkIn = dateInputs.length > 0 ? dateInputs[0] : null;
+            
+            if (roomSelect && checkIn && checkIn.value !== "") {
+                message = `Hola Villa de Sant! 👋\nQuisiera información sobre disponibilidad:\n🏨 Tipo: ${roomSelect.value}\n📅 Check-in: ${checkIn.value}`;
+            }
+        }
+    }
+
+    const whatsappUrl = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+    const link = document.createElement('a');
+    link.href = whatsappUrl;
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

@@ -102,30 +102,6 @@ function injectWidgets(rootPath, viewsPath) {
             <button class="lang-master-toggle theme-btn" id="lang-master-toggle" title="Ajustes"><i class="fa-solid fa-gear"></i></button>
         </div>
 
-        <div class="whatsapp-widget animate-fade">
-            <div class="chat-box" id="wa-chat">
-                <div class="chat-header">
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipNVb6baKMNn4xJZncYQr9f1z7mdaYdRtnXhkfiz=s200" alt="Villa de Sant">
-                    <div>
-                        <h4>Villa de Sant</h4>
-                        <p>En línea • Asistente Virtual</p>
-                    </div>
-                </div>
-                <div class="chat-body" id="chat-conversation">
-                    <!-- Messages will be injected here -->
-                    <div class="typing-indicator" id="typing">Escribiendo...</div>
-                </div>
-                <div class="chat-footer">
-                    <button class="whatsapp-confirm-btn">
-                        Continuar al chat <i class="fa-brands fa-whatsapp"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="whatsapp-button">
-                <i class="fa-brands fa-whatsapp"></i>
-            </div>
-        </div>
-
 
         <div id="google_translate_element" style="display:none;"></div>
 
@@ -142,7 +118,6 @@ function injectWidgets(rootPath, viewsPath) {
 
     // Initial state setup
     setupActiveNavItem(rootPath, viewsPath);
-    if (typeof initWhatsAppWidget === 'function') initWhatsAppWidget();
     
     // Lazy load Google Translate
     initGoogleTranslate();

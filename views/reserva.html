@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Reserva tu estancia en Villa de Sant - Elige tu habitación y vive el lujo en Quito.">
+    <meta name="description"
+        content="Reserva tu estancia en Villa de Sant - Elige tu habitación y vive el lujo en Quito.">
     <title>Reserva tu Estancia | Villa de Sant</title>
-    
+
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <!-- Core CSS (Order matters) -->
     <link rel="stylesheet" href="../assets/css/global.css">
     <link rel="stylesheet" href="../assets/css/header-footer.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
-    
+
     <!-- Core JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="../assets/js/components.js" defer></script>
     <script src="../assets/js/main.js" defer></script>
-    <script src="../assets/js/chat-widget.js" defer></script>
+
     <style>
         .reserva-page-grid {
             display: grid;
@@ -29,19 +33,25 @@
             gap: 60px;
             margin-top: 50px;
         }
+
         .reserva-form-card {
             background: #111;
             padding: 40px;
             border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin-bottom: 25px;
         }
-        .form-col-full { grid-column: span 2; }
+
+        .form-col-full {
+            grid-column: span 2;
+        }
+
         .reserva-summary {
             background: #050505;
             padding: 30px;
@@ -50,6 +60,7 @@
             position: sticky;
             top: 120px;
         }
+
         .summary-item {
             display: flex;
             justify-content: space-between;
@@ -57,6 +68,7 @@
             font-size: 0.9rem;
             color: var(--text-gray);
         }
+
         .summary-total {
             margin-top: 20px;
             padding-top: 20px;
@@ -67,22 +79,34 @@
             font-weight: 700;
             color: var(--primary-gold);
         }
+
         @media (max-width: 900px) {
-            .reserva-page-grid { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-            .form-col-full { grid-column: auto; }
+            .reserva-page-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-col-full {
+                grid-column: auto;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div id="header-placeholder"></div>
 
     <section class="page-hero">
-        <div class="page-hero-bg" id="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')"></div>
+        <div class="page-hero-bg" id="hero-bg"
+            style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+        </div>
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
-            <div class="lottie-hummingbird page-lottie"></div>
+            <img src="../assets/img/logo.png" alt="Villa de Sant" class="hero-logo-glow" style="max-width: 60px;">
             <div class="page-hero-divider"></div>
             <h1 class="page-hero-title serif gold-text">Finalizar Reserva</h1>
             <p class="page-hero-sub">Estás a un paso de vivir la experiencia de Villa de Sant.</p>
@@ -95,7 +119,8 @@
             <div class="reserva-page-grid">
                 <div class="reserva-form-card scroll-anim scroll-left">
                     <form id="full-booking-form">
-                        <h3 class="serif gold-text" style="font-size: 1.8rem; margin-bottom: 30px;">Información Personal</h3>
+                        <h3 class="serif gold-text" style="font-size: 1.8rem; margin-bottom: 30px;">Información Personal
+                        </h3>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Nombre</label>
@@ -111,11 +136,13 @@
                             </div>
                         </div>
 
-                        <h3 class="serif gold-text" style="font-size: 1.8rem; margin: 40px 0 30px;">Detalles de la Estancia</h3>
+                        <h3 class="serif gold-text" style="font-size: 1.8rem; margin: 40px 0 30px;">Detalles de la
+                            Estancia</h3>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Habitación</label>
-                                <select style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
+                                <select
+                                    style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
                                     <option>Suite Real</option>
                                     <option>Habitación Jardín</option>
                                     <option>Deluxe Colonial</option>
@@ -126,23 +153,27 @@
                             </div>
                             <div class="form-group">
                                 <label>Número de Huéspedes</label>
-                                <input type="number" value="2" min="1" max="4" required style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
+                                <input type="number" value="2" min="1" max="4" required
+                                    style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
                             </div>
                             <div class="form-group">
                                 <label>Check-in</label>
-                                <input type="date" required style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
+                                <input type="date" required
+                                    style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
                             </div>
                             <div class="form-group">
                                 <label>Check-out</label>
-                                <input type="date" required style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
+                                <input type="date" required
+                                    style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
                             </div>
                         </div>
 
                         <div class="form-group" style="margin-top: 30px;">
                             <label>Comentarios Adicionales (Opcional)</label>
-                            <textarea placeholder="Ej. Alergias, solicitudes especiales..." style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333; height: 100px;"></textarea>
+                            <textarea placeholder="Ej. Alergias, solicitudes especiales..."
+                                style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333; height: 100px;"></textarea>
                         </div>
-                        
+
                         <button type="submit" class="btn btn-gold btn-full">CONFIRMAR MI RESERVA</button>
                     </form>
                 </div>
@@ -155,21 +186,22 @@
                     </div>
                     <div class="summary-item">
                         <span>Noches</span>
-                        <span>3 Noches</span>
+                        <span>1 Noche</span>
                     </div>
                     <div class="summary-item">
                         <span>Precio Base</span>
-                        <span>$84.00</span>
+                        <span>$82.00</span>
                     </div>
                     <div class="summary-item">
                         <span>Impuestos & Tasas</span>
-                        <span>$43.20</span>
+                        <span>$12.30</span>
                     </div>
                     <div class="summary-total">
                         <span>Total Estancia</span>
-                        <span>$127.20</span>
+                        <span>$94.30</span>
                     </div>
-                    <p style="font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; text-align: center;">Precios expresados en USD. Pago al llegar al establecimiento.</p>
+                    <p style="font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; text-align: center;">
+                        Precios expresados en USD. Pago al llegar al establecimiento.</p>
                 </aside>
             </div>
         </div>
@@ -183,99 +215,99 @@
     <script>
         // Reservation Form Logic
         document.addEventListener('DOMContentLoaded', () => {
-        const roomPrices = {
-            "Suite Real": 84,
-            "Habitación Jardín": 180,
-            "Deluxe Colonial": 160,
-            "Superior Familiar": 310,
-            "Executive Queen": 200,
-            "Junior Suite": 220
-        };
+            const roomPrices = {
+                "Suite Real": 82,
+                "Habitación Jardín": 180,
+                "Deluxe Colonial": 160,
+                "Superior Familiar": 310,
+                "Executive Queen": 200,
+                "Junior Suite": 220
+            };
 
-        const form = document.getElementById('full-booking-form');
-        const roomSelect = form.querySelector('select');
-        const checkInInput = form.querySelectorAll('input[type="date"]')[0];
-        const checkOutInput = form.querySelectorAll('input[type="date"]')[1];
-        
-        const summaryRoom = document.getElementById('summary-room');
-        const summaryNights = document.querySelector('.summary-item:nth-child(3) span:last-child');
-        const summaryBase = document.querySelector('.summary-item:nth-child(4) span:last-child');
-        const summaryTax = document.querySelector('.summary-item:nth-child(5) span:last-child');
-        const summaryTotal = document.querySelector('.summary-total span:last-child');
+            const form = document.getElementById('full-booking-form');
+            const roomSelect = form.querySelector('select');
+            const checkInInput = form.querySelectorAll('input[type="date"]')[0];
+            const checkOutInput = form.querySelectorAll('input[type="date"]')[1];
 
-        function updateSummary() {
-            const room = roomSelect.value;
-            const checkIn = new Date(checkInInput.value);
-            const checkOut = new Date(checkOutInput.value);
-            
-            let nights = 0;
-            if (checkIn && checkOut && checkOut > checkIn) {
-                const diffTime = Math.abs(checkOut - checkIn);
-                nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            }
+            const summaryRoom = document.getElementById('summary-room');
+            const summaryNights = document.querySelector('.summary-item:nth-child(3) span:last-child');
+            const summaryBase = document.querySelector('.summary-item:nth-child(4) span:last-child');
+            const summaryTax = document.querySelector('.summary-item:nth-child(5) span:last-child');
+            const summaryTotal = document.querySelector('.summary-total span:last-child');
 
-            const pricePerNight = roomPrices[room] || 0;
-            const basePrice = pricePerNight * (nights || 1);
-            const taxes = basePrice * 0.22; // 12% IVA + 10% Service
-            const total = basePrice + taxes;
+            function updateSummary() {
+                const room = roomSelect.value;
+                const checkIn = new Date(checkInInput.value);
+                const checkOut = new Date(checkOutInput.value);
 
-            summaryRoom.innerText = room;
-            summaryNights.innerText = `${nights || 0} Noches`;
-            summaryBase.innerText = `$${basePrice.toFixed(2)}`;
-            summaryTax.innerText = `$${taxes.toFixed(2)}`;
-            summaryTotal.innerText = `$${total.toFixed(2)}`;
-        }
-
-        form.addEventListener('input', updateSummary);
-        
-        // Form submission
-        form.onsubmit = (e) => {
-            e.preventDefault();
-            
-            // Extract all form data for WhatsApp
-            const nameInput = form.querySelectorAll('input[type="text"]')[0];
-            const lastNameInput = form.querySelectorAll('input[type="text"]')[1];
-            const guestsInput = form.querySelector('input[type="number"]');
-            
-            const fullName = `${nameInput ? nameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim();
-            const room = roomSelect.value;
-            const checkIn = checkInInput.value;
-            const checkOut = checkOutInput.value;
-            const totalVal = summaryTotal ? summaryTotal.innerText : '';
-
-            const customMsg = `¡Hola Villa de Sant! 👋\nDeseo confirmar mi reserva:\n👤 Nombre: ${fullName}\n👥 Huéspedes: ${guestsInput ? guestsInput.value : '2'}\n🏨 Habitación: ${room}\n📅 Check-in: ${checkIn}\n📅 Check-out: ${checkOut}\n💵 Total Estimado: ${totalVal}`;
-
-            const confirmed = confirm("¿Deseas enviar un mensaje rápido a WhatsApp para pre-aprobar esta reserva y asegurar tu lugar?");
-            if (confirmed) {
-                // Must be synchronous to bypass browser popup blockers
-                if (typeof sendWhatsAppMessage === 'function') {
-                    sendWhatsAppMessage(customMsg);
-                } else {
-                    const link = document.createElement('a');
-                    link.href = `https://wa.me/593984606212?text=${encodeURIComponent(customMsg)}`;
-                    link.target = '_blank';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                let nights = 0;
+                if (checkIn && checkOut && checkOut > checkIn) {
+                    const diffTime = Math.abs(checkOut - checkIn);
+                    nights = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 }
+
+                const pricePerNight = roomPrices[room] || 0;
+                const basePrice = pricePerNight * (nights || 1);
+                const taxes = basePrice * 0.15; // 15% Impuestos
+                const total = basePrice + taxes;
+
+                summaryRoom.innerText = room;
+                summaryNights.innerText = `${nights || 0} Noches`;
+                summaryBase.innerText = `$${basePrice.toFixed(2)}`;
+                summaryTax.innerText = `$${taxes.toFixed(2)}`;
+                summaryTotal.innerText = `$${total.toFixed(2)}`;
             }
 
-            const btn = e.target.querySelector('button');
-            btn.innerHTML = 'PROCESANDO...';
-            btn.disabled = true;
+            form.addEventListener('input', updateSummary);
 
-            setTimeout(() => {
-                alert('¡Reserva confirmada! Recibirás un correo electrónico de confirmación. Tu pago se realizará al check-in.');
-                window.location.href = '../index.html';
-            }, 600);
-        };
+            // Form submission
+            form.onsubmit = (e) => {
+                e.preventDefault();
 
-        // Set default dates
-        const today = new Date().toISOString().split('T')[0];
-        const tomorrow = new Date(new Date().getTime() + 86400000).toISOString().split('T')[0];
-        checkInInput.value = today;
-        checkOutInput.value = tomorrow;
-        updateSummary();
+                // Extract all form data for WhatsApp
+                const nameInput = form.querySelectorAll('input[type="text"]')[0];
+                const lastNameInput = form.querySelectorAll('input[type="text"]')[1];
+                const guestsInput = form.querySelector('input[type="number"]');
+
+                const fullName = `${nameInput ? nameInput.value : ''} ${lastNameInput ? lastNameInput.value : ''}`.trim();
+                const room = roomSelect.value;
+                const checkIn = checkInInput.value;
+                const checkOut = checkOutInput.value;
+                const totalVal = summaryTotal ? summaryTotal.innerText : '';
+
+                const customMsg = `¡Hola Villa de Sant! 👋\nDeseo confirmar mi reserva:\n👤 Nombre: ${fullName}\n👥 Huéspedes: ${guestsInput ? guestsInput.value : '2'}\n🏨 Habitación: ${room}\n📅 Check-in: ${checkIn}\n📅 Check-out: ${checkOut}\n💵 Total Estimado: ${totalVal}`;
+
+                const confirmed = confirm("¿Deseas enviar un mensaje rápido a WhatsApp para pre-aprobar esta reserva y asegurar tu lugar?");
+                if (confirmed) {
+                    // Must be synchronous to bypass browser popup blockers
+                    if (typeof sendWhatsAppMessage === 'function') {
+                        sendWhatsAppMessage(customMsg);
+                    } else {
+                        const link = document.createElement('a');
+                        link.href = `https://wa.me/593984606212?text=${encodeURIComponent(customMsg)}`;
+                        link.target = '_blank';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }
+                }
+
+                const btn = e.target.querySelector('button');
+                btn.innerHTML = 'PROCESANDO...';
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    alert('¡Reserva confirmada! Recibirás un correo electrónico de confirmación. Tu pago se realizará al check-in.');
+                    window.location.href = '../index.html';
+                }, 600);
+            };
+
+            // Set default dates
+            const today = new Date().toISOString().split('T')[0];
+            const tomorrow = new Date(new Date().getTime() + 86400000).toISOString().split('T')[0];
+            checkInInput.value = today;
+            checkOutInput.value = tomorrow;
+            updateSummary();
         });
 
         // Subtle Ken Burns effect on hero

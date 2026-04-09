@@ -29,7 +29,7 @@
     border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 100px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5),
-                inset 0 0 15px rgba(212, 175, 55, 0.05);
+        inset 0 0 15px rgba(212, 175, 55, 0.05);
     transition: all 0.4s ease;
 }
 
@@ -192,10 +192,14 @@ body.light-mode .nav-link {
     }
 }
 
-.footer-brand .footer-lottie {
-    width: 150px;
-    height: 150px;
+.footer-brand .footer-img-logo {
+    width: 100px;
+    height: auto;
+    max-width: 100%;
     margin: 0 auto 15px;
+    display: block;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
 }
 
 .footer-brand p {
@@ -204,6 +208,26 @@ body.light-mode .nav-link {
     margin-top: 15px;
     max-width: 300px;
     text-align: center;
+}
+
+.hero-logo-glow {
+    max-width: 60px;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    display: inline-block;
+    animation: goldGlow 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes goldGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.2), 0 0 20px rgba(212, 175, 55, 0.1);
+        transform: scale(1);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.5), 0 0 50px rgba(212, 175, 55, 0.3);
+        transform: scale(1.05);
+    }
 }
 
 .f-title {
@@ -247,6 +271,7 @@ body.light-mode .nav-link {
 .footer-social .social-icon.facebook {
     color: #1877F2;
 }
+
 .footer-social .social-icon.facebook:hover {
     background: #1877F2;
     color: #fff;
@@ -255,10 +280,49 @@ body.light-mode .nav-link {
     box-shadow: 0 0 15px rgba(24, 119, 242, 0.4);
 }
 
-.footer-social .social-icon.tiktok {
+.footer-social .social-icon.whatsapp {
+    color: #25D366;
+}
+
+.footer-social .social-icon.whatsapp:hover {
+    background: #25D366;
     color: #fff;
-    position: relative;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: #25D366;
+    transform: scale(1.15);
+    box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+}
+
+.footer-social .social-icon.tripadvisor {
+    color: transparent;
+    border-color: #00AF87;
+    background-image: url('../img/tripadvisor_icon.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.footer-social .social-icon.tripadvisor i {
+    display: none;
+}
+
+.footer-social .social-icon.tripadvisor:hover {
+    background-color: transparent;
+    color: transparent;
+    border-color: #00AF87;
+    transform: scale(1.15);
+    box-shadow: 0 0 15px rgba(0, 175, 135, 0.4);
+}
+
+.footer-social .social-icon.instagram {
+    color: #E1306C;
+}
+
+.footer-social .social-icon.instagram:hover {
+    background: #E1306C;
+    color: #fff;
+    border-color: #E1306C;
+    transform: scale(1.15);
+    box-shadow: 0 0 15px rgba(225, 48, 108, 0.4);
 }
 
 body.light-mode .footer-social .social-icon {
@@ -266,25 +330,10 @@ body.light-mode .footer-social .social-icon {
     border-color: rgba(212, 175, 55, 0.25);
 }
 
-body.light-mode .footer-social .social-icon.tiktok {
-    color: #000;
-}
-
-.footer-social .social-icon.tiktok:hover {
-    background: #000;
-    transform: scale(1.15);
-    border-color: #69C9D0;
-    box-shadow: 2px 2px 0px #EE1D52, -2px -2px 0px #69C9D0;
-}
-
-body.light-mode .footer-social .social-icon.tiktok:hover {
-    color: #fff;
-}
-
 .footer-bottom {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
     color: var(--text-gray);
     font-size: 0.8rem;
 }
@@ -293,9 +342,11 @@ body.light-mode .footer-social .social-icon.tiktok:hover {
 .modal-overlay {
     display: none;
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.95);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(10px);
     z-index: 2000;
     justify-content: center;
