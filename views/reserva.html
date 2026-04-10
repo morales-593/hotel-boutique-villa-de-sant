@@ -102,7 +102,7 @@
 
     <section class="page-hero">
         <div class="page-hero-bg" id="hero-bg"
-            style="background-image: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')">
+            style="background-image: url('https://lh3.googleusercontent.com/gps-cs-s/AHVAwepKJWBzsaktNZYTTgFBgDnUVxNa-bmzmqLnF493J_JUlcFeUxZdVa5LT5756Om5ZO4y56-hLG-_UlZ5YLPXK0ewSKVVX6AE4qsXhQ11Nq_cEvN2Brqn2U8_kz6mN4bQfSmjSUu2=s4000')">
         </div>
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
@@ -143,12 +143,11 @@
                                 <label>Habitación</label>
                                 <select
                                     style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
-                                    <option>Suite Real</option>
-                                    <option>Habitación Jardín</option>
-                                    <option>Deluxe Colonial</option>
-                                    <option>Superior Familiar</option>
-                                    <option>Executive Queen</option>
-                                    <option>Junior Suite</option>
+                                    <option>Single Room -Non Smoking</option>
+                                    <option>Queen Room -Non Smoking</option>
+                                    <option>Two Beds Room Non Smoking</option>
+                                    <option>Three Beds - Non smoking</option>
+                                    <option>Suite - Non Smoking</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -164,6 +163,12 @@
                             <div class="form-group">
                                 <label>Check-out</label>
                                 <input type="date" required
+                                    style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
+                            </div>
+                            <div class="form-group form-col-full" style="margin-top: 20px;">
+                                <label>Código de Descuento (Opcional)</label>
+                                <input type="text" id="discount-code" placeholder="Introduce tu código de 10 caracteres"
+                                    maxlength="10"
                                     style="width:100%; padding: 12px; background:#111; color:white; border:1px solid #333;">
                             </div>
                         </div>
@@ -182,23 +187,27 @@
                     <h3 class="serif gold-text" style="margin-bottom: 25px;">Resumen de Selección</h3>
                     <div class="summary-item">
                         <span>Habitación Seleccionada</span>
-                        <span id="summary-room">Suite Real</span>
+                        <span id="summary-room">Single Room -Non Smoking</span>
                     </div>
                     <div class="summary-item">
                         <span>Noches</span>
-                        <span>1 Noche</span>
+                        <span id="summary-nights">1 Noche</span>
                     </div>
                     <div class="summary-item">
                         <span>Precio Base</span>
-                        <span>$82.00</span>
+                        <span id="summary-base">$82.00</span>
+                    </div>
+                    <div class="summary-item" id="summary-discount-row" style="display: none; color: #4caf50;">
+                        <span>Descuento (10%)</span>
+                        <span id="summary-discount">-$0.00</span>
                     </div>
                     <div class="summary-item">
                         <span>Impuestos & Tasas</span>
-                        <span>$12.30</span>
+                        <span id="summary-tax">$12.30</span>
                     </div>
                     <div class="summary-total">
                         <span>Total Estancia</span>
-                        <span>$94.30</span>
+                        <span id="summary-total-val">$94.30</span>
                     </div>
                     <p style="font-size: 0.75rem; color: var(--text-gray); margin-top: 20px; text-align: center;">
                         Precios expresados en USD. Pago al llegar al establecimiento.</p>
@@ -216,12 +225,12 @@
         // Reservation Form Logic
         document.addEventListener('DOMContentLoaded', () => {
             const roomPrices = {
-                "Suite Real": 82,
-                "Habitación Jardín": 180,
-                "Deluxe Colonial": 160,
-                "Superior Familiar": 310,
-                "Executive Queen": 200,
-                "Junior Suite": 220
+                "Single Room -Non Smoking": 82,
+                "Queen Room - Non Smoking": 180,
+                "Two Beds Room - Non Smoking": 160,
+                "Three Beds - Non smoking": 310,
+                "Suite - Non Smoking": 220
+
             };
 
             const form = document.getElementById('full-booking-form');
@@ -230,10 +239,12 @@
             const checkOutInput = form.querySelectorAll('input[type="date"]')[1];
 
             const summaryRoom = document.getElementById('summary-room');
-            const summaryNights = document.querySelector('.summary-item:nth-child(3) span:last-child');
-            const summaryBase = document.querySelector('.summary-item:nth-child(4) span:last-child');
-            const summaryTax = document.querySelector('.summary-item:nth-child(5) span:last-child');
-            const summaryTotal = document.querySelector('.summary-total span:last-child');
+            const summaryNights = document.getElementById('summary-nights');
+            const summaryBase = document.getElementById('summary-base');
+            const summaryTax = document.getElementById('summary-tax');
+            const summaryDiscountRow = document.getElementById('summary-discount-row');
+            const summaryDiscount = document.getElementById('summary-discount');
+            const summaryTotal = document.getElementById('summary-total-val');
 
             function updateSummary() {
                 const room = roomSelect.value;
@@ -248,8 +259,22 @@
 
                 const pricePerNight = roomPrices[room] || 0;
                 const basePrice = pricePerNight * (nights || 1);
-                const taxes = basePrice * 0.15; // 15% Impuestos
-                const total = basePrice + taxes;
+
+                // Lógica de Descuento (10%)
+                const discountInput = document.getElementById('discount-code');
+                const discountCode = discountInput ? discountInput.value.trim() : '';
+                let discountVal = 0;
+
+                if (discountCode.length === 10) {
+                    discountVal = basePrice * 0.10;
+                    summaryDiscountRow.style.display = 'flex';
+                    summaryDiscount.innerText = `-$${discountVal.toFixed(2)}`;
+                } else {
+                    summaryDiscountRow.style.display = 'none';
+                }
+
+                const taxes = (basePrice - discountVal) * 0.15; // 15% Impuestos sobre el subtotal tras descuento
+                const total = (basePrice - discountVal) + taxes;
 
                 summaryRoom.innerText = room;
                 summaryNights.innerText = `${nights || 0} Noches`;
@@ -273,9 +298,24 @@
                 const room = roomSelect.value;
                 const checkIn = checkInInput.value;
                 const checkOut = checkOutInput.value;
+                const discountInput = document.getElementById('discount-code');
+                const discountCode = discountInput ? discountInput.value.trim() : '';
                 const totalVal = summaryTotal ? summaryTotal.innerText : '';
 
-                const customMsg = `¡Hola Villa de Sant! 👋\nDeseo confirmar mi reserva:\n👤 Nombre: ${fullName}\n👥 Huéspedes: ${guestsInput ? guestsInput.value : '2'}\n🏨 Habitación: ${room}\n📅 Check-in: ${checkIn}\n📅 Check-out: ${checkOut}\n💵 Total Estimado: ${totalVal}`;
+                // Validar longitud si se proporciona código
+                if (discountCode && discountCode.length !== 10) {
+                    alert('El código de descuento debe tener exactamente 10 caracteres.');
+                    if (discountInput) discountInput.focus();
+                    return;
+                }
+
+                let customMsg = `¡Hola Villa de Sant! 👋\nDeseo confirmar mi reserva:\n👤 Nombre: ${fullName}\n👥 Huéspedes: ${guestsInput ? guestsInput.value : '2'}\n🏨 Habitación: ${room}\n📅 Check-in: ${checkIn}\n📅 Check-out: ${checkOut}`;
+
+                if (discountCode) {
+                    customMsg += `\n🎟️ Código Descuento: ${discountCode}`;
+                }
+
+                customMsg += `\n💵 Total Estimado: ${totalVal}`;
 
                 const confirmed = confirm("¿Deseas enviar un mensaje rápido a WhatsApp para pre-aprobar esta reserva y asegurar tu lugar?");
                 if (confirmed) {

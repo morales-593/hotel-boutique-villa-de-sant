@@ -146,6 +146,138 @@ body.light-mode .room-card-content h3 {
     color: #000;
 }
 
+/* ── Room Availability Status ────────────────────────────────────────── */
+.room-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.status-dot.available {
+    background-color: #4caf50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+}
+
+.status-dot.occupied {
+    background-color: #f44336;
+    box-shadow: 0 0 8px rgba(244, 67, 54, 0.4);
+}
+
+.status-text {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    color: var(--text-gray);
+}
+
+/* ── Coupon Box (Ticket Style) ──────────────────────────────────────── */
+.coupon-box-mini {
+    margin: 25px 0 15px;
+    background: rgba(212, 175, 55, 0.05);
+    border: 1px dashed var(--primary-gold);
+    border-radius: 4px;
+    padding: 18px;
+    text-align: center;
+    position: relative;
+    overflow: hidden; /* Changed to hidden for shine effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: couponPulse 3s infinite ease-in-out;
+}
+
+.coupon-box-mini:hover {
+    transform: scale(1.02);
+    background: rgba(212, 175, 55, 0.08);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+/* Shine Sweep Effect */
+.coupon-box-mini::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(212, 175, 55, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: couponShine 4s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes couponPulse {
+    0%, 100% { transform: scale(1); border-color: rgba(212, 175, 55, 0.5); }
+    50% { transform: scale(1.01); border-color: var(--primary-gold); }
+}
+
+@keyframes couponShine {
+    0% { left: -150%; }
+    20%, 100% { left: 150%; }
+}
+
+.coupon-header {
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    color: var(--text-gray);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.coupon-code {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-gold);
+    letter-spacing: 1px;
+    margin: 4px 0;
+}
+
+.coupon-footer {
+    font-size: 0.65rem;
+    color: var(--text-gray);
+    opacity: 0.8;
+}
+
+/* Ticket side notches - Re-positioned and styled to work with overflow: hidden */
+.coupon-box-mini::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    background: #0A0A0A;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    left: -6px;
+    border: 1px dashed var(--primary-gold);
+}
+/* Re-creating after-notch since I used ::after for shine */
+.coupon-notch-right {
+    position: absolute;
+    top: 50%;
+    right: -6px;
+    width: 10px;
+    height: 10px;
+    background: #0A0A0A;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    border: 1px dashed var(--primary-gold);
+}
+
 /* ── Detail Page: Room Hero ─────────────────────────────────────────── */
 .room-detail-hero {
     height: 60vh;

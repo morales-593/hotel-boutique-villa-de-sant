@@ -96,6 +96,7 @@ function injectWidgets(rootPath, viewsPath) {
                 <button class="lang-btn active" data-lang="es"><img src="https://flagcdn.com/es.svg" alt="ES" title="Español"></button>
                 <button class="lang-btn" data-lang="en"><img src="https://flagcdn.com/us.svg" alt="EN" title="English"></button>
                 <button class="lang-btn" data-lang="fr"><img src="https://flagcdn.com/fr.svg" alt="FR" title="Français"></button>
+                <button class="lang-btn" data-lang="de"><img src="https://flagcdn.com/de.svg" alt="DE" title="Deutsch"></button>
                 <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); width: 80%; margin: 5px auto;">
                 <button class="theme-btn" id="theme-toggle" title="Modo Claro/Oscuro"><i class="fa-solid fa-moon"></i></button>
             </div>
@@ -137,8 +138,8 @@ function initGoogleTranslate() {
     window.googleTranslateElementInit = function() {
         new google.translate.TranslateElement({
             pageLanguage: 'es', 
-            includedLanguages: 'es,en,fr', 
-            autoDisplay: false
+            includedLanguages: 'es,en,fr,de', 
+                autoDisplay: false
         }, 'google_translate_element');
     };
 }
