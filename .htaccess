@@ -1,0 +1,10 @@
+DirectoryIndex index.php
+
+RewriteEngine On
+
+# Pretty URL for admin
+RewriteRule ^admin$ views/admin/login.php [L]
+RewriteRule ^dashboard$ views/admin/dashboard.php [L]
+
+# Prevent directory listing
+Options -Indexes

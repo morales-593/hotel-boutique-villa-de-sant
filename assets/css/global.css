@@ -14,30 +14,25 @@ html {
     width: 100%;
 }
 
-/* If body has light-mode, ensure html background matches */
-html:has(body.light-mode) {
-    background-color: #F5F3F0;
-}
-
 :root {
     /* Color Palette - Dark Mode (Default) */
     --primary-gold: #D4AF37;
     --primary-gold-dark: #B5942B;
-    --bg-gradient: linear-gradient(135deg, #16241a, #0a0a0a);
+    --bg-gradient: linear-gradient(135deg, #0A0A0A, #16241a);
     --bg-card: rgba(22, 35, 28, 0.85);
     --bg-black: #0A0A0A;
     --bg-darker: #050505;
     --text-white: #F5F5F5;
     --text-gray: #B0B0B0;
     --accent-cream: #FFFDD0;
-    --border-color: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(212, 175, 55, 0.2);
 
     /* Typography */
     --font-serif: 'Playfair Display', serif;
-    --font-sans: 'Inter', sans-serif;
+    --font-sans: 'Outfit', 'Inter', sans-serif;
 
     /* Transitions & Layout */
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --container-width: 1200px;
 }
 
@@ -45,14 +40,16 @@ html:has(body.light-mode) {
    THEME: LIGHT MODE
    ========================================================================== */
 body.light-mode {
-    --bg-gradient: linear-gradient(135deg, #E6E1D6, #F5F3F0);
-    --bg-card: rgba(255, 255, 255, 0.85);
+    --primary-gold: #AA8A2E; /* Deep gold for better contrast on light */
+    --primary-gold-dark: #8E7324;
+    --bg-gradient: linear-gradient(135deg, #F9F7F2, #E6E1D6);
+    --bg-card: rgba(255, 255, 255, 0.95);
     --bg-black: #F5F5F7;
     --bg-darker: #FFFFFF;
-    --text-white: #111111;
-    --text-gray: #555555;
-    --accent-cream: #EAEAEA;
-    --border-color: #DDDDDD;
+    --text-white: #1A1A1A;
+    --text-gray: #4A4A4A;
+    --accent-cream: #FDFBF7;
+    --border-color: rgba(170, 138, 46, 0.2);
 }
 
 /* Light Mode Overrides */
@@ -103,6 +100,9 @@ body {
     position: relative;
 }
 
+h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 20px; }
+h2 { font-size: 2.2rem; line-height: 1.2; margin-bottom: 25px; }
+h3 { font-size: 1.5rem; margin-bottom: 15px; }
 h1, h2, h3, h4, .serif {
     font-family: var(--font-serif);
     font-weight: 700;

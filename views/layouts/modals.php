@@ -1,3 +1,33 @@
+<!-- Reserva Modal -->
+<div id="booking-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <div class="modal-header">
+            <div class="lottie-hummingbird modal-lottie"></div>
+            <h2>Reserva tu Estancia</h2>
+            <p>Reserva rápida via Email o WhatsApp</p>
+        </div>
+        <form id="quick-booking-form">
+            <div class="modal-grid">
+                <div class="form-group full">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="quick-name" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="quick-email" placeholder="tu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp (Opcional)</label>
+                    <input type="tel" id="quick-tel" placeholder="+593 9..." required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-gold btn-full"><span class="btn-text">RESERVAR AHORA</span></button>
+        </form>
+    </div>
+</div>
+
+<!-- Tour Modal -->
 <div id="tour-modal" class="modal-overlay" style="display: none; align-items: center; justify-content: center;">
     <div class="modal-content" style="max-width: 450px; background: rgba(17, 17, 17, 0.95); backdrop-filter: blur(10px);">
         <button class="modal-close" id="tour-modal-close" style="top: 15px; right: 20px;">&times;</button>
@@ -30,3 +60,5 @@
         </form>
     </div>
 </div>
+
+<div id="toast" class="toast">Reserva enviada.</div>
