@@ -24,5 +24,9 @@ class AdminController {
     public function cupones() {
         require_once 'views/admin/cupones.php';
     }
+
+    public function usuarios() {
+        require_once 'views/admin/usuarios.php';
+    }
 }
 ?>

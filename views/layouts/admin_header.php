@@ -1,4 +1,7 @@
-<?php require_once __DIR__ . "/../../config/config.php"; ?>
+<?php 
+require_once __DIR__ . "/../../config/config.php"; 
+$action = $_GET['action'] ?? 'dashboard';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,10 +13,14 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/admin.css">
 </head>
+<body>
     <!-- Mobile Nav Toggle -->
     <button class="mobile-toggle" id="adminMobileToggle">
         <i class="fas fa-bars"></i>
     </button>
+    
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="adminSidebarOverlay"></div>
 
     <div class="sidebar" id="adminSidebar">
         <h2>Villa de Sant</h2>
@@ -29,6 +36,11 @@
         <a href="<?php echo BASE_URL; ?>?action=admin-cupones" class="nav-link <?php echo $action == 'admin-cupones' ? 'active' : ''; ?>">
             <i class="fas fa-ticket-alt"></i> Cupones
         </a>
+        <?php if ($_SESSION['role'] === 'admin'): ?>
+        <a href="<?php echo BASE_URL; ?>?action=admin-usuarios" class="nav-link <?php echo $action == 'admin-usuarios' ? 'active' : ''; ?>">
+            <i class="fas fa-users-cog"></i> Usuarios
+        </a>
+        <?php endif; ?>
         
         <div style="margin-top: auto;">
             <div style="padding: 1rem; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--gold-border); margin-bottom: 1rem;">
@@ -40,4 +52,6 @@
             </a>
         </div>
     </div>
+
     <div class="main-content">
+        <div class="admin-view-container">

@@ -5,6 +5,15 @@ class Session {
      */
     public static function init() {
         if (session_status() == PHP_SESSION_NONE) {
+            // Configurar parámetros de cookie de sesión antes de iniciarla
+            session_set_cookie_params([
+                'lifetime' => 0,
+                'path' => '/',
+                'domain' => $_SERVER['HTTP_HOST'],
+                'secure' => isset($_SERVER['HTTPS']), // Solo si es HTTPS
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
             session_start();
         }
     }

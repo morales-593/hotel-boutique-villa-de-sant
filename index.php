@@ -44,6 +44,7 @@ switch ($action) {
     case 'admin-habitaciones':
     case 'admin-reservas':
     case 'admin-cupones':
+    case 'admin-usuarios':
         require_once 'controllers/AdminController.php';
         $controller = new AdminController();
         
@@ -52,6 +53,7 @@ switch ($action) {
         if ($action === 'admin-habitaciones') $controller->habitaciones();
         if ($action === 'admin-reservas') $controller->reservas();
         if ($action === 'admin-cupones') $controller->cupones();
+        if ($action === 'admin-usuarios') $controller->usuarios();
         break;
 
     // API endpoints (Opcional si usas Fetch/AJAX)

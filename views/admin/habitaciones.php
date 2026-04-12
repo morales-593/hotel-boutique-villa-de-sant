@@ -86,7 +86,7 @@ include_once "views/layouts/admin_header.php";
     }
 </style>
 
-<div class="admin-container" style="max-width: 1300px; margin: 0 auto; color: white; padding: 20px;">
+<div class="admin-container" style="color: white; padding: 20px;">
     
     <!-- HEADER -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 15px;">
@@ -118,7 +118,7 @@ include_once "views/layouts/admin_header.php";
             <span style="font-size: 0.7rem; color: #555;">(<?php echo count($unidades); ?> unidades físicas)</span>
         </div>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px;">
             <?php foreach ($unidades as $u): ?>
             <div class="unit-card">
                 <form method="POST" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">

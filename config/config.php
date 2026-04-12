@@ -11,4 +11,11 @@ $base_dir = str_replace(basename($script_name), '', $script_name);
 $base_dir = str_replace(['views/usuario/', 'views/admin/', 'api/'], '', $base_dir);
 
 define('BASE_URL', $protocol . "://" . $host . rtrim($base_dir, '/') . '/');
+
+/**
+ * Función auxiliar para prevenir ataques XSS al imprimir datos en HTML
+ */
+function e($value) {
+    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
 ?>

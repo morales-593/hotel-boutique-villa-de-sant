@@ -19,11 +19,13 @@ $availRooms = $stmtAvail->fetchColumn();
 include_once "views/layouts/admin_header.php";
 ?>
 
-<div class="glass-card">
-    <h1 style="color: var(--primary); font-family: 'Playfair Display', serif; margin: 0;">Panel de Control</h1>
-    <p style="color: var(--text-muted); margin-bottom: 2rem;">Hola, <?php echo $_SESSION['nombre']; ?>. Aquí tienes un resumen del estado del hotel.</p>
+<div class="admin-container" style="color: white; padding: 20px;">
+    <div class="glass-card" style="margin-bottom: 2rem;">
+        <h1 style="color: var(--primary); font-family: 'Playfair Display', serif; margin: 0;">Panel de Control</h1>
+        <p style="color: var(--text-muted); margin: 0;">Hola, <?php echo $_SESSION['nombre']; ?>. Aquí tienes un resumen del estado del hotel.</p>
+    </div>
     
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
         <div class="glass-card" style="padding: 1.5rem; border-color: rgba(197, 160, 89, 0.2);">
             <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted);">Habitaciones Totales</div>
             <div style="font-size: 2.5rem; font-weight: 700; color: var(--primary);"><?php echo $totalRooms; ?></div>

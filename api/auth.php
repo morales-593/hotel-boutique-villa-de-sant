@@ -1,4 +1,5 @@
 <?php
+define('BASE_PATH', dirname(__DIR__));
 require_once "../config/database.php";
 require_once "../models/User.php";
 require_once "../config/session.php";

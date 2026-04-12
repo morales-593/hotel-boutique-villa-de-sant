@@ -1,4 +1,9 @@
 <?php
+if (!defined('BASE_PATH')) {
+    header("HTTP/1.1 403 Forbidden");
+    exit("Acceso directo no permitido.");
+}
+
 class Database {
     private $host = "localhost";
     private $db_name = "hotel_villa_de_sant";

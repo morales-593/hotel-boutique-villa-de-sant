@@ -63,6 +63,7 @@ include_once "views/layouts/header.php";
             <!-- Additional Masonry Row as per user image -->
             <div class="photo-collage-grid" style="grid-template-columns: repeat(4, 1fr); grid-auto-rows: 180px; margin-top: 15px;">
                 <div class="pcg-item scroll-anim"><img src="https://lh3.googleusercontent.com/p/AF1QipNyCSzQQwHRrwSijTJjGdxpD9KUzSzTSoS-UaBk=s4000" alt="G1"></div>
+                
                 <div class="pcg-item scroll-anim"><img src="https://lh3.googleusercontent.com/p/AF1QipOdcJEEhb35hoq33uFBCeTcjLoNeIKDjisGpll4=s4000" alt="G2"></div>
                 <div class="pcg-item scroll-anim"><img src="https://lh3.googleusercontent.com/p/AF1QipNnats45klmlfIf3e_kutlz84n5yk2gfvtanysnc=s4000" alt="G3"></div>
                 <div class="pcg-item scroll-anim"><img src="https://lh3.googleusercontent.com/p/AF1QipP-v6_n_6_n_6_n_6_n_6_n_6_n_6_n" alt="G4"></div>
