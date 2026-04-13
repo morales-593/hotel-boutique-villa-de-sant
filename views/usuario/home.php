@@ -8,13 +8,25 @@ include_once "views/layouts/header.php";
 
 <main>
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero-new">
         <div class="hero-overlay"></div>
-        <div class="hero-content scroll-anim is-visible">
-            <h1 class="hero-title">Santuario Colonial en el Corazón de Quito</h1>
-            <p class="hero-subtitle">Vive una estancia inolvidable en nuestro hotel boutique, donde el lujo histórico florece bajo el vuelo del colibrí.</p>
-            <div class="hero-actions">
-                <a href="reserva.php" class="btn btn-gold">RESERVA TU EXPERIENCIA</a>
+        <div class="hero-container container">
+            <div class="hero-text-side">
+                <h1 class="hero-title">VILLA DE SANT <span class="gold-highlight">BOUTIQUE HOTEL</span></h1>
+                <p class="hero-description">Disfruta de la elegancia colonial y el máximo confort en el centro histórico de Quito. Un santuario de paz diseñado para estancias inolvidables.</p>
+                <a href="<?php echo BASE_URL; ?>?action=reserva" class="btn-buy">RESERVA TU ESTANCIA</a>
+                
+                <div class="hero-previews">
+                    <div class="preview-item"><img src="<?php echo BASE_URL; ?>assets/img/single/single room1.jpg" alt="Habitación Single"></div>
+                    <div class="preview-item"><img src="<?php echo BASE_URL; ?>assets/img/queen/queen1.jpg" alt="Habitación Queen"></div>
+                    <div class="preview-item"><img src="<?php echo BASE_URL; ?>assets/img/suite/suites.jpg" alt="Suite"></div>
+                </div>
+            </div>
+            
+            <div class="hero-image-side">
+                <div class="image-decorative-frame">
+                    <img src="<?php echo BASE_URL; ?>assets/img/home/hero_subject.png" alt="Villa de Sant Experience" class="hero-main-img">
+                </div>
             </div>
         </div>
     </section>
@@ -23,7 +35,7 @@ include_once "views/layouts/header.php";
     <section class="section-padding story-section">
         <div class="container story-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
             <div class="story-image scroll-anim scroll-left" style="border-radius: 20px; overflow: hidden; height: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                <img src="https://lh3.googleusercontent.com/p/AF1QipNVb6baKMNn4xJZncYQr9f1z7mdaYdRtnXhkfiz=s4000" alt="Villa de Sant Interior" style="width:100%; height:100%; object-fit:cover;">
+                <img src="<?php echo BASE_URL; ?>assets/img/home/home2.jpg" alt="Villa de Sant Interior" style="width:100%; height:100%; object-fit:cover;">
             </div>
             <div class="story-content scroll-anim scroll-right">
                 <h2 class="gold-text serif">El Vuelo del Colibrí</h2>

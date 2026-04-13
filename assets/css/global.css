@@ -160,7 +160,8 @@ img { max-width: 100%; display: block; }
 /* Page Hero Component - Used for internal pages */
 .page-hero {
     position: relative;
-    height: 70vh;
+    height: 55vh;
+    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;

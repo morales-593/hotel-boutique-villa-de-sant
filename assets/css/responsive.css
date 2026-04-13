@@ -10,10 +10,10 @@
 ============================================= */
 
 /* ── Default: hide bottom nav, keep top nav ── */
-.mobile-menu-toggle { display: none; }
+.mobile-menu-toggle { display: none !important; }
 .mobile-bottom-nav  { display: none; }
 
-/* Forcefully hide the legacy overlay */
+/* Hide the overlay completely */
 .mobile-overlay { display: none !important; }
 
 
@@ -141,8 +141,8 @@
         transition: none !important;
         animation: none !important;
     }
-    .desktop-nav          { display: none; }
-    .mobile-menu-toggle   { display: none !important; }
+    .desktop-nav { display: none; }
+    .mobile-menu-toggle { display: none !important; }
 
     /* ── Global ── */
     .section-padding  { padding: 50px 0; }
@@ -266,8 +266,8 @@
                     inset 0 0 10px rgba(212,175,55,0.1);
     }
 
-    /* Extra body padding to clear the bottom nav */
-    body { padding-bottom: 110px; }
+    /* Extra padding on main to clear the bottom nav — footer stays flush */
+    main { padding-bottom: 110px; }
 }
 
 

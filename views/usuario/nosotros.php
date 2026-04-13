@@ -34,13 +34,28 @@ $extraCSS = '
     .btn-outline:hover { background: var(--primary-gold); color: #000; }
 
     @media (max-width: 1000px) { .nos-about-grid { grid-template-columns: 1fr; gap: 50px; } .nos-about-img { height: 400px; } .nos-cta h2 { font-size: 3rem; } }
+    @media (max-width: 768px) {
+        .nos-about { padding: 60px 0; }
+        .nos-about-img { height: 300px; border-radius: 12px; }
+        .nos-about-badge { padding: 12px 18px; bottom: 15px; left: 15px; }
+        .nos-about-badge span { font-size: 1.6rem; }
+        .nos-text h2 { font-size: 1.8rem; }
+        .nos-text p { font-size: 0.95rem; line-height: 1.7; }
+        .nos-ubicacion { padding: 60px 0; }
+        .location-card { height: 300px; }
+        .nos-cta { padding: 80px 0; }
+        .nos-cta h2 { font-size: 2rem; }
+        .nos-cta p { font-size: 1rem; }
+        .nos-cta-btns { flex-direction: column; align-items: center; gap: 15px; }
+        .btn-rounded { padding: 14px 30px; font-size: 0.88rem; width: 100%; max-width: 280px; text-align: center; }
+    }
 </style>';
 include_once "views/layouts/header.php";
 ?>
 
 <main>
     <section class="page-hero">
-        <div class="page-hero-bg" id="nos-hero-bg" style="background-image: url('https://lh3.googleusercontent.com/gps-cs-s/AHVAweo7jA089iqm7VwQLpaAZq6Ljb2GYdxVe6eeQb91mnSuAezn2jbyLheGmWy1aF0bMwuNNsRPp6_-KFQQC-PiTfNn0V5vxLLrUTKXfOj6gVzw2Cm5siYhaS1ruBXiFmzPj_YcO4Yf=s4000')"></div>
+        <div class="page-hero-bg" id="nos-hero-bg" style="background-image: url('<?php echo BASE_URL; ?>assets/img/nosotros/nosotros1.jpg')"></div>
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
             <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Logo" class="hero-logo-glow" style="max-width: 70px;">
@@ -54,7 +69,7 @@ include_once "views/layouts/header.php";
         <div class="container">
             <div class="nos-about-grid">
                 <div class="nos-about-img scroll-anim scroll-left">
-                    <img src="https://lh3.googleusercontent.com/p/AF1QipOQsrgJCYHW0v28XUwBb9gqOp5cbGQc428ZPbml=s4000" alt="Villa History">
+                    <img src="<?php echo BASE_URL; ?>assets/img/home/home2.jpg" alt="Hotel Boutique Villa de Sant">
                     <div class="nos-about-badge">
                         <span>1924</span>
                         <p>Año de Fundación</p>
@@ -109,8 +124,8 @@ include_once "views/layouts/header.php";
             <h2 class="serif">&ldquo;El vuelo del colibrí te espera&rdquo;</h2>
             <p>Ven a ser parte de nuestra historia. Cada estancia en Villa de Sant es el comienzo de una memoria que llevarás contigo para siempre.</p>
             <div class="nos-cta-btns scroll-anim scroll-fade">
-                <a href="reserva.php" class="btn btn-gold btn-rounded"><i class="fa-solid fa-calendar-check" style="margin-right:10px;"></i> RESERVAR AHORA</a>
-                <a href="habitaciones.php" class="btn btn-outline btn-rounded"><i class="fa-solid fa-bed" style="margin-right:10px;"></i> VER HABITACIONES</a>
+                <a href="<?php echo BASE_URL; ?>?action=reserva" class="btn btn-gold btn-rounded"><i class="fa-solid fa-calendar-check" style="margin-right:10px;"></i> RESERVAR AHORA</a>
+                <a href="<?php echo BASE_URL; ?>?action=habitaciones" class="btn btn-outline btn-rounded"><i class="fa-solid fa-bed" style="margin-right:10px;"></i> VER HABITACIONES</a>
             </div>
         </div>
     </section>

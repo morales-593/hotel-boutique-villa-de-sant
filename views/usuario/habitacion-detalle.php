@@ -45,6 +45,22 @@ try {
     $stmtC->execute([$room['tipo']]);
     $coupon = $stmtC->fetch(PDO::FETCH_ASSOC);
 } catch (Exception $e) { /* silent */ }
+// --- Resolve room images from folders ---
+$roomTypeFolder = "assets/img/" . str_replace('_', ' ', $room['tipo']);
+$localImages = [];
+if (is_dir($roomTypeFolder)) {
+    $files = scandir($roomTypeFolder);
+    foreach ($files as $file) {
+        if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp'])) {
+            $localImages[] = $roomTypeFolder . '/' . $file;
+        }
+    }
+}
+$mainImgPath = $room['imagen'] ? (strpos($room['imagen'], 'http') === 0 ? $room['imagen'] : BASE_URL . $room['imagen']) : 'https://lh3.googleusercontent.com/p/AF1QipMmnjV0M4xUEjDw-0RaGFiNhANIB6XM-I_a6War=s4000';
+$heroImg = isset($localImages[0]) ? BASE_URL . $localImages[0] : $mainImgPath;
+$img1 = $heroImg;
+$img2 = isset($localImages[1]) ? BASE_URL . $localImages[1] : $mainImgPath;
+$img3 = isset($localImages[2]) ? BASE_URL . $localImages[2] : $img1;
 
 $pageTitle = htmlspecialchars($room['nombre']) . " | Hotel Boutique Villa de Sant";
 $extraCSS  = '
@@ -53,7 +69,7 @@ $extraCSS  = '
     .room-detail-hero {
         position: relative;
         height: clamp(280px, 40vh, 400px);
-        background: url("' . ($room['imagen'] ?: 'https://lh3.googleusercontent.com/p/AF1QipMmnjV0M4xUEjDw-0RaGFiNhANIB6XM-I_a6War=s4000') . '") no-repeat center 35%;
+        background: url("' . $heroImg . '") no-repeat center 35%;
         background-size: cover;
         display: flex;
         align-items: flex-end;
@@ -353,13 +369,13 @@ include_once "views/layouts/header.php";
             <!-- Photo Grid: 1 large + 2 small -->
             <div class="room-photo-grid">
                 <div class="photo-main">
-                    <img src="<?php echo htmlspecialchars($room['imagen'] ?: 'https://lh3.googleusercontent.com/p/AF1QipMIQr7TRGo_LxBf6Y6uQFMdudqUH53FkN0YOmQy=s4000'); ?>" alt="<?php echo htmlspecialchars($room['nombre']); ?>">
+                    <img src="<?php echo $img1; ?>" alt="<?php echo htmlspecialchars($room['nombre']); ?>">
                 </div>
                 <div class="photo-sm">
-                    <img src="<?php echo htmlspecialchars($room['imagen'] ?: 'https://lh3.googleusercontent.com/p/AF1QipOUY0uL1F_v_8dGPVe0ynf_3RW2WLzdV7YcKVbK=s4000'); ?>" alt="Vista 2">
+                    <img src="<?php echo $img2; ?>" alt="Vista 2">
                 </div>
                 <div class="photo-sm">
-                    <img src="<?php echo htmlspecialchars($room['imagen'] ?: 'https://lh3.googleusercontent.com/p/AF1QipNszXIbjjvNsY0MnxFayR8jadWS4bkzKXzM4S-V=s4000'); ?>" alt="Vista 3">
+                    <img src="<?php echo $img3; ?>" alt="Vista 3">
                 </div>
             </div>
         </div>

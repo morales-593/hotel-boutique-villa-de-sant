@@ -21,121 +21,7 @@ $rooms = $db->query($query);
 $pageTitle = "Nuestras Estancias | Hotel Boutique Villa de Sant";
 $extraCSS = '
 <style>
-    /* ========= HERO ========= */
-    .rooms-hero {
-        position: relative;
-        height: 85vh; /* Increased height */
-        min-height: 550px;
-        display: flex;
-        align-items: center; /* Center vertically for a more balanced look */
-        justify-content: center;
-        text-align: center;
-        background: url("https://lh3.googleusercontent.com/p/AF1QipNVb6baKMNn4xJZncYQr9f1z7mdaYdRtnXhkfiz=s4000") no-repeat center center;
-        background-size: cover;
-        overflow: hidden;
-    }
-    .rooms-hero::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to bottom,
-            rgba(0,0,0,0.15) 0%,
-            rgba(0,0,0,0.45) 40%,
-            rgba(5,10,5,0.97) 100%);
-    }
-    body.light-mode .rooms-hero::before {
-        background: linear-gradient(to bottom,
-            rgba(210,190,140,0.3) 0%,
-            rgba(200,175,110,0.7) 50%,
-            rgba(238,228,200,0.98) 100%);
-    }
-    .rooms-hero-content {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        max-width: 900px;
-        padding: 40px 20px; /* Adjusted padding */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .rooms-hero-divider {
-        width: 60px;
-        height: 2px;
-        background: linear-gradient(to right, transparent, var(--primary-gold), transparent);
-        margin: 20px auto 25px;
-    }
-    .rooms-hero-title {
-        font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-        color: var(--primary-gold);
-        margin-bottom: 10px;
-        line-height: 1.05;
-        text-shadow: 0 2px 16px rgba(0,0,0,0.7);
-    }
-    body.light-mode .rooms-hero-title { text-shadow: 0 1px 6px rgba(120,80,0,0.2); }
-    .rooms-hero-sub {
-        font-size: 0.95rem;
-        color: rgba(255,255,255,0.82);
-        max-width: 500px;
-        margin: 0 auto 24px;
-        line-height: 1.65;
-    }
-    body.light-mode .rooms-hero-sub { color: rgba(50,30,5,0.8); }
 
-    .schedule-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        max-width: 520px;
-        width: 100%;
-        margin: 0 auto;
-    }
-    .schedule-card {
-        background: rgba(16, 28, 18, 0.72);
-        border: 1px solid rgba(212, 175, 55, 0.35);
-        border-radius: 12px;
-        padding: 14px 16px;
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-        transition: border-color 0.3s ease;
-    }
-    .schedule-card:hover { border-color: rgba(212,175,55,0.7); }
-    body.light-mode .schedule-card {
-        background: rgba(240, 230, 200, 0.72);
-        border-color: rgba(160, 120, 20, 0.4);
-    }
-    .schedule-icon-circle {
-        width: 34px;
-        height: 34px;
-        background: rgba(212, 175, 55, 0.18);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary-gold);
-        font-size: 0.9rem;
-    }
-    .schedule-card h4 {
-        font-size: 0.78rem;
-        color: rgba(255,255,255,0.75);
-        font-weight: 400;
-        font-family: var(--font-sans);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin: 0;
-    }
-    body.light-mode .schedule-card h4 { color: rgba(60,40,10,0.75); }
-    .schedule-card .time {
-        font-size: 1.2rem;
-        color: var(--primary-gold);
-        font-weight: 700;
-        font-family: var(--font-serif);
-        margin: 0;
-    }
 
     /* ========= ROOMS GRID ========= */
     .rooms-grid-section {
@@ -244,8 +130,7 @@ $extraCSS = '
     body.light-mode .btn-outline-gold:hover { background: #b8922a; color: #fff; }
 
     @media (max-width: 768px) {
-        .schedule-grid { grid-template-columns: 1fr; }
-        .rooms-hero { height: auto; min-height: 380px; padding-bottom: 30px; }
+        .rooms-grid-section { padding-top: 40px; }
     }
 </style>';
 include_once "views/layouts/header.php";
@@ -253,25 +138,13 @@ include_once "views/layouts/header.php";
 
 <main>
     <!-- HERO: NUESTRAS ESTANCIAS -->
-    <section class="rooms-hero">
-        <div class="rooms-hero-content">
-            <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Logo" style="max-width: 90px; margin-bottom: 30px; border-radius:50%; filter: drop-shadow(0 0 15px rgba(212,175,55,0.7));">
-            <div class="rooms-hero-divider"></div>
-            <h1 class="rooms-hero-title serif">Nuestras Estancias</h1>
-            <p class="rooms-hero-sub">Descubre el equilibrio perfecto entre la historia colonial y el confort contemporáneo.</p>
-
-            <div class="schedule-grid">
-                <div class="schedule-card">
-                    <div class="schedule-icon-circle"><i class="fa-solid fa-bell-concierge"></i></div>
-                    <h4>Hora de entrada</h4>
-                    <div class="time">12:00 p. m.</div>
-                </div>
-                <div class="schedule-card">
-                    <div class="schedule-icon-circle"><i class="fa-solid fa-key"></i></div>
-                    <h4>Hora de salida</h4>
-                    <div class="time">12:00 p. m.</div>
-                </div>
-            </div>
+    <section class="page-hero">
+        <div class="page-hero-bg" style="background-image: url('<?php echo BASE_URL; ?>assets/img/home/habitacion.jpg')"></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+            <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Logo" class="hero-logo-glow" style="max-width: 70px;">
+            <div class="page-hero-divider"></div>
+            <h1 class="page-hero-title serif gold-text">Nuestras Estancias</h1>
         </div>
     </section>
 
@@ -285,7 +158,33 @@ include_once "views/layouts/header.php";
                 ?>
                 <div class="room-item scroll-anim scroll-fade">
                     <div class="room-img-wrapper">
-                        <img src="<?php echo $row['imagen'] ?: 'https://lh3.googleusercontent.com/gps-cs-s/AHVAweo7jA089iqm7VwQLpaAZq6Ljb2GYdxVe6eeQb91mnSuAezn2jbyLheGmWy1aF0bMwuNNsRPp6_-KFQQC-PiTfNn0V5vxLLrUTKXfOj6gVzw2Cm5siYhaS1ruBXiFmzPj_YcO4Yf=s4000'; ?>" alt="<?php echo htmlspecialchars($row['nombre']); ?>">
+                        <?php 
+                        // Try to find a local image first
+                        $localImg = null;
+                        $roomTypeFolder = "assets/img/" . str_replace('_', ' ', $row['tipo']);
+                        if (is_dir($roomTypeFolder)) {
+                            // If the DB already has a valid local path, use it, else pick the first from folder
+                            if ($row['imagen'] && strpos($row['imagen'], 'assets/') === 0 && file_exists($row['imagen'])) {
+                                $localImg = BASE_URL . $row['imagen'];
+                            } else {
+                                $files = scandir($roomTypeFolder);
+                                foreach ($files as $file) {
+                                    if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp'])) {
+                                        $localImg = BASE_URL . $roomTypeFolder . '/' . $file;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        
+                        // Fallback to DB or placeholder
+                        $finalImg = $localImg ?: ($row['imagen'] ?: BASE_URL . 'assets/img/home/hero_home.jpg');
+                        // Ensure it's a full URL if it's from DB and not already full
+                        if (strpos($finalImg, 'http') !== 0 && strpos($finalImg, BASE_URL) !== 0) {
+                            $finalImg = BASE_URL . $finalImg;
+                        }
+                        ?>
+                        <img src="<?php echo $finalImg; ?>" alt="<?php echo htmlspecialchars($row['nombre']); ?>">
                     </div>
                     <div class="room-info">
                         <h2 class="serif"><?php echo htmlspecialchars($row['nombre']); ?></h2>

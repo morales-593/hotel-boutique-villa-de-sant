@@ -224,6 +224,7 @@ body.light-mode .nav-link {
         box-shadow: 0 0 10px rgba(212, 175, 55, 0.2), 0 0 20px rgba(212, 175, 55, 0.1);
         transform: scale(1);
     }
+
     100% {
         box-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.5), 0 0 50px rgba(212, 175, 55, 0.3);
         transform: scale(1.05);
@@ -293,24 +294,29 @@ body.light-mode .nav-link {
 }
 
 .footer-social .social-icon.tripadvisor {
-    color: transparent;
-    border-color: #00AF87;
-    background-image: url('../img/tripadvisor_icon.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    border-color: #000000a2;
 }
 
-.footer-social .social-icon.tripadvisor i {
-    display: none;
+/* Dark mode: icon shows naturally */
+.footer-social .social-icon.tripadvisor img {
+    filter: brightness(1) saturate(1.2);
+    transition: filter 0.3s ease;
 }
 
-.footer-social .social-icon.tripadvisor:hover {
-    background-color: transparent;
-    color: transparent;
-    border-color: #00AF87;
+/* Light mode: darken the icon so it's visible on light background */
+body.light-mode .footer-social .social-icon.tripadvisor img {
+    filter: brightness(0.3) saturate(1.5);
+}
+
+.footer-social .social-icon.tripadvisor {
+    background: #ffffffc3;
     transform: scale(1.15);
     box-shadow: 0 0 15px rgba(0, 175, 135, 0.4);
+}
+
+/* On hover, restore natural colors in both modes */
+.footer-social .social-icon.tripadvisor:hover img {
+    filter: brightness(1) saturate(1);
 }
 
 .footer-social .social-icon.instagram {

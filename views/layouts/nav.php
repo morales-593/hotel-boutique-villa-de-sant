@@ -24,18 +24,23 @@ $current_action = $_GET['action'] ?? 'home';
             <span class="btn-text">RESERVAR</span>
         </a>
 
-        <button class="mobile-menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
     <div class="header-scroll-line"></div>
 </header>
 
-<div class="mobile-overlay" id="mobile-overlay">
-    <button class="close-overlay" id="close-overlay">&times;</button>
-    <ul class="mobile-overlay-links">
-        <li><a href="<?php echo BASE_URL; ?>?action=home" class="nav-link <?php echo $current_action == 'home' ? 'active' : ''; ?>"><i class="fa-solid fa-house"></i> Inicio</a></li>
-        <li><a href="<?php echo BASE_URL; ?>?action=habitaciones" class="nav-link <?php echo $current_action == 'habitaciones' ? 'active' : ''; ?>"><i class="fa-solid fa-bed"></i> Habitaciones</a></li>
-        <li><a href="<?php echo BASE_URL; ?>?action=experiencias" class="nav-link <?php echo $current_action == 'experiencias' ? 'active' : ''; ?>"><i class="fa-solid fa-compass"></i> Experiencias</a></li>
-        <li><a href="<?php echo BASE_URL; ?>?action=nosotros" class="nav-link <?php echo $current_action == 'nosotros' ? 'active' : ''; ?>"><i class="fa-solid fa-users"></i> Nosotros</a></li>
-        <li><a href="<?php echo BASE_URL; ?>?action=reserva" class="btn btn-gold" style="margin-top:20px; color: white;"><i class="fa-solid fa-calendar-check"></i> RESERVAR</a></li>
-    </ul>
-</div>
+<!-- Mobile Bottom Tab Bar -->
+<nav class="mobile-bottom-nav">
+    <a href="<?php echo BASE_URL; ?>?action=home" class="mob-nav-item <?php echo $current_action == 'home' ? 'active' : ''; ?>">
+        <i class="fa-solid fa-house"></i>
+    </a>
+    <a href="<?php echo BASE_URL; ?>?action=habitaciones" class="mob-nav-item <?php echo $current_action == 'habitaciones' ? 'active' : ''; ?>">
+        <i class="fa-solid fa-bed"></i>
+    </a>
+    <a href="<?php echo BASE_URL; ?>?action=experiencias" class="mob-nav-item <?php echo $current_action == 'experiencias' ? 'active' : ''; ?>">
+        <i class="fa-solid fa-compass"></i>
+    </a>
+    <a href="<?php echo BASE_URL; ?>?action=nosotros" class="mob-nav-item <?php echo $current_action == 'nosotros' ? 'active' : ''; ?>">
+        <i class="fa-solid fa-users"></i>
+    </a>
+
+</nav>

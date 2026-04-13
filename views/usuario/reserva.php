@@ -27,18 +27,6 @@ $preselected = intval($_GET['room'] ?? 0);
 $pageTitle = "Reserva tu Estancia | Hotel Boutique Villa de Sant";
 $extraCSS = '
 <style>
-    .booking-hero {
-        height: 42vh; min-height: 300px;
-        background: url("https://lh3.googleusercontent.com/p/AF1QipMmnjV0M4xUEjDw-0RaGFiNhANIB6XM-I_a6War=s4000") no-repeat center 40%;
-        background-size: cover;
-        position: relative; display: flex; align-items: flex-end;
-    }
-    .booking-hero::before { content:""; position:absolute; inset:0; background:linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(5,10,5,0.97) 100%); }
-    body.light-mode .booking-hero::before { background:linear-gradient(to bottom,rgba(210,190,140,0.2) 0%,rgba(238,228,200,0.97) 100%); }
-    .booking-hero-inner { position:relative; z-index:2; padding:30px 40px; }
-    .booking-hero-inner h1 { font-size:clamp(1.8rem,3.5vw,2.8rem); color:var(--primary-gold); margin:0; }
-    .booking-hero-inner p { color:rgba(255,255,255,0.75); font-size:0.95rem; margin-top:6px; }
-    body.light-mode .booking-hero-inner p { color:rgba(50,30,5,0.75); }
 
     .booking-layout { max-width:1200px; margin:0 auto; padding:50px 30px 80px; display:grid; grid-template-columns:1fr 360px; gap:50px; align-items:start; }
     @media(max-width:1024px){ .booking-layout{grid-template-columns:1fr;} }
@@ -121,18 +109,40 @@ $extraCSS = '
     .bs-total { margin-top:20px; padding-top:20px; border-top:2px solid var(--primary-gold); display:flex; justify-content:space-between; font-size:1.2rem; font-weight:700; color:var(--primary-gold); }
     .bs-note { font-size:0.75rem; color:var(--text-gray); margin-top:16px; display:flex; align-items:center; gap:8px; }
     .bs-note i { color:var(--primary-gold); }
+
+    /* RESPONSIVE ADJUSTMENTS for Reserva */
+    @media (max-width: 768px) {
+        .booking-layout { padding: 30px 15px 120px; gap: 30px; }
+        .booking-form-card { padding: 25px 20px; border-radius: 12px; }
+        .bf-row { grid-template-columns: 1fr; gap: 15px; }
+        .section-label { font-size: 0.65rem; letter-spacing: 2px; }
+        .room-type-grid { grid-template-columns: 1fr 1fr; }
+        .booking-summary { position: static; padding: 25px 20px; }
+        .btn-confirm { padding: 15px; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 480px) {
+        .room-type-grid { grid-template-columns: 1fr; }
+        .page-hero-sub { font-size: 0.85rem; }
+        .bf-group input, .bf-group select { padding: 12px; font-size: 0.85rem; }
+    }
 </style>';
 
 include_once "views/layouts/header.php";
 ?>
 
 <main>
-    <div class="booking-hero">
-        <div class="booking-hero-inner">
-            <h1 class="serif">Reserva tu Estancia</h1>
-            <p>Completa el formulario y nos contactaremos contigo de inmediato.</p>
+    <!-- HERO -->
+    <section class="page-hero">
+        <div class="page-hero-bg" style="background-image: url('<?php echo BASE_URL; ?>assets/img/home/hero_home.jpg')"></div>
+        <div class="page-hero-overlay"></div>
+        <div class="page-hero-content">
+             <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Logo" class="hero-logo-glow" style="max-width: 70px;">
+             <div class="page-hero-divider"></div>
+             <h1 class="page-hero-title serif gold-text">Reserva tu Estancia</h1>
+             <p class="page-hero-sub">Completa el formulario y nos contactaremos contigo de inmediato para confirmar tu visita.</p>
         </div>
-    </div>
+    </section>
 
     <div class="booking-layout">
 
