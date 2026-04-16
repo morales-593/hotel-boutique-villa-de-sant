@@ -42,8 +42,10 @@ switch ($action) {
     // === Panel de Administración (Protegido por Sesión) ===
     case 'dashboard':
     case 'admin-habitaciones':
+    case 'admin-precios':
     case 'admin-reservas':
     case 'admin-cupones':
+    case 'admin-experiencias':
     case 'admin-usuarios':
         require_once 'controllers/AdminController.php';
         $controller = new AdminController();
@@ -51,8 +53,10 @@ switch ($action) {
         // Mapeo de acciones a métodos del controlador
         if ($action === 'dashboard') $controller->dashboard();
         if ($action === 'admin-habitaciones') $controller->habitaciones();
+        if ($action === 'admin-precios') $controller->precios();
         if ($action === 'admin-reservas') $controller->reservas();
         if ($action === 'admin-cupones') $controller->cupones();
+        if ($action === 'admin-experiencias') $controller->experiencias();
         if ($action === 'admin-usuarios') $controller->usuarios();
         break;
 

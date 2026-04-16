@@ -188,6 +188,10 @@ include_once "views/layouts/header.php";
                     </div>
                     <div class="room-info">
                         <h2 class="serif"><?php echo htmlspecialchars($row['nombre']); ?></h2>
+                        
+                        <div style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 800; margin-bottom: 12px; margin-top: -3px;">
+                            $<?php echo number_format($row['precio'], 2); ?> <span style="font-size: 0.75rem; color: var(--text-gray); font-weight: normal;">/ noche</span>
+                        </div>
 
                         <div class="room-features">
                             <?php if (!empty($features)): ?>

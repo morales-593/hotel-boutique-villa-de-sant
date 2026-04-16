@@ -126,7 +126,28 @@ $extraCSS = '
         .page-hero-sub { font-size: 0.85rem; }
         .bf-group input, .bf-group select { padding: 12px; font-size: 0.85rem; }
     }
-</style>';
+
+    /* ADDITIONAL SERVICES BOXES */
+    .extra-services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; }
+    .extra-service-card {
+        background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.2);
+        padding: 15px; border-radius: 10px; cursor: pointer; transition: all 0.3s;
+        display: flex; align-items: center; gap: 12px; position: relative;
+    }
+    .extra-service-card:hover { border-color: rgba(212,175,55,0.5); background: rgba(212,175,55,0.05); }
+    .extra-service-card.active { border-color: var(--primary-gold); background: rgba(212,175,55,0.12); }
+    .extra-service-card i { font-size: 1.2rem; color: var(--primary-gold); width: 25px; text-align: center; }
+    .extra-service-info { flex: 1; }
+    .esc-title { font-size: 0.82rem; font-weight: 700; color: var(--text-white); margin-bottom: 2px; }
+    body.light-mode .esc-title { color: #1a110a; }
+    .esc-sub { font-size: 0.68rem; color: var(--text-gray); }
+    .extra-service-card input { position: absolute; opacity: 0; }
+    
+    @media (max-width: 600px) { .extra-services-grid { grid-template-columns: 1fr; } }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+';
 
 include_once "views/layouts/header.php";
 ?>
@@ -161,9 +182,18 @@ include_once "views/layouts/header.php";
                         <label>Teléfono / WhatsApp</label>
                         <input type="tel" name="telefono" id="f-telefono" placeholder="+593 99 000 0000" required>
                     </div>
-                    <div class="bf-group bf-full">
+                    <div class="bf-group">
                         <label>Correo electrónico</label>
                         <input type="email" name="email" id="f-email" placeholder="correo@dominio.com" required>
+                    </div>
+                    <div class="bf-group">
+                        <label>Idioma Preferido</label>
+                        <select name="idioma" id="f-idioma">
+                            <option value="es" selected>Español</option>
+                            <option value="en">Inglés (English)</option>
+                            <option value="fr">Francés (Français)</option>
+                            <option value="de">Alemán (Deutsch)</option>
+                        </select>
                     </div>
                 </div>
 
@@ -185,8 +215,7 @@ include_once "views/layouts/header.php";
                     ?>
                     <label class="room-type-card <?php echo ($rt['tipo'] == 'suite') ? 'selected' : ''; ?>" data-tipo="<?php echo $rt['tipo']; ?>" data-price="<?php echo $rt['precio']; ?>" data-id="<?php echo $rt['id_disponible']; ?>">
                         <input type="radio" name="habitacion_tipo" value="<?php echo $rt['tipo']; ?>" <?php echo ($rt['tipo'] == 'suite') ? 'checked' : ''; ?> <?php echo $isDisabled; ?>>
-                        <?php if ($rt['tipo'] == 'suite'): ?><span class="rtc-badge">PREMIUM</span><?php endif; ?>
-                        <div class="rtc-name"><?php echo htmlspecialchars($shortLabel); ?> Room</div>
+                        <div class="rtc-name"><?php echo htmlspecialchars($rt['nombre']); ?></div>
                         <div class="rtc-price">$<?php echo number_format($rt['precio'], 0); ?>/noche</div>
                         <div class="rtc-avail <?php echo $availClass; ?>">
                             <div class="rtc-dot"></div> <?php echo $availText; ?>
@@ -228,9 +257,30 @@ include_once "views/layouts/header.php";
                     </div>
                 </div>
 
+                <!-- ADDITIONAL SERVICES -->
+                <div class="section-label" style="margin-top:10px;"><i class="fa-solid fa-wand-magic-sparkles"></i> Servicios Adicionales (Opcional)</div>
+                <div class="extra-services-grid">
+                    <label class="extra-service-card" onclick="toggleExtra(this)">
+                        <input type="checkbox" name="extra_transporte" id="f-extra-transporte" onchange="updateSummary()">
+                        <i class="fa-solid fa-van-shuttle"></i>
+                        <div class="extra-service-info">
+                            <div class="esc-title">Transporte de Lujo</div>
+                            <div class="esc-sub">Traslado privado al Aeropuerto</div>
+                        </div>
+                    </label>
+                    <label class="extra-service-card" onclick="toggleExtra(this)">
+                        <input type="checkbox" name="extra_tour" id="f-extra-tour" onchange="updateSummary()">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <div class="extra-service-info">
+                            <div class="esc-title">Tours y Aventuras</div>
+                            <div class="esc-sub">Explora Quito y sus alrededores</div>
+                        </div>
+                    </label>
+                </div>
+
                 <button type="submit" class="btn-confirm" id="btn-submit">
-                    <i class="fa-brands fa-whatsapp"></i>
-                    CONFIRMAR RESERVA
+                    <i class="fa-solid fa-credit-card"></i>
+                    PAGAR CON VISA / MASTERCARD (USD)
                 </button>
             </form>
         </div>
@@ -238,6 +288,18 @@ include_once "views/layouts/header.php";
         <!-- SUMMARY SIDEBAR -->
         <aside class="booking-summary scroll-anim scroll-right">
             <div class="bs-title">Resumen</div>
+            
+            <div class="bf-group" style="margin-bottom: 20px;">
+                <label style="color: var(--primary-gold); font-size: 0.65rem;">MONEDA DE PAGO / CURRENCY</label>
+                <select id="f-currency" onchange="updateSummary()" style="background: rgba(212,175,55,0.1); border-color: var(--primary-gold); font-weight: bold;">
+                    <option value="USD">USD - Dólar Estadounidense</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="COP">COP - Peso Colombiano</option>
+                    <option value="MXN">MXN - Peso Mexicano</option>
+                    <option value="PEN">PEN - Sol Peruano</option>
+                </select>
+            </div>
+
             <div class="bs-row"><span class="label">Tipo de habitación</span><span class="val" id="s-room">-</span></div>
             <div class="bs-row"><span class="label">Precio por noche</span><span class="val" id="s-price">$0</span></div>
             <div class="bs-row"><span class="label">Noches</span><span class="val" id="s-nights">0</span></div>
@@ -248,7 +310,11 @@ include_once "views/layouts/header.php";
             </div>
             <div class="bs-total">
                 <span>Total Estancia</span>
-                <span id="s-total">$0.00</span>
+                <span id="s-total">$0.00 <small>USD</small></span>
+            </div>
+            <div id="s-extras-box" style="margin-top: 15px; display: none;">
+                <div style="font-size: 0.7rem; color: var(--primary-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">EXTRAS SOLICITADOS:</div>
+                <div id="s-extras-list" style="font-size: 0.8rem; color: var(--text-white);"></div>
             </div>
             <div class="bs-note"><i class="fa-solid fa-shield-halved"></i> Sin cargos hasta 48h antes.</div>
             <div class="bs-note"><i class="fa-brands fa-whatsapp"></i> Confirmaremos por WhatsApp.</div>
@@ -303,28 +369,56 @@ document.getElementById('f-checkin').addEventListener('change', function(){
 });
 document.getElementById('f-checkout').addEventListener('change', updateSummary);
 
+function toggleExtra(card) {
+    const cb = card.querySelector('input');
+    cb.checked = !cb.checked;
+    card.classList.toggle('active', cb.checked);
+    updateSummary();
+}
+
 function updateSummary() {
     const ci = new Date(document.getElementById('f-checkin').value);
     const co = new Date(document.getElementById('f-checkout').value);
     const nights = (!isNaN(ci) && !isNaN(co) && co > ci)
         ? Math.ceil((co - ci) / 86400000) : 0;
 
-    const base    = selectedPrice * (nights || 1);
+    const currency = document.getElementById('f-currency').value;
+    const rates = { 'USD': 1, 'EUR': 0.94, 'COP': 3900, 'MXN': 17.5, 'PEN': 3.75 };
+    const rate = rates[currency] || 1;
+
+    const base    = (selectedPrice * (nights || 1)) * rate;
     const discAmt = base * (currentDiscount / 100);
     const total   = base - discAmt;
 
     document.getElementById('s-room').innerText    = selectedLabel || '-';
-    document.getElementById('s-price').innerText   = '$' + selectedPrice.toFixed(2);
+    document.getElementById('s-price').innerText   = (selectedPrice * rate).toFixed(2) + ' ' + currency;
     document.getElementById('s-nights').innerText  = nights + ' noche' + (nights !== 1 ? 's' : '');
-    document.getElementById('s-subtotal').innerText = '$' + base.toFixed(2);
-    document.getElementById('s-total').innerText   = '$' + total.toFixed(2);
+    document.getElementById('s-subtotal').innerText = base.toFixed(2) + ' ' + currency;
+    document.getElementById('s-total').innerText   = total.toFixed(2) + ' ' + currency;
 
     const discRow = document.getElementById('s-disc-row');
     if (currentDiscount > 0) {
         discRow.style.display = 'flex';
-        document.getElementById('s-disc').innerText = '-$' + discAmt.toFixed(2) + ' (' + currentDiscount + '%)';
+        document.getElementById('s-disc').innerText = '-' + discAmt.toFixed(2) + ' ' + currency + ' (' + currentDiscount + '%)';
     } else {
         discRow.style.display = 'none';
+    }
+
+    // Update Extras in summary
+    const extraTrans = document.getElementById('f-extra-transporte').checked;
+    const extraTour = document.getElementById('f-extra-tour').checked;
+    const extrasBox = document.getElementById('s-extras-box');
+    const extrasList = document.getElementById('s-extras-list');
+    
+    let html = '';
+    if (extraTrans) html += '• Servicio de Transporte<br>';
+    if (extraTour) html += '• Tours y Aventuras<br>';
+    
+    if (html) {
+        extrasBox.style.display = 'block';
+        extrasList.innerHTML = html;
+    } else {
+        extrasBox.style.display = 'none';
     }
 }
 
@@ -370,31 +464,58 @@ document.getElementById('booking-form').addEventListener('submit', async functio
         checkin:      document.getElementById('f-checkin').value,
         checkout:     document.getElementById('f-checkout').value,
         huespedes:    document.getElementById('f-huespedes').value,
+        idioma:       document.getElementById('f-idioma').value,
         notas:        document.getElementById('f-notas').value,
         cupon:        document.getElementById('f-cupon').value.toUpperCase(),
         descuento:    currentDiscount,
         total:        total.toFixed(2),
+        currency:     currency,
         nights:       nights,
-        room_label:   selectedLabel
+        room_label:   selectedLabel,
+        extra_transporte: document.getElementById('f-extra-transporte').checked,
+        extra_tour:       document.getElementById('f-extra-tour').checked
     };
 
-    const res  = await fetch('<?php echo BASE_URL; ?>api/reservar.php', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload)
-    });
-    const data = await res.json();
+    try {
+        const res  = await fetch('<?php echo BASE_URL; ?>api/reservar.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
 
-    if (data.success) {
-        // Open WhatsApp with pre-filled message
-        const msg = encodeURIComponent(data.whatsapp_msg);
-        window.open(`https://wa.me/593${data.whatsapp_number}?text=${msg}`, '_blank');
-        btn.innerHTML = '<i class="fa-solid fa-check"></i> ¡Reserva Enviada!';
-        btn.style.background = '#2ecc71';
-    } else {
+        if (data.success) {
+            Swal.fire({
+                title: '¡Reserva Registrada!',
+                text: 'Ahora te redirigiremos a la pasarela de pago segura para completar tu reserva con Visa o cualquier tarjeta.',
+                icon: 'info',
+                background: '#0c100c',
+                color: '#fff',
+                confirmButtonColor: '#c5a059',
+                confirmButtonText: 'Ir a Pagar'
+            }).then(() => {
+                // Redirigir a Mercado Pago
+                if (data.init_point) {
+                    window.location.href = data.init_point;
+                } else {
+                    Swal.fire('Error', 'No se pudo generar el enlace de pago. Por favor intente más tarde.', 'error');
+                }
+            });
+        } else {
+            throw new Error(data.message || 'Error desconocido');
+        }
+    } catch (error) {
+        console.error(error);
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> CONFIRMAR RESERVA';
-        alert('Error: ' + (data.message || 'Intenta de nuevo.'));
+        Swal.fire({
+            title: 'Error',
+            text: 'No pudimos procesar tu reserva: ' + error.message,
+            icon: 'error',
+            background: '#0c100c',
+            color: '#fff',
+            confirmButtonColor: '#e74c3c'
+        });
     }
 });
 </script>

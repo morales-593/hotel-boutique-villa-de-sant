@@ -1,133 +1,201 @@
--- ============================================================
--- VILLA DE SANT - Database Schema v2
--- ============================================================
-CREATE DATABASE IF NOT EXISTS hotel_villa_de_sant;
-USE hotel_villa_de_sant;
 
--- ============================================================
--- TABLA: usuarios
--- ============================================================
-CREATE TABLE IF NOT EXISTS usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'staff') DEFAULT 'admin',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- --------------------------------------------------------
 
--- ============================================================
--- TABLA: habitaciones (20 unidades totales)
--- ============================================================
-CREATE TABLE IF NOT EXISTS habitaciones (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    tipo VARCHAR(50) NOT NULL COMMENT 'Tipo de habitación (Single, Queen, etc.)',
-    numero VARCHAR(10) NOT NULL COMMENT 'Número de habitación ej: 101',
-    nombre VARCHAR(120) NOT NULL,
-    descripcion TEXT,
-    precio DECIMAL(10, 2) NOT NULL,
-    estado ENUM('disponible', 'ocupado', 'mantenimiento') DEFAULT 'disponible',
-    imagen VARCHAR(255),
-    caracteristicas JSON,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY uq_numero (numero)
-);
+--
+-- Estructura de tabla para la tabla `cupones`
+--
 
--- ============================================================
--- TABLA: cupones
--- ============================================================
-CREATE TABLE IF NOT EXISTS cupones (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    habitacion_tipo VARCHAR(50) DEFAULT NULL COMMENT 'Aplica a todo un tipo. NULL = global',
-    codigo VARCHAR(20) UNIQUE NOT NULL,
-    descuento INT NOT NULL,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    activo BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+CREATE TABLE `cupones` (
+  `id` int(11) NOT NULL,
+  `habitacion_tipo` varchar(50) DEFAULT NULL COMMENT 'Aplica a todo un tipo. NULL = global',
+  `codigo` varchar(20) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `activo` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- ============================================================
--- TABLA: reservas
--- ============================================================
-CREATE TABLE IF NOT EXISTS reservas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    habitacion_id INT,
-    nombre_cliente VARCHAR(100) NOT NULL,
-    email_cliente VARCHAR(100) NOT NULL,
-    telefono_cliente VARCHAR(20),
-    fecha_entrada DATE NOT NULL,
-    fecha_salida DATE NOT NULL,
-    num_huespedes INT DEFAULT 1,
-    total DECIMAL(10, 2) NOT NULL,
-    estado ENUM('pendiente', 'confirmada', 'cancelada') DEFAULT 'pendiente',
-    cupon_codigo VARCHAR(20) DEFAULT NULL,
-    descuento_aplicado INT DEFAULT 0,
-    notas TEXT DEFAULT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (habitacion_id) REFERENCES habitaciones(id)
-);
+--
+-- Volcado de datos para la tabla `cupones`
+--
 
--- ============================================================
--- DATOS: Admin (password: admin123)
--- ============================================================
-INSERT INTO usuarios (nombre, email, password, role)
-VALUES ('Administrador', 'admin@villadesant.com', '$2y$10$nUP/7WsUcPhj9rjhMxrv1O.4WVkc/Sta5zNLRCB8YnRONXlUmMyKu', 'admin')
-ON DUPLICATE KEY UPDATE id=id;
+INSERT INTO `cupones` (`id`, `habitacion_tipo`, `codigo`, `descuento`, `fecha_inicio`, `fecha_fin`, `activo`, `created_at`) VALUES
+(1, 'two_beds', 'DOSHABITAICION10', 10, '2026-04-10', '2026-08-31', 1, '2026-04-11 00:17:46'),
+(2, 'queen', 'QUEEN15SAN', 15, '2026-04-10', '2026-09-30', 1, '2026-04-11 00:17:46'),
+(3, 'single', 'SINGLE21AN', 20, '2026-05-01', '2026-10-31', 1, '2026-04-11 00:17:46'),
+(4, 'three_beds', 'FAMILY25SAN', 25, '2026-05-01', '2026-11-30', 1, '2026-04-11 00:17:46'),
+(5, 'suite', 'SUITE30SAN', 26, '2026-04-10', '2026-12-20', 1, '2026-04-11 00:17:46');
 
--- ============================================================
--- DATOS: 20 Habitaciones (6+6+6+1+1)
--- ============================================================
-INSERT INTO habitaciones (tipo, numero, nombre, descripcion, precio, estado, imagen, caracteristicas) VALUES
+-- --------------------------------------------------------
 
--- === SINGLE ROOM × 6 ===
-('single', '101', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/single/single room1.jpg', '["fa-wifi:WiFi Incluido","fa-mountain-sun:Vista Panorámica","fa-martini-glass:Minibar Premium","fa-snowflake:Aire Acondicionado"]'),
-('single', '102', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/single/single room2.jpg', '["fa-wifi:WiFi Incluido","fa-mountain-sun:Vista Panorámica","fa-martini-glass:Minibar Premium","fa-snowflake:Aire Acondicionado"]'),
-('single', '103', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/single/single room3.jpg', '["fa-wifi:WiFi Incluido","fa-mountain-sun:Vista Panorámica","fa-martini-glass:Minibar Premium","fa-snowflake:Aire Acondicionado"]'),
-('single', '104', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/single/single room1.jpg', '["fa-wifi:WiFi Incluido","fa-mountain-sun:Vista Panorámica","fa-martini-glass:Minibar Premium","fa-snowflake:Aire Acondicionado"]'),
-('single', '105', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/single/single room2.jpg', '["fa-wifi:WiFi Incluido","fa-mountain-sun:Vista Panorámica","fa-martini-glass:Minibar Premium","fa-snowflake:Aire Acondicionado"]'),
-('single', '106', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/single/single room3.jpg', '["fa-wifi:WiFi Incluido","fa-mountain-sun:Vista Panorámica","fa-martini-glass:Minibar Premium","fa-snowflake:Aire Acondicionado"]'),
+--
+-- Estructura de tabla para la tabla `habitaciones`
+--
 
--- === QUEEN ROOM × 6 ===
-('queen', '201', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 110.00, 'disponible', 'assets/img/queen/queen1.jpg', '["fa-bed:Cama Queen Size","fa-door-open:Acceso al Patio","fa-tv:Smart TV","fa-box:King Bed disponible"]'),
-('queen', '202', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 110.00, 'disponible', 'assets/img/queen/queen2.jpg', '["fa-bed:Cama Queen Size","fa-door-open:Acceso al Patio","fa-tv:Smart TV","fa-box:King Bed disponible"]'),
-('queen', '203', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 110.00, 'disponible', 'assets/img/queen/queen1.jpg', '["fa-bed:Cama Queen Size","fa-door-open:Acceso al Patio","fa-tv:Smart TV","fa-box:King Bed disponible"]'),
-('queen', '204', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 110.00, 'disponible', 'assets/img/queen/queen2.jpg', '["fa-bed:Cama Queen Size","fa-door-open:Acceso al Patio","fa-tv:Smart TV","fa-box:King Bed disponible"]'),
-('queen', '205', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 110.00, 'disponible', 'assets/img/queen/queen1.jpg', '["fa-bed:Cama Queen Size","fa-door-open:Acceso al Patio","fa-tv:Smart TV","fa-box:King Bed disponible"]'),
-('queen', '206', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 110.00, 'disponible', 'assets/img/queen/queen2.jpg', '["fa-bed:Cama Queen Size","fa-door-open:Acceso al Patio","fa-tv:Smart TV","fa-box:King Bed disponible"]'),
+CREATE TABLE `habitaciones` (
+  `id` int(11) NOT NULL,
+  `tipo` varchar(50) NOT NULL COMMENT 'Tipo de habitación (Single, Queen, etc.)',
+  `numero` varchar(10) NOT NULL COMMENT 'Número de habitación ej: 101',
+  `nombre` varchar(120) NOT NULL,
+  `descripcion` text DEFAULT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `estado` enum('disponible','ocupado','mantenimiento') DEFAULT 'disponible',
+  `imagen` varchar(255) DEFAULT NULL,
+  `caracteristicas` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`caracteristicas`)),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- === TWO BEDS × 6 ===
-('two_beds', '301', 'Two Beds Room - Non Smoking', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 135.00, 'disponible', 'assets/img/two beds/two beds.jpg', '["fa-bed:2 Camas Queen","fa-building-columns:Techos Altos","fa-desktop:Escritorio","fa-vault:Caja Fuerte"]'),
-('two_beds', '302', 'Two Beds Room - Non Smoking', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 135.00, 'disponible', 'assets/img/two beds/two beds2.jpg', '["fa-bed:2 Camas Queen","fa-building-columns:Techos Altos","fa-desktop:Escritorio","fa-vault:Caja Fuerte"]'),
-('two_beds', '303', 'Two Beds Room - Non Smoking', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 135.00, 'disponible', 'assets/img/two beds/two beds3.jpg', '["fa-bed:2 Camas Queen","fa-building-columns:Techos Altos","fa-desktop:Escritorio","fa-vault:Caja Fuerte"]'),
-('two_beds', '304', 'Two Beds Room - Non Smoking', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 135.00, 'disponible', 'assets/img/two beds/two beds.jpg', '["fa-bed:2 Camas Queen","fa-building-columns:Techos Altos","fa-desktop:Escritorio","fa-vault:Caja Fuerte"]'),
-('two_beds', '305', 'Two Beds Room - Non Smoking', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 135.00, 'disponible', 'assets/img/two beds/two beds2.jpg', '["fa-bed:2 Camas Queen","fa-building-columns:Techos Altos","fa-desktop:Escritorio","fa-vault:Caja Fuerte"]'),
-('two_beds', '306', 'Two Beds Room - Non Smoking', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 135.00, 'disponible', 'assets/img/two beds/two beds3.jpg', '["fa-bed:2 Camas Queen","fa-building-columns:Techos Altos","fa-desktop:Escritorio","fa-vault:Caja Fuerte"]'),
+--
+-- Volcado de datos para la tabla `habitaciones`
+--
 
--- === THREE BEDS × 1 ===
-('three_beds', '401', 'Three Beds - Non Smoking', 'Nuestra habitación más amplia para grupos familiares. Cuenta con una cama Queen, una plaza y media y una plaza individual, ofreciendo flexibilidad para toda la familia.', 160.00, 'disponible', 'assets/img/three beds/three beds.jpg', '["fa-bed:1 Cama Queen","fa-bed:1 Plaza y Media","fa-bed:1 Plaza","fa-bath:Baño Doble","fa-people-group:Sala Común"]'),
+INSERT INTO `habitaciones` (`id`, `tipo`, `numero`, `nombre`, `descripcion`, `precio`, `estado`, `imagen`, `caracteristicas`, `created_at`) VALUES
+(1, 'single', '101', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-wifi:WiFi Incluido\",\"fa-mountain-sun:Vista Panorámica\",\"fa-martini-glass:Minibar Premium\",\"fa-snowflake:Aire Acondicionado\"]', '2026-04-11 00:17:46'),
+(2, 'single', '102', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-wifi:WiFi Incluido\",\"fa-mountain-sun:Vista Panorámica\",\"fa-martini-glass:Minibar Premium\",\"fa-snowflake:Aire Acondicionado\"]', '2026-04-11 00:17:46'),
+(3, 'single', '103', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-wifi:WiFi Incluido\",\"fa-mountain-sun:Vista Panorámica\",\"fa-martini-glass:Minibar Premium\",\"fa-snowflake:Aire Acondicionado\"]', '2026-04-11 00:17:46'),
+(4, 'single', '104', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-wifi:WiFi Incluido\",\"fa-mountain-sun:Vista Panorámica\",\"fa-martini-glass:Minibar Premium\",\"fa-snowflake:Aire Acondicionado\"]', '2026-04-11 00:17:46'),
+(5, 'single', '105', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-wifi:WiFi Incluido\",\"fa-mountain-sun:Vista Panorámica\",\"fa-martini-glass:Minibar Premium\",\"fa-snowflake:Aire Acondicionado\"]', '2026-04-11 00:17:46'),
+(6, 'single', '106', 'Single Room - Non Smoking', 'Habitación individual con diseño único y personalizado. Ideal para viajeros solos que buscan una experiencia íntima y auténtica en el corazón colonial de Quito.', 75.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-wifi:WiFi Incluido\",\"fa-mountain-sun:Vista Panorámica\",\"fa-martini-glass:Minibar Premium\",\"fa-snowflake:Aire Acondicionado\"]', '2026-04-11 00:17:46'),
+(7, 'queen', '201', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 80.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:Cama Queen Size\",\"fa-door-open:Acceso al Patio\",\"fa-tv:Smart TV\",\"fa-box:King Bed disponible\"]', '2026-04-11 00:17:46'),
+(8, 'queen', '202', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 80.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:Cama Queen Size\",\"fa-door-open:Acceso al Patio\",\"fa-tv:Smart TV\",\"fa-box:King Bed disponible\"]', '2026-04-11 00:17:46'),
+(9, 'queen', '203', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 80.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:Cama Queen Size\",\"fa-door-open:Acceso al Patio\",\"fa-tv:Smart TV\",\"fa-box:King Bed disponible\"]', '2026-04-11 00:17:46'),
+(10, 'queen', '204', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 80.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:Cama Queen Size\",\"fa-door-open:Acceso al Patio\",\"fa-tv:Smart TV\",\"fa-box:King Bed disponible\"]', '2026-04-11 00:17:46'),
+(11, 'queen', '205', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 80.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:Cama Queen Size\",\"fa-door-open:Acceso al Patio\",\"fa-tv:Smart TV\",\"fa-box:King Bed disponible\"]', '2026-04-11 00:17:46'),
+(12, 'queen', '206', 'Queen Room - Non Smoking', 'Elegante habitación con cama Queen Size. Perfecta para parejas que desean una estancia romántica rodeados de arquitectura colonial y comodidades modernas.', 80.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:Cama Queen Size\",\"fa-door-open:Acceso al Patio\",\"fa-tv:Smart TV\",\"fa-box:King Bed disponible\"]', '2026-04-11 00:17:46'),
+(13, 'two_beds', 'abc', 'Habitación con dos camas - No fumadores', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 20.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:2 Camas Queen\",\"fa-building-columns:Techos Altos\",\"fa-desktop:Escritorio\",\"fa-vault:Caja Fuerte\"]', '2026-04-11 00:17:46'),
+(14, 'two_beds', '302', 'Habitación con dos camas - No fumadores', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 20.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:2 Camas Queen\",\"fa-building-columns:Techos Altos\",\"fa-desktop:Escritorio\",\"fa-vault:Caja Fuerte\"]', '2026-04-11 00:17:46'),
+(15, 'two_beds', '303', 'Habitación con dos camas - No fumadores', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 20.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:2 Camas Queen\",\"fa-building-columns:Techos Altos\",\"fa-desktop:Escritorio\",\"fa-vault:Caja Fuerte\"]', '2026-04-11 00:17:46'),
+(16, 'two_beds', '304', 'Habitación con dos camas - No fumadores', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 20.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:2 Camas Queen\",\"fa-building-columns:Techos Altos\",\"fa-desktop:Escritorio\",\"fa-vault:Caja Fuerte\"]', '2026-04-11 00:17:46'),
+(17, 'two_beds', '305', 'Habitación con dos camas - No fumadores', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 20.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:2 Camas Queen\",\"fa-building-columns:Techos Altos\",\"fa-desktop:Escritorio\",\"fa-vault:Caja Fuerte\"]', '2026-04-11 00:17:46'),
+(18, 'two_beds', '306', 'Habitación con dos camas - No fumadores', 'Espaciosa habitación con dos camas Queen Size. Ideal para familias o amigos que viajan juntos y quieren el máximo confort con espacio propio para cada uno.', 20.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:2 Camas Queen\",\"fa-building-columns:Techos Altos\",\"fa-desktop:Escritorio\",\"fa-vault:Caja Fuerte\"]', '2026-04-11 00:17:46'),
+(19, 'three_beds', '401', 'Three Beds - Non Smoking', 'Nuestra habitación más amplia para grupos familiares. Cuenta con una cama Queen, una plaza y media y una plaza individual, ofreciendo flexibilidad para toda la familia.', 160.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-bed:1 Cama Queen\",\"fa-bed:1 Plaza y Media\",\"fa-bed:1 Plaza\",\"fa-bath:Baño Doble\",\"fa-people-group:Sala Común\"]', '2026-04-11 00:17:46'),
+(20, 'suite', '501', 'Suite - Non Smoking', 'Nuestra suite colonial insignia. Una experiencia de lujo completo con mobiliario de época, ambiente insonorizado, balcón privado y detalles de confort que la hacen única.', 85.00, 'disponible', 'assets/img/hero_home.png', '[\"fa-gem:Mobiliario de Lujo\",\"fa-volume-xmark:Insonorizada\",\"fa-archway:Habitación Colonial\",\"fa-door-open:Balcón Privado\"]', '2026-04-11 00:17:46');
 
--- === SUITE × 1 ===
-('suite', '501', 'Suite - Non Smoking', 'Nuestra suite colonial insignia. Una experiencia de lujo completo con mobiliario de época, ambiente insonorizado, balcón privado y detalles de confort que la hacen única.', 200.00, 'disponible', 'assets/img/suite/suites.jpg', '["fa-gem:Mobiliario de Lujo","fa-volume-xmark:Insonorizada","fa-archway:Habitación Colonial","fa-door-open:Balcón Privado"]')
+-- --------------------------------------------------------
 
-ON DUPLICATE KEY UPDATE
-    estado = VALUES(estado),
-    precio = VALUES(precio),
-    descripcion = VALUES(descripcion),
-    imagen = VALUES(imagen),
-    caracteristicas = VALUES(caracteristicas);
+--
+-- Estructura de tabla para la tabla `reservas`
+--
 
--- ============================================================
--- DATOS: Cupones por tipo de habitación
--- ============================================================
-INSERT INTO cupones (habitacion_tipo, codigo, descuento, fecha_inicio, fecha_fin, activo) VALUES
-('single',     'SINGLE10SAN',  10, '2026-04-10', '2026-08-31', 1),
-('queen',      'QUEEN15SAN',   15, '2026-04-10', '2026-09-30', 1),
-('two_beds',   'TWINS20SAN',   20, '2026-05-01', '2026-10-31', 1),
-('three_beds', 'FAMILY25SAN',  25, '2026-05-01', '2026-11-30', 1),
-('suite',      'SUITE30SAN',   30, '2026-04-10', '2026-12-20', 1)
-ON DUPLICATE KEY UPDATE
-    descuento    = VALUES(descuento),
-    fecha_inicio = VALUES(fecha_inicio),
-    fecha_fin    = VALUES(fecha_fin),
-    activo       = VALUES(activo);
+CREATE TABLE `reservas` (
+  `id` int(11) NOT NULL,
+  `habitacion_id` int(11) DEFAULT NULL,
+  `nombre_cliente` varchar(100) NOT NULL,
+  `email_cliente` varchar(100) NOT NULL,
+  `telefono_cliente` varchar(20) DEFAULT NULL,
+  `fecha_entrada` date NOT NULL,
+  `fecha_salida` date NOT NULL,
+  `num_huespedes` int(11) DEFAULT 1,
+  `total` decimal(10,2) NOT NULL,
+  `estado` enum('pendiente','confirmada','cancelada') DEFAULT 'pendiente',
+  `cupon_codigo` varchar(20) DEFAULT NULL,
+  `descuento_aplicado` int(11) DEFAULT 0,
+  `notas` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reservas`
+--
+
+INSERT INTO `reservas` (`id`, `habitacion_id`, `nombre_cliente`, `email_cliente`, `telefono_cliente`, `fecha_entrada`, `fecha_salida`, `num_huespedes`, `total`, `estado`, `cupon_codigo`, `descuento_aplicado`, `notas`, `created_at`) VALUES
+(1, 13, 'wiliam', 'wiliampuntomorales45@gmail.com', '1234567889', '2026-04-11', '2026-04-11', 2, 0.09, 'pendiente', NULL, 0, NULL, '2026-04-12 02:18:15');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('admin','staff') DEFAULT 'admin',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `role`, `created_at`) VALUES
+(1, 'Administrador', 'admin@villadesant.com', '$2y$10$nUP/7WsUcPhj9rjhMxrv1O.4WVkc/Sta5zNLRCB8YnRONXlUmMyKu', 'admin', '2026-04-11 00:17:46'),
+(2, 'wiliam', 'wiliampuntomorales45@gmail.com', '$2y$10$eSqpSjux/oTlpVAUJxd8fuZaR5LOqhKM41ExZoX5k5KO5CvrWxoz2', 'admin', '2026-04-12 02:09:15');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `cupones`
+--
+ALTER TABLE `cupones`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `codigo` (`codigo`);
+
+--
+-- Indices de la tabla `habitaciones`
+--
+ALTER TABLE `habitaciones`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `uq_numero` (`numero`);
+
+--
+-- Indices de la tabla `reservas`
+--
+ALTER TABLE `reservas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `habitacion_id` (`habitacion_id`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `cupones`
+--
+ALTER TABLE `cupones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `habitaciones`
+--
+ALTER TABLE `habitaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `reservas`
+--
+ALTER TABLE `reservas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `reservas`
+--
+ALTER TABLE `reservas`
+  ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`habitacion_id`) REFERENCES `habitaciones` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -120,10 +120,6 @@ include_once "views/layouts/header.php";
                     <h2 class="gold-text">Preguntas Frecuentes</h2>
                     <div class="faq-grid">
                         <div class="faq-item">
-                            <div class="faq-question">¿Están céntricos? <i class="fa-solid fa-chevron-down"></i></div>
-                            <div class="faq-answer">Sí, estamos ubicados estratégicamente en el corazón de Quito, permitiéndole acceder fácilmente a los principales puntos culturales y financieros de la ciudad.</div>
-                        </div>
-                        <div class="faq-item">
                             <div class="faq-question">¿Están cerca del mercado Artesanal de la Mariscal? <i class="fa-solid fa-chevron-down"></i></div>
                             <div class="faq-answer">Nos encontramos en una ubicación privilegiada, a pocos minutos del emblemático Mercado Artesanal de La Mariscal, ideal para descubrir artesanías y cultura local.</div>
                         </div>

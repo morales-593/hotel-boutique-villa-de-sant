@@ -7,19 +7,22 @@ $db = (new Database())->getConnection();
 // Lógica de edición/actualización
 if (isset($_POST['save_coupon'])) {
     $id = intval($_POST['coupon_id']);
+    $codigo = strtoupper(trim($_POST['codigo']));
+    $habitacion_tipo = !empty($_POST['habitacion_tipo']) ? $_POST['habitacion_tipo'] : null;
     $descuento = intval($_POST['descuento']);
     $fecha_ini = $_POST['fecha_inicio'];
     $fecha_fin = $_POST['fecha_fin'];
     $activo = isset($_POST['activo']) ? 1 : 0;
     
-    $stmt = $db->prepare("UPDATE cupones SET descuento = ?, fecha_inicio = ?, fecha_fin = ?, activo = ? WHERE id = ?");
-    if ($stmt->execute([$descuento, $fecha_ini, $fecha_fin, $activo, $id])) {
+    $stmt = $db->prepare("UPDATE cupones SET habitacion_tipo = ?, codigo = ?, descuento = ?, fecha_inicio = ?, fecha_fin = ?, activo = ? WHERE id = ?");
+    if ($stmt->execute([$habitacion_tipo, $codigo, $descuento, $fecha_ini, $fecha_fin, $activo, $id])) {
         $success_json = json_encode(['title' => '¡Actualizado!', 'text' => 'Los cambios se han aplicado.', 'icon' => 'success']);
     }
 }
 
-// Obtener todos los cupones
+// Obtener todos los cupones y categorías de habitación
 $cupones = $db->query("SELECT * FROM cupones ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
+$categorias = $db->query("SELECT DISTINCT tipo, nombre FROM habitaciones ORDER BY precio ASC")->fetchAll(PDO::FETCH_ASSOC);
 
 include_once "views/layouts/admin_header.php";
 ?>
@@ -61,11 +64,30 @@ include_once "views/layouts/admin_header.php";
                 </div>
                 <div style="font-size: 0.65rem; color: <?php echo $status_color; ?>; font-weight: 900; letter-spacing: 1px; margin-top: 5px;">
                     ● <?php echo $status_label; ?>
+                    <?php if($cup['habitacion_tipo']): ?> | APLICA A: <?php echo strtoupper($cup['habitacion_tipo']); ?><?php else: ?> | GLOBAL<?php endif; ?>
                 </div>
             </div>
 
             <form method="POST">
                 <input type="hidden" name="coupon_id" value="<?php echo $cup['id']; ?>">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <label style="display: block; font-size: 0.65rem; color: #888; margin-bottom: 5px;">CÓDIGO DE CUPÓN</label>
+                        <input type="text" name="codigo" value="<?php echo htmlspecialchars($cup['codigo']); ?>" style="width: 100%; text-transform: uppercase;" required>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.65rem; color: #888; margin-bottom: 5px;">HABITACIÓN APLICABLE</label>
+                        <select name="habitacion_tipo" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid rgba(212,175,55,0.3); background: #111; color: white;">
+                            <option value="">Todas (Global)</option>
+                            <?php foreach($categorias as $cat): ?>
+                                <option value="<?php echo $cat['tipo']; ?>" <?php echo $cup['habitacion_tipo'] === $cat['tipo'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($cat['nombre']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                     <div>

@@ -55,7 +55,7 @@ include_once "views/layouts/header.php";
 
 <main>
     <section class="page-hero">
-        <div class="page-hero-bg" id="nos-hero-bg" style="background-image: url('<?php echo BASE_URL; ?>assets/img/nosotros/nosotros1.jpg')"></div>
+        <div class="page-hero-bg" id="nos-hero-bg" style="background-image: url('<?php echo BASE_URL; ?>assets/img/home/hero_home.jpg')"></div>
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
             <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Logo" class="hero-logo-glow" style="max-width: 70px;">

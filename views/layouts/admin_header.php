@@ -11,7 +11,7 @@ $action = $_GET['action'] ?? 'dashboard';
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/admin.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/admin.css?v=<?php echo time(); ?>">
 </head>
 <body>
     <!-- Mobile Nav Toggle -->
@@ -27,14 +27,28 @@ $action = $_GET['action'] ?? 'dashboard';
         <a href="<?php echo BASE_URL; ?>?action=dashboard" class="nav-link <?php echo $action == 'dashboard' ? 'active' : ''; ?>">
             <i class="fas fa-chart-line"></i> Dashboard
         </a>
-        <a href="<?php echo BASE_URL; ?>?action=admin-habitaciones" class="nav-link <?php echo $action == 'admin-habitaciones' ? 'active' : ''; ?>">
-            <i class="fas fa-bed"></i> Habitaciones
-        </a>
+        <div class="nav-dropdown <?php echo (strpos($action, 'admin-habitaciones') !== false || $action == 'admin-precios') ? 'active' : ''; ?>">
+            <div class="nav-link nav-dropdown-toggle" onclick="this.parentElement.classList.toggle('active')">
+                <span><i class="fas fa-bed"></i> Habitaciones</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="nav-sub-menu">
+                <a href="<?php echo BASE_URL; ?>?action=admin-habitaciones" class="nav-sub-link <?php echo $action == 'admin-habitaciones' ? 'active' : ''; ?>">
+                    <i class="fas fa-circle"></i> Gestión de Unidades
+                </a>
+                <a href="<?php echo BASE_URL; ?>?action=admin-precios" class="nav-sub-link <?php echo $action == 'admin-precios' ? 'active' : ''; ?>">
+                    <i class="fas fa-circle"></i> Información y Precios
+                </a>
+            </div>
+        </div>
         <a href="<?php echo BASE_URL; ?>?action=admin-reservas" class="nav-link <?php echo $action == 'admin-reservas' ? 'active' : ''; ?>">
             <i class="fas fa-calendar-check"></i> Reservas
         </a>
         <a href="<?php echo BASE_URL; ?>?action=admin-cupones" class="nav-link <?php echo $action == 'admin-cupones' ? 'active' : ''; ?>">
             <i class="fas fa-ticket-alt"></i> Cupones
+        </a>
+        <a href="<?php echo BASE_URL; ?>?action=admin-experiencias" class="nav-link <?php echo $action == 'admin-experiencias' ? 'active' : ''; ?>">
+            <i class="fas fa-images"></i> Experiencias
         </a>
         <?php if ($_SESSION['role'] === 'admin'): ?>
         <a href="<?php echo BASE_URL; ?>?action=admin-usuarios" class="nav-link <?php echo $action == 'admin-usuarios' ? 'active' : ''; ?>">

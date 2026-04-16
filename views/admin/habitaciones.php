@@ -90,9 +90,12 @@ include_once "views/layouts/admin_header.php";
     
     <!-- HEADER -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 15px;">
-        <h2 class="serif gold-text" style="font-size: clamp(1.4rem, 4vw, 2.2rem); margin: 0;">Gestión de Habitaciones</h2>
-        <a href="index.php?action=dashboard" class="btn-gold" style="padding: 10px 22px; font-size: 0.75rem; border-radius: 50px;">
-            <i class="fas fa-arrow-left"></i> VOLVER AL DASHBOARD
+        <div>
+            <h2 class="serif gold-text" style="font-size: clamp(1.4rem, 4vw, 2.2rem); margin: 0;">Gestión de Unidades</h2>
+            <p style="color: #888; margin-top: 5px;">Controla el estado operativo y numeración de cada habitación física.</p>
+        </div>
+        <a href="index.php?action=admin-precios" class="btn-gold" style="padding: 10px 22px; font-size: 0.75rem; border-radius: 50px;">
+            <i class="fas fa-tag"></i> EDITAR INFORMACIÓN Y PRECIOS
         </a>
     </div>
 
@@ -153,22 +156,22 @@ include_once "views/layouts/admin_header.php";
 
 </div>
 
-<!-- SWEETALERT NOTIFICATION -->
 <?php if ($success_json): ?>
 <script>
-    const data = <?php echo $success_json; ?>;
-    Swal.fire({
-        ...data,
-        background: '#151921',
-        color: '#fff',
-        confirmButtonColor: '#c5a059',
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            ...<?php echo $success_json; ?>,
+            background: '#151921',
+            color: '#fff',
+            confirmButtonColor: '#c5a059',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true
+        });
     });
 </script>
 <?php endif; ?>
 
-<?php include_once "views/layouts/admin_footer.php"; ?>
+<?php include_once "views/layouts/admin_header.php"; ?>

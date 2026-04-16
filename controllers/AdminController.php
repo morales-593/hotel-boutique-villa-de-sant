@@ -17,12 +17,20 @@ class AdminController {
         require_once 'views/admin/habitaciones.php';
     }
 
+    public function precios() {
+        require_once 'views/admin/habitaciones_info.php';
+    }
+
     public function reservas() {
         require_once 'views/admin/reservas.php';
     }
 
     public function cupones() {
         require_once 'views/admin/cupones.php';
+    }
+
+    public function experiencias() {
+        require_once 'views/admin/experiencias.php';
     }
 
     public function usuarios() {

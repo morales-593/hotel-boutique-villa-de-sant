@@ -21,7 +21,8 @@ Este sistema es una plataforma web completa que automatiza los procesos centrale
     - Perfeccionamiento de la búsqueda y filtros por fecha.
     - **Reserva Manual:** Modal responsivo para registros directos por categoría.
     - **Auto-compactación de IDs:** Al eliminar registros, el sistema reordena automáticamente los IDs para mantener la base de datos limpia.
-  - **Sistema de Cupones Inteligente:** Lógica de expiración automática por fecha y control de estado bajo demanda.
+  - **Sistema de Cupones Inteligente:** Lógica de expiración automática por fecha, control de estado bajo demanda y edición dinámica de códigos de descuento.
+    - **Gestión de Precios e Información:** Interfaz interactiva para actualizar tarifas, descripciones y fotos de portada de la vista de cada categoría al instante.
   - **Optimización UI/UX:** Tipografía técnica (0.9rem), Sidebar compacto (240px) y modales responsivos con scroll interno para dispositivos móviles.
 
 ## 🛠️ Tecnologías Utilizadas
@@ -62,7 +63,7 @@ Este sistema es una plataforma web completa que automatiza los procesos centrale
 4. **Configuración:** Edita `config/database.php` con tus credenciales locales si es necesario.
 5. **Acceso:** Abre tu navegador y dirígete a `http://localhost/hotel-boutique-villa-de-sant`.
 
-## 🔒 Medidas de Seguridad Aplicadas
+## 🛡️ Medidas de Seguridad Aplicadas
 
 Para garantizar la integridad de los datos y la estabilidad del sistema, se han implementado las siguientes medidas:
 
@@ -71,6 +72,29 @@ Para garantizar la integridad de los datos y la estabilidad del sistema, se han 
 3. **Manejo Blindado de Sesiones:** Atributos `HttpOnly` en cookies para mitigar riesgos de XSS y secuestro de sesión.
 4. **Validación de Entradas:** Filtrado de datos recibidos del lado del cliente antes de su procesamiento.
 5. **Desactivación de Listado de Directorio:** Evita que atacantes puedan navegar por la estructura de archivos en el navegador.
+
+## 📝 Resumen Técnico de Implementación (Prompt de Estado)
+
+Este proyecto representa un sistema de gestión hotelera de grado comercial con las siguientes capacidades activas:
+
+- **Estatus del Motor de Reservas:** 
+  - Gestión dinámica de categorías (Single, Queen, Suite, etc.).
+  - Validación de cupones en tiempo real con lógica de expiración.
+  - Sincronización automática de disponibilidad tras la reserva.
+- **Pasarela de Pagos (Actualizado):**
+  - Integración con **Mercado Pago Checkout Pro** configurada en **Dólares (USD)**.
+  - Optimizada para tarjetas de crédito (**Visa**, **MasterCard**).
+  - Flujo de datos pre-llenados (Nombre, Email, Teléfono) para reducir la fricción del usuario.
+  - Sistema de **Webhooks** para confirmación automática de reservas en segundo plano.
+  - Página de éxito personalizada con diseño corporativo premium.
+- **Panel Administrativo:**
+  - CRUD completo de reservaciones con filtros avanzados.
+  - Sistema de roles (Admin/Staff) con control de acceso granular.
+  - Edición de contenidos (imágenes, precios, características) sin tocar el código.
+- **Infraestructura:**
+  - Código desacoplado en una arquitectura MVC simplificada.
+  - Rutas amigables mediante `.htaccess`.
+  - Diseño responsivo "mobile-first" con Vanilla CSS y animaciones avanzadas.
 
 ---
 © 2026 Hotel Boutique Villa de Sant. Todos los derechos reservados.

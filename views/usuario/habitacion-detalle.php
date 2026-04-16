@@ -45,22 +45,43 @@ try {
     $stmtC->execute([$room['tipo']]);
     $coupon = $stmtC->fetch(PDO::FETCH_ASSOC);
 } catch (Exception $e) { /* silent */ }
-// --- Resolve room images from folders ---
+// --- Resolve room images from folders (prioritizing new admin naming) ---
 $roomTypeFolder = "assets/img/" . str_replace('_', ' ', $room['tipo']);
-$localImages = [];
+$img1 = null; $img2 = null; $img3 = null;
+
 if (is_dir($roomTypeFolder)) {
-    $files = scandir($roomTypeFolder);
-    foreach ($files as $file) {
-        if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp'])) {
-            $localImages[] = $roomTypeFolder . '/' . $file;
+    // Priority 1: Check specifically for gallery1, 2, 3
+    for ($i = 1; $i <= 3; $i++) {
+        $files = glob($roomTypeFolder . "/gallery{$i}_*.*");
+        if (!empty($files)) {
+            ${"img$i"} = BASE_URL . $files[0];
         }
     }
+    
+    // Priority 2: Fallback to any images in folder if slots are empty
+    if (!$img1 || !$img2 || !$img3) {
+        $files = scandir($roomTypeFolder);
+        $remaining = [];
+        foreach ($files as $file) {
+            if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), ['jpg', 'jpeg', 'png', 'webp'])) {
+                if (strpos($file, 'gallery') === false) { // Don't duplicate the ones we already found
+                    $remaining[] = BASE_URL . $roomTypeFolder . '/' . $file;
+                }
+            }
+        }
+        if (!$img1) $img1 = $remaining[0] ?? null;
+        if (!$img2) $img2 = $remaining[1] ?? null;
+        if (!$img3) $img3 = $remaining[2] ?? null;
+    }
 }
+
 $mainImgPath = $room['imagen'] ? (strpos($room['imagen'], 'http') === 0 ? $room['imagen'] : BASE_URL . $room['imagen']) : 'https://lh3.googleusercontent.com/p/AF1QipMmnjV0M4xUEjDw-0RaGFiNhANIB6XM-I_a6War=s4000';
-$heroImg = isset($localImages[0]) ? BASE_URL . $localImages[0] : $mainImgPath;
-$img1 = $heroImg;
-$img2 = isset($localImages[1]) ? BASE_URL . $localImages[1] : $mainImgPath;
-$img3 = isset($localImages[2]) ? BASE_URL . $localImages[2] : $img1;
+
+// Final safety fallbacks
+if (!$img1) $img1 = $mainImgPath;
+if (!$img2) $img2 = $mainImgPath;
+if (!$img3) $img3 = $img1;
+$heroImg = $img1;
 
 $pageTitle = htmlspecialchars($room['nombre']) . " | Hotel Boutique Villa de Sant";
 $extraCSS  = '
@@ -384,6 +405,11 @@ include_once "views/layouts/header.php";
         <div class="booking-sidebar scroll-anim scroll-right">
             <h3 class="sidebar-title">Reserva tu Estancia</h3>
             <p class="sidebar-sub">Selecciona tus fechas y vive la experiencia del colibrí con los servicios incluidos. Consulta disponibilidad sin compromiso.</p>
+
+            <div style="font-size: 2.2rem; color: var(--primary-gold); font-weight: 800; margin-bottom: 25px; display: flex; align-items: baseline; gap: 8px;">
+                $<?php echo number_format($room['precio'], 2); ?> 
+                <span style="font-size: 0.9rem; color: var(--text-gray); font-weight: normal; letter-spacing: 1px;">/ noche</span>
+            </div>
 
             <ul class="sidebar-amenities">
                 <?php foreach ($amenities as $a): ?>

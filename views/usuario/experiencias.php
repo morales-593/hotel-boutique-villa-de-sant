@@ -1,5 +1,29 @@
 <?php
 require_once "config/config.php";
+require_once "config/database.php";
+require_once "models/Experience.php";
+
+$db = (new Database())->getConnection();
+$experience = new Experience($db);
+
+$secciones = $experience->getAllSections();
+$galeria = $experience->getGalleryPhotos();
+
+// Indexar secciones
+$seccionesMap = [];
+foreach ($secciones as $s) {
+    $seccionesMap[$s['seccion']] = $s;
+}
+
+$transporte = $seccionesMap['transporte'] ?? null;
+$tours = $seccionesMap['tours'] ?? null;
+
+// Indexar galería por posición
+$galeriaMap = [];
+foreach ($galeria as $g) {
+    $galeriaMap[intval($g['posicion'])] = $g;
+}
+
 $pageTitle = "Experiencias en Quito | Villa de Sant";
 $extraCSS = '
 <style>
@@ -33,6 +57,54 @@ $extraCSS = '
     .tour-360-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; width: 100%; max-width: 1000px; margin: 0 auto; }
     .tour-360-item { height: 350px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); border: 1px solid rgba(212, 175, 55, 0.3); background: #000; }
     @media (max-width: 900px) { .tour-360-grid { grid-template-columns: 1fr; } .tour-360-item { height: 300px; } }
+
+    /* ========= NEW FEATURE SECTIONS ========= */
+    .experience-feature {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        padding: 80px 0;
+    }
+    .feature-img-box {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        aspect-ratio: 16/10;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .feature-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+    .feature-img-box:hover img { transform: scale(1.05); }
+    
+    .feature-content h3 { font-size: 2.2rem; margin-bottom: 20px; color: var(--primary-gold); }
+    .feature-content p { color: var(--text-gray); line-height: 1.8; margin-bottom: 25px; font-size: 1.05rem; }
+    .feature-list { list-style: none; padding: 0; }
+    .feature-list li { display: flex; align-items: center; gap: 12px; color: var(--text-white); margin-bottom: 12px; font-size: 0.95rem; }
+    .feature-list li i { color: var(--primary-gold); font-size: 0.85rem; }
+
+    .keyword-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 25px;
+    }
+    .keyword-tag {
+        font-size: 0.65rem;
+        background: rgba(212,175,55,0.1);
+        color: var(--primary-gold);
+        padding: 5px 12px;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+        border: 1px solid rgba(212,175,55,0.2);
+    }
+
+    @media (max-width: 900px) {
+        .experience-feature { grid-template-columns: 1fr; gap: 40px; padding: 50px 0; }
+        .experience-feature.reverse { direction: initial; }
+        .experience-feature.reverse .feature-img-box { order: -1; }
+    }
 </style>';
 include_once "views/layouts/header.php";
 ?>
@@ -50,32 +122,121 @@ include_once "views/layouts/header.php";
         </div>
     </section>
 
+    <!-- TRANSPORTATION SECTION -->
+    <?php if ($transporte): 
+        $tags_t = json_decode($transporte['tags'] ?? '[]', true) ?: [];
+        $lista_t = json_decode($transporte['lista'] ?? '[]', true) ?: [];
+    ?>
+    <div class="container">
+        <section class="experience-feature scroll-anim scroll-fade">
+            <div class="feature-content">
+                <span class="gold-text" style="text-transform: uppercase; letter-spacing: 3px; font-weight: 700; font-size: 0.75rem; display: block; margin-bottom: 10px;"><?php echo e($transporte['subtitulo']); ?></span>
+                <h3 class="serif"><?php echo e($transporte['titulo']); ?></h3>
+                
+                <?php if (!empty($tags_t)): ?>
+                <div class="keyword-tags">
+                    <?php foreach ($tags_t as $tag): ?>
+                    <span class="keyword-tag"><?php echo e($tag); ?></span>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+
+                <p><?php echo e($transporte['descripcion']); ?></p>
+                <?php if (!empty($lista_t)): ?>
+                <ul class="feature-list">
+                    <?php foreach ($lista_t as $item): ?>
+                    <li><i class="<?php echo e($item['icono']); ?>"></i> <?php echo e($item['texto']); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+                <?php endif; ?>
+            </div>
+            <div class="feature-img-box">
+                <img src="<?php echo BASE_URL . $transporte['imagen']; ?>" alt="<?php echo e($transporte['titulo']); ?>">
+            </div>
+        </section>
+    </div>
+    <?php endif; ?>
+
     <div class="section-padding">
         <div class="container">
             <div class="double-collage-wrapper">
-                <!-- LEFT COLLAGE -->
+                <!-- LEFT COLLAGE (posiciones 1-4) -->
                 <div class="photo-collage-grid">
-                    <div class="pcg-item pcg-1 scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia1.jpg" alt="Experiencia 1"></div>
-                    <div class="pcg-item pcg-2 scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia9.jpg" alt="Experiencia 2"></div>
-                    <div class="pcg-item pcg-3 scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia3.jpg" alt="Experiencia 3"></div>
-                    <div class="pcg-item pcg-4 scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia4.jpg" alt="Experiencia 4"></div>
+                    <?php 
+                    $leftClasses = ['pcg-1', 'pcg-2', 'pcg-3', 'pcg-4'];
+                    for ($i = 1; $i <= 4; $i++):
+                        $foto = $galeriaMap[$i] ?? null;
+                        $cls = $leftClasses[$i - 1];
+                    ?>
+                    <div class="pcg-item <?php echo $cls; ?> scroll-anim">
+                        <?php if ($foto): ?>
+                        <img src="<?php echo BASE_URL . $foto['imagen']; ?>" alt="<?php echo e($foto['alt_text']); ?>">
+                        <?php endif; ?>
+                    </div>
+                    <?php endfor; ?>
                 </div>
-                <!-- RIGHT COLLAGE -->
+                <!-- RIGHT COLLAGE (posiciones 5-8) -->
                 <div class="photo-collage-grid">
-                    <div class="pcg-item pcg-1 scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia5.jpg" alt="Experiencia 5"></div>
-                    <div class="pcg-item pcg-2 scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia6.jpg" alt="Experiencia 6"></div>
-                    <div class="pcg-item pcg-3 scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia10.jpg" alt="Experiencia 7"></div>
-                    <div class="pcg-item pcg-4 scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia11.jpg" alt="Experiencia 8"></div>
+                    <?php 
+                    $rightClasses = ['pcg-1', 'pcg-2', 'pcg-3', 'pcg-4'];
+                    for ($i = 5; $i <= 8; $i++):
+                        $foto = $galeriaMap[$i] ?? null;
+                        $cls = $rightClasses[$i - 5];
+                    ?>
+                    <div class="pcg-item <?php echo $cls; ?> scroll-anim">
+                        <?php if ($foto): ?>
+                        <img src="<?php echo BASE_URL . $foto['imagen']; ?>" alt="<?php echo e($foto['alt_text']); ?>">
+                        <?php endif; ?>
+                    </div>
+                    <?php endfor; ?>
                 </div>
             </div>
 
-            <!-- Fila inferior - 12 imágenes en total -->
+            <!-- Fila inferior - posiciones 9-12 -->
             <div class="photo-collage-grid" style="grid-template-columns: repeat(4, 1fr); grid-auto-rows: 160px; margin-top: 12px;">
-                <div class="pcg-item scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia2.jpg" alt="Experiencia 2"></div>
-                <div class="pcg-item scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia7.jpg" alt="Experiencia 7"></div>
-                <div class="pcg-item scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia8.jpg" alt="Experiencia 8"></div>
-                <div class="pcg-item scroll-anim"><img src="<?php echo BASE_URL; ?>assets/img/experiencia/experiencia12.jpg" alt="Experiencia 12"></div>
+                <?php for ($i = 9; $i <= 12; $i++):
+                    $foto = $galeriaMap[$i] ?? null;
+                ?>
+                <div class="pcg-item scroll-anim">
+                    <?php if ($foto): ?>
+                    <img src="<?php echo BASE_URL . $foto['imagen']; ?>" alt="<?php echo e($foto['alt_text']); ?>">
+                    <?php endif; ?>
+                </div>
+                <?php endfor; ?>
             </div>
+
+            <!-- TOURS SECTION -->
+            <?php if ($tours): 
+                $tags_to = json_decode($tours['tags'] ?? '[]', true) ?: [];
+                $lista_to = json_decode($tours['lista'] ?? '[]', true) ?: [];
+            ?>
+            <section class="experience-feature reverse scroll-anim scroll-fade" style="border-top: 1px solid rgba(212,175,55,0.1); margin-top: 40px;">
+                <div class="feature-img-box">
+                    <img src="<?php echo BASE_URL . $tours['imagen']; ?>" alt="<?php echo e($tours['titulo']); ?>">
+                </div>
+                <div class="feature-content">
+                    <span class="gold-text" style="text-transform: uppercase; letter-spacing: 3px; font-weight: 700; font-size: 0.75rem; display: block; margin-bottom: 10px;"><?php echo e($tours['subtitulo']); ?></span>
+                    <h3 class="serif"><?php echo e($tours['titulo']); ?></h3>
+
+                    <?php if (!empty($tags_to)): ?>
+                    <div class="keyword-tags">
+                        <?php foreach ($tags_to as $tag): ?>
+                        <span class="keyword-tag"><?php echo e($tag); ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+
+                    <p><?php echo e($tours['descripcion']); ?></p>
+                    <?php if (!empty($lista_to)): ?>
+                    <ul class="feature-list">
+                        <?php foreach ($lista_to as $item): ?>
+                        <li><i class="<?php echo e($item['icono']); ?>"></i> <?php echo e($item['texto']); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php endif; ?>
+                </div>
+            </section>
+            <?php endif; ?>
         </div>
     </div>
 
