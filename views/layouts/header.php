@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hotel Boutique Villa de Sant - Lujo, cultura y agilidad en el corazón de Quito.">
-    <title><?php echo isset($pageTitle) ? $pageTitle : 'Hotel Boutique Villa de Sant'; ?></title>
+    <meta name="description" content="Hotel Centro - Lujo, cultura y agilidad en el corazón de Quito.">
+    <title><?php echo isset($pageTitle) ? $pageTitle : 'Hotel Centro'; ?></title>
 
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

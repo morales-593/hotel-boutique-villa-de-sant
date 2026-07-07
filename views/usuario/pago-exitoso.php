@@ -21,7 +21,7 @@ if ($status === 'approved' && $external_ref) {
     }
 }
 
-$pageTitle = "¡Pago Exitoso! | Hotel Boutique Villa de Sant";
+$pageTitle = "¡Pago Exitoso! | Hotel Centro";
 $extraCSS = '
 <style>
     .success-container {
@@ -98,7 +98,7 @@ include_once "../layouts/header.php";
         </div>
         <h1 class="success-title">¡Reserva Confirmada!</h1>
         <p class="success-text">
-            Gracias por elegir Hotel Boutique Villa de Sant. Tu pago ha sido procesado exitosamente con Visa/MasterCard y tu habitación ha sido reservada en USD.
+            Gracias por elegir Hotel Centro. Tu pago ha sido procesado exitosamente con Visa/MasterCard y tu habitación ha sido reservada en USD.
         </p>
 
         <div class="booking-details">

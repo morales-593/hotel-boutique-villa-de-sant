@@ -1,5 +1,5 @@
 <?php
-$pageTitle = "Suite Real | Hotel Boutique Villa de Sant";
+$pageTitle = "Suite Real | Hotel Centro";
 $extraCSS = '<link rel="stylesheet" href="' . BASE_URL . 'assets/css/rooms.css">';
 include_once "../layouts/header.php";
 ?>
@@ -9,7 +9,7 @@ include_once "../layouts/header.php";
     <section class="room-detail-hero" style="background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')">
         <div class="room-detail-overlay"></div>
         <div class="container room-header-content text-center scroll-anim scroll-fade">
-            <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Villa de Sant" class="hero-logo-glow" style="max-width: 50px;">
+            <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Hotel Centro" class="hero-logo-glow" style="max-width: 50px;">
             <div style="width: 60px; height: 2px; background: var(--primary-gold); margin: 0 auto 20px;"></div>
             <h1 class="gold-text" style="font-size: 3rem; margin-bottom: 20px;">Nuestras Estancias</h1>
             <p class="hero-subtitle" style="font-size: 1.1rem; color: #EEE;">Descubre el equilibrio perfecto entre la historia colonial y el confort contemporáneo.</p>
@@ -35,7 +35,7 @@ include_once "../layouts/header.php";
 
         <aside class="booking-sidebar scroll-anim scroll-right">
             <h3 class="serif gold-text">Reserva tu Estancia</h3>
-            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 25px;">Selecciona tus fechas y vive la experiencia del colibrí.</p>
+            <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 25px;">Selecciona tus fechas y vive una experiencia premium única.</p>
 
             <a href="reserva.php" class="btn btn-gold" style="width: 100%; display: block; text-align: center; padding: 15px; text-decoration: none;">
                 <i class="fa-solid fa-calendar-days"></i> CONSULTAR DISPONIBILIDAD

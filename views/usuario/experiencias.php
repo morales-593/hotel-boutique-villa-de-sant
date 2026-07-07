@@ -24,7 +24,7 @@ foreach ($galeria as $g) {
     $galeriaMap[intval($g['posicion'])] = $g;
 }
 
-$pageTitle = "Experiencias en Quito | Villa de Sant";
+$pageTitle = "Experiencias en Quito | Hotel Centro";
 $extraCSS = '
 <style>
     .double-collage-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
@@ -47,16 +47,6 @@ $extraCSS = '
         .pcg-1 { grid-column: span 2; }
         .pcg-3, .pcg-4 { grid-column: span 1; grid-row: span 1; }
     }
-    
-    .section-360-bg {
-        margin-top: 60px;
-        border-top: 1px solid rgba(212, 175, 55, 0.2);
-        border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-        background: linear-gradient(135deg, #0a110a 0%, #000000 100%);
-    }
-    .tour-360-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; width: 100%; max-width: 1000px; margin: 0 auto; }
-    .tour-360-item { height: 350px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); border: 1px solid rgba(212, 175, 55, 0.3); background: #000; }
-    @media (max-width: 900px) { .tour-360-grid { grid-template-columns: 1fr; } .tour-360-item { height: 300px; } }
 
     /* ========= NEW FEATURE SECTIONS ========= */
     .experience-feature {
@@ -116,7 +106,7 @@ include_once "views/layouts/header.php";
         </div>
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
-            <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Villa de Sant" class="hero-logo-glow" style="max-width: 70px;">
+            <img src="<?php echo BASE_URL; ?>assets/img/logo.png" alt="Hotel Centro" class="hero-logo-glow" style="max-width: 70px;">
             <div class="page-hero-divider"></div>
             <h1 class="page-hero-title serif gold-text">Experiencias de Usuario</h1>
         </div>
@@ -239,19 +229,6 @@ include_once "views/layouts/header.php";
             <?php endif; ?>
         </div>
     </div>
-
-    <section class="section-360-bg" style="padding: 60px 0;">
-        <div class="container text-center scroll-anim scroll-fade">
-            <p style="color: var(--primary-gold); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; font-size: 0.85rem; margin-bottom: 10px;">
-                <i class="fa-solid fa-vr-cardboard" style="margin-right: 8px;"></i>Exploración Virtual
-            </p>
-            <h2 class="serif gold-text" style="font-size: 2.5rem; margin-bottom: 15px;">Recorridos 360°</h2>
-            <div class="tour-360-grid scroll-anim scroll-fade">
-                <div class="tour-360-item"><iframe src="https://www.google.com/maps/embed?pb=!4v1680000000000!6m8!1m7!1sCIHM0ogKEICAgIDssrHyaA!2m2!1d-0.2064062!2d-78.4945526!3f120!4f100!5f0.7820865974627469" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
-                <div class="tour-360-item"><iframe src="https://www.google.com/maps/embed?pb=!4v1775444151019!6m8!1m7!1sCAoSFkNJSE0wb2dLRUlDQWdJRHNzdkd1SXc.!2m2!1d-0.2064062152678696!2d-78.4945525612083!3f175.13555631159855!4f-16.00812007753943!5f0.7820865974627469" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
-            </div>
-        </div>
-    </section>
 </main>
 
 <?php include_once "views/layouts/footer.php"; ?>

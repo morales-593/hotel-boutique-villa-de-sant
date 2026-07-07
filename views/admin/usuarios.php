@@ -183,7 +183,7 @@ include_once "views/layouts/admin_header.php";
 
             <div style="margin-bottom: 15px;">
                 <label style="display: block; font-size: 0.7rem; color: #888; margin-bottom: 5px;">CORREO ELECTRÓNICO</label>
-                <input type="email" name="email" id="userEmail" placeholder="admin@villadesant.com" required style="width: 100%;">
+                <input type="email" name="email" id="userEmail" placeholder="admin@hotelcentro.com" required style="width: 100%;">
             </div>
 
             <div id="passField" style="margin-bottom: 15px;">

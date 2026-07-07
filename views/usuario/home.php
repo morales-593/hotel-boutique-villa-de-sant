@@ -1,7 +1,7 @@
 <?php
 
 require_once "config/config.php";
-$pageTitle = "Hotel Boutique Villa de Sant | Inicio";
+$pageTitle = "Hotel Centro | Inicio";
 $extraCSS = '<link rel="stylesheet" href="' . BASE_URL . 'assets/css/home.css">';
 include_once "views/layouts/header.php";
 ?>
@@ -12,7 +12,7 @@ include_once "views/layouts/header.php";
         <div class="hero-overlay"></div>
         <div class="hero-container container">
             <div class="hero-text-side">
-                <h1 class="hero-title">VILLA DE SANT <span class="gold-highlight">BOUTIQUE HOTEL</span></h1>
+                <h1 class="hero-title">HOTEL CENTRO <span class="gold-highlight">BOUTIQUE HOTEL</span></h1>
                 <p class="hero-description">Disfruta de la elegancia colonial y el máximo confort en el centro histórico de Quito. Un santuario de paz diseñado para estancias inolvidables.</p>
                 <a href="<?php echo BASE_URL; ?>?action=reserva" class="btn-buy">RESERVA TU ESTANCIA</a>
                 
@@ -25,22 +25,22 @@ include_once "views/layouts/header.php";
             
             <div class="hero-image-side">
                 <div class="image-decorative-frame">
-                    <img src="<?php echo BASE_URL; ?>assets/img/home/hero_subject.png" alt="Villa de Sant Experience" class="hero-main-img">
+                    <img src="<?php echo BASE_URL; ?>assets/img/home/hero_subject.png" alt="Hotel Centro Experience" class="hero-main-img">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION: El Vuelo del Colibrí (Now ABOVE Amenities) -->
+    <!-- SECTION: La Estancia Ideal (Now ABOVE Amenities) -->
     <section class="section-padding story-section">
         <div class="container story-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
             <div class="story-image scroll-anim scroll-left" style="border-radius: 20px; overflow: hidden; height: 600px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-                <img src="<?php echo BASE_URL; ?>assets/img/home/home2.jpg" alt="Villa de Sant Interior" style="width:100%; height:100%; object-fit:cover;">
+                <img src="<?php echo BASE_URL; ?>assets/img/home/home2.jpg" alt="Hotel Centro Interior" style="width:100%; height:100%; object-fit:cover;">
             </div>
             <div class="story-content scroll-anim scroll-right">
-                <h2 class="gold-text serif">El Vuelo del Colibrí</h2>
-                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">En el corazón de Quito, surge Villa de Sant como un homenaje a la agilidad y la elegancia de nuestra ave más icónica. Nuestra historia se teje entre muros coloniales y un servicio contemporáneo que fluye sin esfuerzo.</p>
-                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 40px;">Cada rincón de nuestro hotel ha sido diseñado para transportarte a una época de esplendor, sin renunciar a las comodidades del lujo moderno. Descubre por qué somos el refugio favorito de quienes buscan algo más que un simple alojamiento.</p>
+                <h2 class="gold-text serif"><i class="fa-solid fa-hotel" style="margin-right: 10px;"></i>La Estancia Ideal</h2>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">En el corazón de Quito, surge Hotel Centro como la opción predilecta de alojamiento premium para el viajero contemporáneo. Nuestra propuesta fusiona el encanto arquitectónico del centro histórico con instalaciones modernas diseñadas para su máximo confort.</p>
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 40px;">Cada rincón de nuestro hotel ha sido pensado para garantizar una estancia placentera y funcional. Descubra el equilibrio perfecto entre hospitalidad, servicio de primer nivel y comodidad garantizada.</p>
                 <a href="habitaciones.php" class="btn btn-gold" style="padding: 18px 40px; border-radius: 4px; font-weight: 700;">EXPLORAR HABITACIONES</a>
             </div>
         </div>

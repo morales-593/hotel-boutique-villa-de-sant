@@ -18,7 +18,7 @@ $query = "
 ";
 $rooms = $db->query($query);
 
-$pageTitle = "Nuestras Estancias | Hotel Boutique Villa de Sant";
+$pageTitle = "Nuestras Estancias | Hotel Centro";
 $extraCSS = '
 <style>
 

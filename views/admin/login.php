@@ -10,7 +10,7 @@ if (isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceso Administrativo | Villa de Sant</title>
+    <title>Acceso Administrativo | Hotel Centro</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <!-- FontAwesome -->
@@ -220,7 +220,7 @@ if (isset($_SESSION['user_id'])) {
         <div class="login-card">
             <div class="logo-area">
                 <div class="logo-circle">
-                    <img src="assets/img/logo.png" alt="Villa de Sant">
+                    <img src="assets/img/logo.png" alt="Hotel Centro">
                 </div>
                 <h1>Panel de Gestión</h1>
                 <p class="subtitle">Acceso exclusivo para administradores</p>
@@ -231,7 +231,7 @@ if (isset($_SESSION['user_id'])) {
                     <label>Correo Electrónico</label>
                     <div class="input-wrapper">
                         <i class="fa-solid fa-envelope"></i>
-                        <input type="email" name="email" required placeholder="admin@villadesant.com">
+                        <input type="email" name="email" required placeholder="admin@hotelcentro.com">
                     </div>
                 </div>
 

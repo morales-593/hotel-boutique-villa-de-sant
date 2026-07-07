@@ -83,7 +83,7 @@ if (!$img2) $img2 = $mainImgPath;
 if (!$img3) $img3 = $img1;
 $heroImg = $img1;
 
-$pageTitle = htmlspecialchars($room['nombre']) . " | Hotel Boutique Villa de Sant";
+$pageTitle = htmlspecialchars($room['nombre']) . " | Hotel Centro";
 $extraCSS  = '
 <style>
     /* ========= HERO MINIMAL ========= */
@@ -404,7 +404,7 @@ include_once "views/layouts/header.php";
         <!-- RIGHT: BOOKING SIDEBAR -->
         <div class="booking-sidebar scroll-anim scroll-right">
             <h3 class="sidebar-title">Reserva tu Estancia</h3>
-            <p class="sidebar-sub">Selecciona tus fechas y vive la experiencia del colibrí con los servicios incluidos. Consulta disponibilidad sin compromiso.</p>
+            <p class="sidebar-sub">Selecciona tus fechas y vive una estancia placentera con los servicios incluidos. Consulta disponibilidad sin compromiso.</p>
 
             <div style="font-size: 2.2rem; color: var(--primary-gold); font-weight: 800; margin-bottom: 25px; display: flex; align-items: baseline; gap: 8px;">
                 $<?php echo number_format($room['precio'], 2); ?> 

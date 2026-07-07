@@ -7,7 +7,7 @@ $action = $_GET['action'] ?? 'dashboard';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración - Villa de Sant</title>
+    <title>Panel de Administración - Hotel Centro</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -23,7 +23,7 @@ $action = $_GET['action'] ?? 'dashboard';
     <div class="sidebar-overlay" id="adminSidebarOverlay"></div>
 
     <div class="sidebar" id="adminSidebar">
-        <h2>Villa de Sant</h2>
+        <h2>Hotel Centro</h2>
         <a href="<?php echo BASE_URL; ?>?action=dashboard" class="nav-link <?php echo $action == 'dashboard' ? 'active' : ''; ?>">
             <i class="fas fa-chart-line"></i> Dashboard
         </a>
@@ -44,9 +44,7 @@ $action = $_GET['action'] ?? 'dashboard';
         <a href="<?php echo BASE_URL; ?>?action=admin-reservas" class="nav-link <?php echo $action == 'admin-reservas' ? 'active' : ''; ?>">
             <i class="fas fa-calendar-check"></i> Reservas
         </a>
-        <a href="<?php echo BASE_URL; ?>?action=admin-cupones" class="nav-link <?php echo $action == 'admin-cupones' ? 'active' : ''; ?>">
-            <i class="fas fa-ticket-alt"></i> Cupones
-        </a>
+
         <a href="<?php echo BASE_URL; ?>?action=admin-experiencias" class="nav-link <?php echo $action == 'admin-experiencias' ? 'active' : ''; ?>">
             <i class="fas fa-images"></i> Experiencias
         </a>

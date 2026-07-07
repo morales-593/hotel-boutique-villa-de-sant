@@ -98,3 +98,9 @@ Este proyecto representa un sistema de gestión hotelera de grado comercial con 
 
 ---
 © 2026 Hotel Boutique Villa de Sant. Todos los derechos reservados.
+
+    private $host = "3306";
+    private $db_name = "if0_42096238_hotel_centro";
+    private $username = "if0_42096238";
+    private $password = "xSD950gLiil";
+    public $conn;

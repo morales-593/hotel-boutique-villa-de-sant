@@ -25,9 +25,6 @@ class AdminController {
         require_once 'views/admin/reservas.php';
     }
 
-    public function cupones() {
-        require_once 'views/admin/cupones.php';
-    }
 
     public function experiencias() {
         require_once 'views/admin/experiencias.php';

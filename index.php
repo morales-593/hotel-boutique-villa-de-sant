@@ -44,7 +44,6 @@ switch ($action) {
     case 'admin-habitaciones':
     case 'admin-precios':
     case 'admin-reservas':
-    case 'admin-cupones':
     case 'admin-experiencias':
     case 'admin-usuarios':
         require_once 'controllers/AdminController.php';
@@ -55,12 +54,11 @@ switch ($action) {
         if ($action === 'admin-habitaciones') $controller->habitaciones();
         if ($action === 'admin-precios') $controller->precios();
         if ($action === 'admin-reservas') $controller->reservas();
-        if ($action === 'admin-cupones') $controller->cupones();
         if ($action === 'admin-experiencias') $controller->experiencias();
         if ($action === 'admin-usuarios') $controller->usuarios();
         break;
 
-    // API endpoints (Opcional si usas Fetch/AJAX)
+    // API: guardar reserva
     case 'api-reservar':
         require_once 'api/reservar.php';
         break;

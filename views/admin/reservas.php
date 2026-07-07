@@ -23,9 +23,13 @@ if (isset($_POST['update_status'])) {
     $reserva_id = intval($_POST['reserva_id']);
     $nuevo_estado = $_POST['estado'];
     
-    if ($nuevo_estado == 'cancelada') {
-        $stmt_room = $db->prepare("UPDATE habitaciones SET estado = 'disponible' WHERE id = (SELECT habitacion_id FROM reservas WHERE id = ?)");
-        $stmt_room->execute([$reserva_id]);
+    // Sincronizar estado de la habitación según el estado de la reserva
+    if ($nuevo_estado == 'confirmada') {
+        $db->prepare("UPDATE habitaciones SET estado = 'ocupado' WHERE id = (SELECT habitacion_id FROM reservas WHERE id = ?)")
+           ->execute([$reserva_id]);
+    } elseif ($nuevo_estado == 'cancelada' || $nuevo_estado == 'pendiente') {
+        $db->prepare("UPDATE habitaciones SET estado = 'disponible' WHERE id = (SELECT habitacion_id FROM reservas WHERE id = ?)")
+           ->execute([$reserva_id]);
     }
     
     if ($resModel->updateStatus($reserva_id, $nuevo_estado)) {
@@ -50,10 +54,10 @@ if (isset($_POST['update_status'])) {
                 $room = $res['room_name'];
 
                 $msgs = [
-                    'es' => "Hola $name, te saluda el *Hotel Boutique Villa de Sant*. 🏨\n\nTu reserva para la habitación *$room* ha sido *CONFIRMADA*. ✅\n\n¡Estamos ansiosos por recibirte!",
-                    'en' => "Hi $name, greetings from *Hotel Boutique Villa de Sant*. 🏨\n\nYour reservation for the *$room* has been *CONFIRMED*. ✅\n\nWe look forward to welcoming you!",
-                    'fr' => "Bonjour $name, salutations de l' *Hôtel Boutique Villa de Sant*. 🏨\n\nVotre réservation pour la chambre *$room* a été *CONFIRMÉE*. ✅\n\nNous avons hâte de vous accueillir !",
-                    'de' => "Hallo $name, Grüße vom *Hotel Boutique Villa de Sant*. 🏨\n\nIhre Reservierung für das Zimmer *$room* wurde *BESTÄTIGT*. ✅\n\nWir freuen uns darauf, Sie begrüßen zu dürfen!"
+                    'es' => "Hola $name, te saluda el *Hotel Centro*. 🏨\n\nTu reserva para la habitación *$room* ha sido *CONFIRMADA*. ✅\n\n¡Estamos ansiosos por recibirte!",
+                    'en' => "Hi $name, greetings from *Hotel Centro*. 🏨\n\nYour reservation for the *$room* has been *CONFIRMED*. ✅\n\nWe look forward to welcoming you!",
+                    'fr' => "Bonjour $name, salutations de l' *Hôtel Centro*. 🏨\n\nVotre réservation pour la chambre *$room* a été *CONFIRMÉE*. ✅\n\nNous avons hâte de vous accueillir !",
+                    'de' => "Hallo $name, Grüße vom *Hotel Centro*. 🏨\n\nIhre Reservierung für das Zimmer *$room* wurde *BESTÄTIGT*. ✅\n\nWir freuen uns darauf, Sie begrüßen zu dürfen!"
                 ];
 
                 $msg = $msgs[$idioma] ?? $msgs['es'];
@@ -67,12 +71,22 @@ if (isset($_POST['update_status'])) {
 // ======== EDITAR RESERVA COMPLETA ========
 if (isset($_POST['edit_reserva'])) {
     $id = intval($_POST['reserva_id']);
+    $cupon = trim($_POST['cupon']) ?: null;
+    $notas = trim($_POST['notas']) ?: null;
+    $adultos = intval($_POST['adultos'] ?? 1);
+    $ninos = intval($_POST['ninos'] ?? 0);
+    $huespedes = $adultos + $ninos;
+    $parqueadero = isset($_POST['parqueadero']) ? 1 : 0;
+
     $stmt = $db->prepare("UPDATE reservas SET 
         nombre_cliente = ?, 
+        dni = ?,
         email_cliente = ?, 
         telefono_cliente = ?,
         habitacion_id = ?,
         num_huespedes = ?,
+        adultos = ?,
+        ninos = ?,
         fecha_entrada = ?,
         fecha_salida = ?,
         total = ?,
@@ -80,18 +94,16 @@ if (isset($_POST['edit_reserva'])) {
         cupon_codigo = ?,
         descuento_aplicado = ?,
         notas = ?,
-        idioma = ?
+        idioma = ?,
+        parqueadero = ?
         WHERE id = ?");
     
-    $cupon = trim($_POST['cupon']) ?: null;
-    $notas = trim($_POST['notas']) ?: null;
-    
     if ($stmt->execute([
-        $_POST['nombre'], $_POST['email'], $_POST['telefono'],
-        intval($_POST['habitacion_id']), intval($_POST['huespedes']),
+        $_POST['nombre'], $_POST['dni'], $_POST['email'], $_POST['telefono'],
+        intval($_POST['habitacion_id']), $huespedes, $adultos, $ninos,
         $_POST['entrada'], $_POST['salida'], floatval($_POST['total']),
         $_POST['estado'], $cupon, intval($_POST['descuento']),
-        $notas, $_POST['idioma'], $id
+        $notas, $_POST['idioma'], $parqueadero, $id
     ])) {
         $success_data = [
             'title' => '¡Reserva Editada!', 
@@ -129,29 +141,36 @@ if (isset($_POST['edit_reserva'])) {
 
 // ======== RESERVA MANUAL ========
 if (isset($_POST['manual_reserva'])) {
+    $adultos = intval($_POST['adultos'] ?? 1);
+    $ninos = intval($_POST['ninos'] ?? 0);
+    $huespedes = $adultos + $ninos;
+    
     $data = [
         'nombre_cliente' => $_POST['nombre'],
+        'dni' => $_POST['dni'],
         'email_cliente' => $_POST['email'],
         'telefono_cliente' => $_POST['telefono'],
         'habitacion_id' => $_POST['habitacion_id'],
-        'num_huespedes' => $_POST['huespedes'],
+        'num_huespedes' => $huespedes,
         'fecha_entrada' => $_POST['entrada'],
         'fecha_salida' => $_POST['salida'],
         'total' => $_POST['total'],
         'estado' => 'confirmada'
     ];
     if ($resModel->create($data)) {
-        // También guardar notas y cupón si se proporcionaron
+        // También guardar notas, cupón y extras
         $lastId = $db->lastInsertId();
         $notas = trim($_POST['notas'] ?? '');
         $cupon = trim($_POST['cupon'] ?? '');
         $descuento = intval($_POST['descuento'] ?? 0);
         $idioma = $_POST['idioma'] ?? 'es';
-        if ($notas || $cupon || $idioma != 'es') {
-            $db->prepare("UPDATE reservas SET notas = ?, cupon_codigo = ?, descuento_aplicado = ?, idioma = ? WHERE id = ?")
-               ->execute([$notas ?: null, $cupon ?: null, $descuento, $idioma, $lastId]);
-        }
-        $success_json = json_encode(['title' => '¡Reserva Creada!', 'text' => "La reserva manual ha sido registrada.", 'icon' => 'success']);
+        $parqueadero = isset($_POST['parqueadero']) ? 1 : 0;
+        $db->prepare("UPDATE reservas SET notas = ?, cupon_codigo = ?, descuento_aplicado = ?, idioma = ?, adultos = ?, ninos = ?, parqueadero = ?, dni = ? WHERE id = ?")
+           ->execute([$notas ?: null, $cupon ?: null, $descuento, $idioma, $adultos, $ninos, $parqueadero, $_POST['dni'], $lastId]);
+        // Marcar habitación como ocupada
+        $db->prepare("UPDATE habitaciones SET estado = 'ocupado' WHERE id = ?")
+           ->execute([intval($_POST['habitacion_id'])]);
+        $success_json = json_encode(['title' => '¡Reserva Creada!', 'text' => "La reserva manual ha sido registrada correctamente.", 'icon' => 'success']);
     }
 }
 
@@ -218,6 +237,16 @@ $stmt = $db->prepare($query);
 $stmt->execute($params);
 $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Todas las habitaciones para modal de edición
+$all_rooms = $db->query("SELECT id, tipo, numero, nombre, precio FROM habitaciones ORDER BY tipo, numero")->fetchAll(PDO::FETCH_ASSOC);
+
+// Datos de habitaciones para JS (precio por noche)
+$rooms_json = [];
+foreach ($all_rooms as $rm) {
+    $rooms_json[$rm['id']] = ['precio' => floatval($rm['precio']), 'nombre' => $rm['nombre'], 'numero' => $rm['numero']];
+}
+$rooms_json_enc = json_encode($rooms_json);
+
 // Stats rápidos
 $stats_total = $db->query("SELECT COUNT(*) FROM reservas")->fetchColumn();
 $stats_pending = $db->query("SELECT COUNT(*) FROM reservas WHERE estado = 'pendiente'")->fetchColumn();
@@ -226,9 +255,6 @@ $stats_revenue = $db->query("SELECT COALESCE(SUM(total), 0) FROM reservas WHERE 
 
 // Meses en español para formateo
 $meses_es = ['', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-
-// Todas las habitaciones para modal de edición
-$all_rooms = $db->query("SELECT id, tipo, numero, nombre, precio FROM habitaciones ORDER BY tipo, numero")->fetchAll(PDO::FETCH_ASSOC);
 
 include_once "views/layouts/admin_header.php";
 ?>
@@ -514,6 +540,10 @@ include_once "views/layouts/admin_header.php";
                                 <span><?php echo htmlspecialchars($res['email_cliente']); ?></span>
                             </div>
                             <div class="detail-item">
+                                <label><i class="fas fa-id-card"></i> Cédula / DNI</label>
+                                <span><?php echo htmlspecialchars($res['dni'] ?? 'No proporcionado'); ?></span>
+                            </div>
+                            <div class="detail-item">
                                 <label><i class="fas fa-phone"></i> Teléfono</label>
                                 <span><?php echo htmlspecialchars($res['telefono_cliente'] ?? 'No proporcionado'); ?></span>
                             </div>
@@ -530,9 +560,15 @@ include_once "views/layouts/admin_header.php";
                                 <span><?php echo date('d/m/Y', strtotime($res['fecha_salida'])); ?></span>
                             </div>
                             <div class="detail-item">
-                                <label><i class="fas fa-users"></i> Huéspedes</label>
-                                <span><?php echo $res['num_huespedes']; ?></span>
+                                <label><i class="fas fa-users"></i> Huéspedes / Camas</label>
+                                <span><?php echo ($res['adultos'] ?? $res['num_huespedes']); ?> Adulto(s) y <?php echo $res['ninos'] ?? 0; ?> Niño(s) (<?php echo ($res['adultos'] ?? $res['num_huespedes']) + ($res['ninos'] ?? 0); ?> Camas)</span>
                             </div>
+                            <?php if (!empty($res['parqueadero'])): ?>
+                            <div class="detail-item">
+                                <label><i class="fas fa-car"></i> Parqueadero</label>
+                                <span style="color: #2ecc71;"><i class="fas fa-check-circle"></i> Incluido (+$10.00)</span>
+                            </div>
+                            <?php endif; ?>
                             <div class="detail-item">
                                 <label><i class="fas fa-dollar-sign"></i> Total</label>
                                 <span style="font-weight: 700; color: var(--primary);">$<?php echo number_format($res['total'], 2); ?></span>
@@ -594,56 +630,72 @@ include_once "views/layouts/admin_header.php";
             <h3 class="serif gold-text" style="margin: 0;"><i class="fas fa-calendar-plus" style="margin-right: 8px;"></i>Nueva Reserva Manual</h3>
             <button onclick="hideModal('createModal')" style="background:none; border:none; color:#888; cursor:pointer; font-size:1.5rem;">&times;</button>
         </div>
-        <form method="POST">
+        <form method="POST" id="createReservaForm">
             <input type="hidden" name="manual_reserva" value="1">
+            <input type="hidden" name="email" value="">
             <div class="edit-grid">
-                <div class="edit-full edit-group">
+                <div class="edit-group">
                     <label>Nombre del Cliente</label>
                     <input type="text" name="nombre" required placeholder="Nombre completo">
                 </div>
                 <div class="edit-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required placeholder="correo@ejemplo.com">
+                    <label>Cédula o DNI</label>
+                    <input type="text" name="dni" required placeholder="0000000000">
                 </div>
                 <div class="edit-group">
-                    <label>Teléfono</label>
+                    <label>Teléfono / WhatsApp</label>
                     <input type="text" name="telefono" required placeholder="+593 99 000 0000">
                 </div>
                 <hr class="edit-divider">
                 <div class="edit-group">
                     <label>Habitación</label>
-                    <select name="habitacion_id" required>
+                    <select name="habitacion_id" id="create-habitacion" required onchange="calcCreateTotal()">
                         <option value="">— Seleccionar —</option>
                         <?php foreach($available_rooms as $room): ?>
-                        <option value="<?php echo $room['id']; ?>"><?php echo htmlspecialchars($room['nombre']); ?> — #<?php echo $room['numero']; ?> ($<?php echo number_format($room['precio'], 2); ?>)</option>
+                        <option value="<?php echo $room['id']; ?>" data-precio="<?php echo $room['precio']; ?>"><?php echo htmlspecialchars($room['nombre']); ?> — #<?php echo $room['numero']; ?> ($<?php echo number_format($room['precio'], 2); ?>/noche)</option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="edit-group">
-                    <label>Huéspedes</label>
-                    <input type="number" name="huespedes" min="1" max="10" value="2" required>
+                    <label>Adultos ($10/noche)</label>
+                    <input type="number" name="adultos" id="create-adultos" min="1" max="10" value="1" required onchange="calcCreateTotal()">
+                </div>
+                <div class="edit-group">
+                    <label>Niños ($5/noche)</label>
+                    <input type="number" name="ninos" id="create-ninos" min="0" max="10" value="0" required onchange="calcCreateTotal()">
                 </div>
                 <div class="edit-group">
                     <label>Check-in</label>
-                    <input type="date" name="entrada" required>
+                    <input type="date" name="entrada" id="create-entrada" required onchange="calcCreateTotal()">
                 </div>
                 <div class="edit-group">
                     <label>Check-out</label>
-                    <input type="date" name="salida" required>
+                    <input type="date" name="salida" id="create-salida" required onchange="calcCreateTotal()">
                 </div>
                 <hr class="edit-divider">
-                <div class="edit-group">
-                    <label>Total a Pagar ($)</label>
-                    <input type="number" step="0.01" name="total" required placeholder="0.00">
+                <!-- EXTRAS -->
+                <div class="edit-group" style="background: rgba(197,160,89,0.05); border: 1px solid rgba(197,160,89,0.15); border-radius: 10px; padding: 12px;">
+                    <label style="margin-bottom: 8px;"><i class="fas fa-car" style="margin-right: 5px;"></i> Parqueadero <span style="color:#888; font-weight:400;">($10)</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85rem; color: #ddd; text-transform: none; letter-spacing: 0;">
+                        <input type="checkbox" name="parqueadero" id="create-parking" value="1" onchange="calcCreateTotal()" style="width: auto; accent-color: var(--primary);">
+                        Incluir parqueadero privado
+                    </label>
                 </div>
-                <div class="edit-group">
-                    <label>Cupón (Opcional)</label>
-                    <input type="text" name="cupon" placeholder="Ej: SUITE30SAN" style="text-transform: uppercase;">
+                <hr class="edit-divider">
+                <!-- RESUMEN DE PRECIOS -->
+                <div class="edit-full" id="create-price-breakdown" style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 14px; display: none; font-size: 0.8rem;">
+                    <div style="color: var(--primary); font-weight: 700; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Desglose de precio</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color:#888;">Alojamiento (<span id="cb-noches">0</span> noche/s)</span><span id="cb-hab">$0.00</span></div>
+                    <div id="cb-park-row" style="display: flex; justify-content: space-between; margin-bottom: 5px; display:none;"><span style="color:#888;">Parqueadero</span><span>$10.00</span></div>
+                    <div style="border-top: 1px solid rgba(197,160,89,0.2); margin: 8px 0;"></div>
+                    <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.95rem;"><span style="color: var(--primary);">TOTAL</span><span id="cb-total" style="color: var(--primary);">$0.00</span></div>
                 </div>
-                <div class="edit-group">
-                    <label>Descuento %</label>
-                    <input type="number" name="descuento" min="0" max="100" value="0">
+                <div class="edit-group edit-full">
+                    <label>Total a Pagar ($) <span style="color:#888; font-size:0.7rem; font-weight:400;">(calculado automáticamente)</span></label>
+                    <input type="number" step="0.01" name="total" id="create-total" required placeholder="0.00" style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">
                 </div>
+                <input type="hidden" name="cupon" value="">
+                <input type="hidden" name="descuento" value="0">
                 <div class="edit-group">
                     <label>Idioma del Huésped</label>
                     <select name="idioma">
@@ -655,7 +707,7 @@ include_once "views/layouts/admin_header.php";
                 </div>
                 <div class="edit-full edit-group">
                     <label>Notas / Peticiones Especiales</label>
-                    <textarea name="notas" rows="2" style="resize: none;" placeholder="Solicitud de cama extra, alergias, hora de llegada..."></textarea>
+                    <textarea name="notas" rows="2" style="resize: none;" placeholder="Solicitud de hora de llegada, alergias..."></textarea>
                 </div>
             </div>
             <button type="submit" class="btn-gold" style="width: 100%; margin-top: 20px; justify-content: center; padding: 14px;">
@@ -672,47 +724,69 @@ include_once "views/layouts/admin_header.php";
             <h3 class="serif gold-text" style="margin: 0;"><i class="fas fa-pen" style="margin-right: 8px;"></i>Editar Reserva <span id="edit-id-display" style="color: #888;"></span></h3>
             <button onclick="hideModal('editModal')" style="background:none; border:none; color:#888; cursor:pointer; font-size:1.5rem;">&times;</button>
         </div>
-        <form method="POST">
+        <form method="POST" id="editReservaForm">
             <input type="hidden" name="edit_reserva" value="1">
             <input type="hidden" name="reserva_id" id="edit-id">
+            <input type="hidden" name="email" id="edit-email" value="">
             <div class="edit-grid">
-                <div class="edit-full edit-group">
+                <div class="edit-group">
                     <label>Nombre del Cliente</label>
                     <input type="text" name="nombre" id="edit-nombre" required>
                 </div>
                 <div class="edit-group">
-                    <label>Email</label>
-                    <input type="email" name="email" id="edit-email" required>
+                    <label>Cédula o DNI</label>
+                    <input type="text" name="dni" id="edit-dni" required>
                 </div>
                 <div class="edit-group">
-                    <label>Teléfono</label>
+                    <label>Teléfono / WhatsApp</label>
                     <input type="text" name="telefono" id="edit-telefono">
                 </div>
-                <hr class="edit-divider">
+                <hr class="edit-divider" style="grid-column:1/-1;">
                 <div class="edit-group">
                     <label>Habitación</label>
-                    <select name="habitacion_id" id="edit-habitacion" required>
+                    <select name="habitacion_id" id="edit-habitacion" required onchange="calcEditTotal()">
                         <?php foreach($all_rooms as $room): ?>
-                        <option value="<?php echo $room['id']; ?>"><?php echo htmlspecialchars($room['nombre']); ?> — #<?php echo $room['numero']; ?> ($<?php echo number_format($room['precio'], 2); ?>)</option>
+                        <option value="<?php echo $room['id']; ?>" data-precio="<?php echo $room['precio']; ?>"><?php echo htmlspecialchars($room['nombre']); ?> — #<?php echo $room['numero']; ?> ($<?php echo number_format($room['precio'], 2); ?>/noche)</option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="edit-group">
-                    <label>Huéspedes</label>
-                    <input type="number" name="huespedes" id="edit-huespedes" min="1" max="10" required>
+                    <label>Adultos ($10/noche)</label>
+                    <input type="number" name="adultos" id="edit-adultos" min="1" max="10" required onchange="calcEditTotal()">
+                </div>
+                <div class="edit-group">
+                    <label>Niños ($5/noche)</label>
+                    <input type="number" name="ninos" id="edit-ninos" min="0" max="10" required onchange="calcEditTotal()">
                 </div>
                 <div class="edit-group">
                     <label>Check-in</label>
-                    <input type="date" name="entrada" id="edit-entrada" required>
+                    <input type="date" name="entrada" id="edit-entrada" required onchange="calcEditTotal()">
                 </div>
                 <div class="edit-group">
                     <label>Check-out</label>
-                    <input type="date" name="salida" id="edit-salida" required>
+                    <input type="date" name="salida" id="edit-salida" required onchange="calcEditTotal()">
                 </div>
                 <hr class="edit-divider">
-                <div class="edit-group">
-                    <label>Total a Pagar ($)</label>
-                    <input type="number" step="0.01" name="total" id="edit-total" required>
+                <!-- EXTRAS -->
+                <div class="edit-group" style="background: rgba(197,160,89,0.05); border: 1px solid rgba(197,160,89,0.15); border-radius: 10px; padding: 12px;">
+                    <label style="margin-bottom: 8px;"><i class="fas fa-car" style="margin-right: 5px;"></i> Parqueadero <span style="color:#888; font-weight:400;">($10)</span></label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.85rem; color: #ddd; text-transform: none; letter-spacing: 0;">
+                        <input type="checkbox" name="parqueadero" id="edit-parking" value="1" onchange="calcEditTotal()" style="width: auto; accent-color: var(--primary);">
+                        Incluir parqueadero privado
+                    </label>
+                </div>
+                <hr class="edit-divider">
+                <!-- RESUMEN PRECIOS EDIT -->
+                <div class="edit-full" id="edit-price-breakdown" style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 14px; font-size: 0.8rem;">
+                    <div style="color: var(--primary); font-weight: 700; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Desglose de precio</div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color:#888;">Alojamiento (<span id="eb-noches">0</span> noche/s)</span><span id="eb-hab">$0.00</span></div>
+                    <div id="eb-park-row" style="display: flex; justify-content: space-between; margin-bottom: 5px;"><span style="color:#888;">Parqueadero</span><span>$10.00</span></div>
+                    <div style="border-top: 1px solid rgba(197,160,89,0.2); margin: 8px 0;"></div>
+                    <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 0.95rem;"><span style="color: var(--primary);">TOTAL</span><span id="eb-total" style="color: var(--primary);">$0.00</span></div>
+                </div>
+                <div class="edit-group edit-full">
+                    <label>Total a Pagar ($) <span style="color:#888; font-size:0.7rem; font-weight:400;">(editable)</span></label>
+                    <input type="number" step="0.01" name="total" id="edit-total" required style="font-size: 1.1rem; font-weight: 700; color: var(--primary);">
                 </div>
                 <div class="edit-group">
                     <label>Estado</label>
@@ -722,14 +796,8 @@ include_once "views/layouts/admin_header.php";
                         <option value="cancelada">Cancelada</option>
                     </select>
                 </div>
-                <div class="edit-group">
-                    <label>Cupón</label>
-                    <input type="text" name="cupon" id="edit-cupon" style="text-transform: uppercase;">
-                </div>
-                <div class="edit-group">
-                    <label>Descuento %</label>
-                    <input type="number" name="descuento" id="edit-descuento" min="0" max="100">
-                </div>
+                <input type="hidden" name="cupon" id="edit-cupon" value="">
+                <input type="hidden" name="descuento" id="edit-descuento" value="0">
                 <div class="edit-group">
                     <label>Idioma del Huésped</label>
                     <select name="idioma" id="edit-idioma">
@@ -787,25 +855,85 @@ include_once "views/layouts/admin_header.php";
         }
     }
 
+    // ======== ROOMS DATA (for price calc) ========
+    const roomsData = <?php echo $rooms_json_enc; ?>;
+
+    // ======== CALC TOTAL: CREATE ========
+    function calcCreateTotal() {
+        const habSel = document.getElementById('create-habitacion');
+        const entrada = document.getElementById('create-entrada').value;
+        const salida = document.getElementById('create-salida').value;
+        const adultos = parseInt(document.getElementById('create-adultos').value) || 0;
+        const ninos = parseInt(document.getElementById('create-ninos').value) || 0;
+        const parking = document.getElementById('create-parking').checked;
+
+        if (!habSel.value || !entrada || !salida) return;
+
+        const d1 = new Date(entrada), d2 = new Date(salida);
+        const noches = Math.max(1, Math.round((d2 - d1) / 86400000));
+
+        const baseHab = ((adultos * 10) + (ninos * 5)) * noches;
+        const extPark = parking ? 10 : 0;
+        const total = baseHab + extPark;
+
+        const bd = document.getElementById('create-price-breakdown');
+        bd.style.display = 'block';
+        document.getElementById('cb-noches').textContent = noches;
+        document.getElementById('cb-hab').textContent = '$' + baseHab.toFixed(2);
+        const parkRow = document.getElementById('cb-park-row');
+        parkRow.style.display = parking ? 'flex' : 'none';
+        document.getElementById('cb-total').textContent = '$' + total.toFixed(2);
+        document.getElementById('create-total').value = total.toFixed(2);
+    }
+
+    // ======== CALC TOTAL: EDIT ========
+    function calcEditTotal() {
+        const habSel = document.getElementById('edit-habitacion');
+        const entrada = document.getElementById('edit-entrada').value;
+        const salida = document.getElementById('edit-salida').value;
+        const adultos = parseInt(document.getElementById('edit-adultos').value) || 0;
+        const ninos = parseInt(document.getElementById('edit-ninos').value) || 0;
+        const parking = document.getElementById('edit-parking').checked;
+
+        if (!habSel.value || !entrada || !salida) return;
+
+        const d1 = new Date(entrada), d2 = new Date(salida);
+        const noches = Math.max(1, Math.round((d2 - d1) / 86400000));
+
+        const baseHab = ((adultos * 10) + (ninos * 5)) * noches;
+        const extPark = parking ? 10 : 0;
+        const total = baseHab + extPark;
+
+        document.getElementById('eb-noches').textContent = noches;
+        document.getElementById('eb-hab').textContent = '$' + baseHab.toFixed(2);
+        const parkRow = document.getElementById('eb-park-row');
+        parkRow.style.display = parking ? 'flex' : 'none';
+        document.getElementById('eb-total').textContent = '$' + total.toFixed(2);
+        document.getElementById('edit-total').value = total.toFixed(2);
+    }
+
     // ======== OPEN EDIT MODAL ========
     function openEditModal(res) {
         document.getElementById('edit-id').value = res.id;
         document.getElementById('edit-id-display').textContent = '#' + String(res.id).padStart(3, '0');
         document.getElementById('edit-nombre').value = res.nombre_cliente;
+        document.getElementById('edit-dni').value = res.dni || '';
         document.getElementById('edit-email').value = res.email_cliente;
         document.getElementById('edit-telefono').value = res.telefono_cliente || '';
         document.getElementById('edit-habitacion').value = res.habitacion_id;
-        document.getElementById('edit-huespedes').value = res.num_huespedes;
+        document.getElementById('edit-adultos').value = res.adultos || res.num_huespedes || 1;
+        document.getElementById('edit-ninos').value = res.ninos || 0;
         document.getElementById('edit-entrada').value = res.fecha_entrada;
         document.getElementById('edit-salida').value = res.fecha_salida;
         document.getElementById('edit-total').value = res.total;
         document.getElementById('edit-estado').value = res.estado;
-        document.getElementById('edit-cupon').value = res.cupon_codigo || '';
-        document.getElementById('edit-descuento').value = res.descuento_aplicado || 0;
-        document.getElementById('edit-idioma').value = res.idioma || 'es';
         document.getElementById('edit-notas').value = res.notas || '';
+        // Extras
+        document.getElementById('edit-parking').checked = res.parqueadero == 1;
         
         document.getElementById('editModal').classList.add('active');
+        // Recalcular desglose con los datos cargados
+        calcEditTotal();
     }
 
     // ======== DELETE CONFIRMATION ========

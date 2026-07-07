@@ -1,6 +1,6 @@
 <?php
 require_once "config/config.php";
-$pageTitle = "Sobre Nosotros | Hotel Boutique Villa de Sant";
+$pageTitle = "Sobre Nosotros | Hotel Centro";
 $extraCSS = '
 <style>
     /* STORY SECTION */
@@ -69,7 +69,7 @@ include_once "views/layouts/header.php";
         <div class="container">
             <div class="nos-about-grid">
                 <div class="nos-about-img scroll-anim scroll-left">
-                    <img src="<?php echo BASE_URL; ?>assets/img/home/home2.jpg" alt="Hotel Boutique Villa de Sant">
+                    <img src="<?php echo BASE_URL; ?>assets/img/home/home2.jpg" alt="Hotel Centro">
                     <div class="nos-about-badge">
                         <span>1924</span>
                         <p>Año de Fundación</p>
@@ -78,7 +78,7 @@ include_once "views/layouts/header.php";
                 <div class="nos-text scroll-anim scroll-right">
                     <div class="nos-label"><i class="fa-solid fa-leaf"></i> NUESTRA HISTORIA</div>
                     <h2 class="serif gold-text">Un legado de hospitalidad alada</h2>
-                    <p>Villa de Sant nació como una casona colonial en el centro histórico de Quito, testigo silencioso de generaciones de viajeros que encontraron aquí su hogar lejos de casa. Cada piedra tallada, cada ventanal arqueado y cada patio florido cuenta una historia de amor por la hospitalidad.</p>
+                    <p>Hotel Centro nació como una casona colonial en el centro histórico de Quito, testigo silencioso de generaciones de viajeros que encontraron aquí su hogar lejos de casa. Cada piedra tallada, cada ventanal arqueado y cada patio florido cuenta una historia de amor por la hospitalidad.</p>
                     <p>Hoy, décadas después, mantenemos intacta esa esencia: un hotel boutique donde el lujo no se mide en metros cuadrados, sino en la profundidad de las experiencias y la calidez de cada encuentro.</p>
                     <ul class="nos-values-list">
                         <li class="nos-value-item"><i class="fa-solid fa-circle-check"></i> Hospitalidad auténtica y personalizada</li>
@@ -99,19 +99,19 @@ include_once "views/layouts/header.php";
                     <div class="nos-label"><i class="fa-solid fa-location-dot"></i> DÓNDE ESTAMOS</div>
                     <h2 class="serif gold-text">Nuestra Ubicación</h2>
                     <p style="color: var(--text-white); font-weight: 700; font-size: 1.3rem;">
-                        <i class="fa-solid fa-map" style="color: var(--primary-gold); margin-right: 15px;"></i> Robles E y Reina Victoria 5-62 y<br>
-                        <span style="padding-left: 38px;">170526 Quito, Ecuador</span>
+                        <i class="fa-solid fa-map" style="color: var(--primary-gold); margin-right: 15px;"></i> Chile y Juan Pío Montúfar E1-17<br>
+                        <span style="padding-left: 38px;">170401 Quito, Ecuador</span>
                     </p>
                     <div class="plus-code-box">
-                        <i class="fa-solid fa-qrcode"></i> Plus Code: QGV4+C5 Quito
+                        <i class="fa-solid fa-qrcode"></i> Centro Histórico de Quito
                     </div>
-                    <p>Ubicados en el corazón vibrante y elegante de la capital. Nuestro santuario campestre te ofrece una escapada perfecta cerca de los puntos más emblemáticos de la ciudad.</p>
-                    <a href="https://www.google.com/maps/dir//Hotel+Boutique+Villa+de+Sant/@-0.2063638,-78.497076,17z" target="_blank" class="btn btn-gold btn-rounded" style="width: auto; margin-top: 30px;">
+                    <p>Ubicados en pleno corazón del Centro Histórico de Quito, Patrimonio de la Humanidad. A pasos de la Plaza Grande, iglesias coloniales y los puntos más emblemáticos de la capital.</p>
+                    <a href="https://www.google.com/maps/place/Chile+y+Juan+P%C3%ADo+Mont%C3%BAfar+E1-17,+Quito+170401" target="_blank" class="btn btn-gold btn-rounded" style="width: auto; margin-top: 30px;">
                         ABRIR EN MAPS <i class="fa-solid fa-location-arrow" style="margin-left:8px;"></i>
                     </a>
                 </div>
                 <div class="location-card scroll-anim scroll-right">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.792556214589!2d-78.497076!3d-0.2063638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59b188d65eb01%3A0xaef63a839146e029!2sHotel%20Boutique%20Villa%20de%20Sant!5e0!3m2!1ses!2sec!4v1712781234567!5m2!1ses!2sec" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.8231894!2d-78.5067!3d-0.2199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59a4002b2e5e9%3A0x7e99dac47b1d5a2b!2sChile%20%26%20Juan%20P%C3%ADo%20Mont%C3%BAfar%2C%20Quito%20170401!5e0!3m2!1ses!2sec!4v1720000000001!5m2!1ses!2sec" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Hotel Centro - Chile y Juan Pío Montúfar, Quito"></iframe>
                 </div>
             </div>
         </div>
@@ -121,8 +121,8 @@ include_once "views/layouts/header.php";
     <section class="nos-cta section-padding">
         <div class="container text-center">
             <div class="page-hero-divider" style="width: 100px; margin: 0 auto 50px;"></div>
-            <h2 class="serif">&ldquo;El vuelo del colibrí te espera&rdquo;</h2>
-            <p>Ven a ser parte de nuestra historia. Cada estancia en Villa de Sant es el comienzo de una memoria que llevarás contigo para siempre.</p>
+            <h2 class="serif">&ldquo;El descanso que mereces te espera&rdquo;</h2>
+            <p>Ven a disfrutar de una estancia inigualable. Cada momento en Hotel Centro está diseñado para brindarte el máximo confort y descanso.</p>
             <div class="nos-cta-btns scroll-anim scroll-fade">
                 <a href="<?php echo BASE_URL; ?>?action=reserva" class="btn btn-gold btn-rounded"><i class="fa-solid fa-calendar-check" style="margin-right:10px;"></i> RESERVAR AHORA</a>
                 <a href="<?php echo BASE_URL; ?>?action=habitaciones" class="btn btn-outline btn-rounded"><i class="fa-solid fa-bed" style="margin-right:10px;"></i> VER HABITACIONES</a>
